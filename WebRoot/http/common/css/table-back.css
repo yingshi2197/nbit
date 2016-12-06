@@ -1,0 +1,16 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+.table{
+	background-color:#FFF; width:100%; border:#CCC solid 1px;
+}
+.table th{ text-align:center; vertical-align:middle;}
+
+.table input,select{ 
+	width: 100%;
+}
+
+.table .redStar{ 
+  top:auto; 
+  right:auto; 
+}

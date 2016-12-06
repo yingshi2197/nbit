@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.project.dao.ProjectDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.project.entity.Project" resultMap="project.result">
+        <![CDATA[
+           	select p.*
+			 from 
+			 	project p
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.project.entity.Project">
+		update project 
+		set
+			name = #{name},formal=#{formal},
+			code = #{code},description = #{description},source = #{source},
+			target = #{target},container = #{container},path = #{path},port=#{port},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.project.entity.Project">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into project
+		(id, name, code, source,target, formal,path,description,delete_flag,container,port,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, #{code}, #{source},#{target}, #{formal},#{path},#{description},'0',#{container},#{port},<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update project set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="project.result">
+		select p.* 
+		from project p
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('name')">
+			and p.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('code')">
+			and p.code =#{code,jdbcType=VARCHAR}
+		</if>
+		order by p.last_modify_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="project.result">
+    	select p.*
+    	 from project p
+    	where delete_flag=0
+    </select>
+
+</mapper>

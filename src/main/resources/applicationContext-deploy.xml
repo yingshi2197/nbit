@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:mvc="http://www.springframework.org/schema/mvc" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:cache="http://www.springframework.org/schema/cache" 
+  xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:aop="http://www.springframework.org/schema/aop" 
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:oscache="http://www.springmodules.org/schema/oscache"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+   	 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+   	 http://www.springframework.org/schema/context
+   	 http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+   	 http://www.springframework.org/schema/aop 
+   	 http://www.springframework.org/schema/aop/spring-aop-3.1.xsd 
+   	 http://www.springframework.org/schema/cache  
+	http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+   	 http://www.springframework.org/schema/tx 
+   	 http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+   	 http://www.springmodules.org/schema/oscache 
+   	 http://www.springmodules.org/schema/cache/springmodules-oscache.xsd
+   	 http://www.springframework.org/schema/mvc
+   	 http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+    
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	    <!-- 国际化信息所在的文件名 -->                     
+	    <property name="basenames" >
+	    	<list>
+	    		<value>global</value>
+	    	</list>
+	    </property>   
+	    <!-- 如果在国际化资源文件中找不到对应代码的信息，就用这个代码作为名称  -->               
+	    <property name="useCodeAsDefaultMessage" value="true" />           
+	</bean>
+    
+    
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/com/noboll/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<bean id="systemContext" class="com.noboll.context.SystemContext" init-method="init"></bean>
+	 
+</beans>

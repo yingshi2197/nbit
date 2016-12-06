@@ -1,0 +1,163 @@
+@charset "utf-8";
+
+body{
+    padding-top: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+a{
+    color: #15a6ca;
+    text-decoration: none;
+}
+a:hover,a:visited{
+    text-decoration: none;
+}
+/*login页*/
+.body-bg{
+    background-color: #3f7ddb;
+/*    background:url("../images/bg.png")no-repeat;
+    background-size:cover;*/
+}
+.global{
+    height: 100%;
+    text-align: center;
+}
+.container .con-title{
+    margin-top: 120px;
+    color: #ffffff;
+    font-size: 30px;
+}
+.container .title-tex{
+    margin-left: 5px;
+    vertical-align: bottom;
+}
+.container .login{
+    width: 498px;
+    height: 300px;
+    margin: 25px auto 10px;
+    background: #ffffff;
+    padding: 55px 35px 35px 35px;
+    border: 1px solid #e3e3e3;
+    mso-border-shadow: ;
+    border-radius: 4px;
+}
+.login .form-group{
+    margin-bottom: 25px;
+}
+.login .form-control{
+    padding-left: 55px;
+    height: 44px;
+}
+
+.login .user{
+    background: transparent url("../images/user.png") no-repeat 15px;
+}
+.login .password{
+    background: transparent url("../images/password.png") no-repeat 15px;
+}
+
+.login .btn-primary{
+    height: 44px;
+    width: 100%;
+    font-size: 16px;
+    letter-spacing: 15px;
+    color: #ffffff;
+    border: none;
+    background-color: #15a6ca;
+}
+.footer{
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+}
+
+/*index页*/
+.navbaro{
+    background-color: #15a6ca;
+    color: #ffffff;
+    border: none;
+    border-radius: 0;
+    height: 64px;
+    vertical-align: middle;
+    margin-bottom: 0px;
+}
+.navbaro .navbar-header{
+
+}
+.logo-img{
+    float: left;
+    vertical-align: middle;
+}
+.logo-text {
+    margin-left: 5px;
+    float: left;
+    color: #ffffff;
+    padding-top: 10px;
+}
+.navbaro .navbar-collapse{
+    height: 64px;
+}
+.navbaro .navbar-nav>li>a{
+    color: #ffffff;
+    font-size: 15px;
+    height: 64px;
+    line-height: 64px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.navbaro .navbar-nav>li>a:hover,.navbaro .navbar-nav>li>a:visited{
+    color: #ffffff;
+    background-color: #28bce0;
+}
+.navbaro .navbar-nav > .active > a{
+    color: #ffffff;
+    font-weight: 700;
+    background-color: #17b2d8;
+}
+.navbaro .navbar-nav > .active > a:hover,.navbaro .navbar-nav > .active > a:visited ,.navbaro .navbar-nav > .active > a:active{
+    color: #ffffff;
+    background-color: #28bce0;
+}
+.nav-add .breadcrumb{
+    background-color: transparent;
+    border-radius: 0;
+    padding-left: 0;
+    padding-top: 10px;
+    border-bottom: 1px solid #d0cdcd;
+}
+.container {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+.btn-col{
+    background-color: #15a6ca;
+    border: none;
+}
+.btn-col:hover{
+    background-color: #17b2d8;
+}
+.table-striped>thead>tr>th{
+    background-color: #83c1d0;
+    color: #FFFFFF;
+}
+.pagination>.active>a{
+    background-color: #15a6ca;
+}
+.fb-navbar .dropdown-menu{
+    color: #FFFFFF;
+    background:#15a6ca;
+}
+.fb-navbar .dropdown-menu > li > a{
+   color: #FFFFFF;
+}
+.fb-navbar .dropdown-menu > li > a:hover{
+    color: #ffffff;
+    background-color: #28bce0;
+}
+.fb-navbar .dropdown-menu .divider{
+    background-color: #2897b2;
+}
+

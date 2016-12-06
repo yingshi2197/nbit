@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.dict.dao.DictDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.dict.entity.Dict" resultMap="dict.result">
+        <![CDATA[
+           	select sd.*,sdt.name type_name,sdt.code type_code,concat(sdt.name,'>',sd.name) fullName
+			 from 
+			 	dict sd,dict_type sdt  
+			 where 
+				 sd.type_id=sdt.id 
+				 and sd.delete_flag = '0' 
+				 and sdt.delete_flag='0' 
+				 and sd.id = #{id} 
+        ]]>
+	</select>
+	
+	<select id="queryByTypeCode" resultType="list" parameterType="string"
+		resultMap="dict.result">
+        <![CDATA[
+           select sd.*,sdt.name type_name,sdt.code type_code
+			 from 
+			 	dict sd,dict_type sdt  
+			 where 
+			 	sd.type_id=sdt.id 
+			 	and sd.delete_flag = '0' 
+			 	and sdt.delete_flag ='0' 
+			 	and sdt.code = #{typeCode}
+			 	and sd.delete_flag='0'
+			 	and sdt.delete_flag='0'
+			order by sd.seq
+        ]]>
+	</select>
+	
+	<update id="updateEntity" parameterType="com.noboll.business.dict.entity.Dict">
+		update dict 
+		set
+			name = #{name},
+			code = #{code},
+			seq = #{seq},
+			description=#{description},
+			type_id=#{typeId},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.dict.entity.Dict">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into dict
+		(id, name, code, description,seq, type_id,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, #{code}, #{description},#{seq}, #{typeId},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update dict set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="queryByTypeId" resultType="list" parameterType="string"
+		resultMap="dict.result">
+        <![CDATA[
+           select sd.*,sdt.name type_name,sdt.code type_code
+			 from dict sd,dict_type sdt  where 
+			 sd.type_id=sdt.id and sd.delete_flag = '0' and sdt.delete_flag='0' and sdt.id = #{typeId}
+			 order by sd.seq
+        ]]>
+	</select>
+	
+	<select id="getMaxSeqByTypeId" resultType="int" parameterType="string" >
+		select case when t.num is null then 0 else t.num end num from (
+		SELECT max(seq) num FROM dict where type_id=#{typeId} 
+		and delete_flag='0') t
+	</select>
+
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="dict.result">
+		select sd.*,sdt.name type_name,sdt.code type_code
+		from dict sd,dict_type sdt
+		where sd.type_id=sdt.id and sd.delete_flag = '0' and sdt.delete_flag='0'
+		<if test="_parameter.containsKey('name')">
+			and sd.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('code')">
+			and sd.code LIKE CONCAT('%',
+			CONCAT(#{code,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('typeName')">
+			and sdt.name LIKE CONCAT('%',
+			CONCAT(#{typeName,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('typeId')">
+			and sd.type_id = #{typeId}
+		</if>
+
+		order by sd.seq
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="dict.result">
+    	select d.*,dt.code typeCode from dict d
+    	 left join dict_type dt on dt.id=d.type_id and dt.delete_flag='0'
+    	where d.delete_flag=0
+    </select>
+
+</mapper>

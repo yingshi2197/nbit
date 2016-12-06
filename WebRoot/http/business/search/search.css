@@ -1,0 +1,113 @@
+@charset "utf-8";
+/* CSS Document */
+a {
+    color: #555;
+}
+body{background:#FFF;}
+.smg_icon{position:absolute; margin-left:15px;}
+.search_bg{
+background-image:url(images/bg.jpg);  
+background-repeat:no-repeat;
+background-size: cover;
+margin-bottom:40px;}
+.pading-80{ padding:80px 0; text-align:center}
+.searchingBtn {
+	height: 38px;
+    width: 100px;
+    border: 0;
+    cursor: pointer;
+	margin-left:-5px;
+	width:100px;
+	color:#FFF; 
+	font-size:16px;
+	font-weight:bold; 
+	background-color:#169BD5;
+}
+.searchingSelect {
+	height: 38px;
+    border: 0;
+	margin-right:-5px;
+	padding-left:10px;
+	width:100px;
+	color:#FFF; 
+	font-size:16px;
+	background-color:#169BD5;
+	vertical-align: bottom; 
+}
+.search_msg{ text-align:left; 
+             color:#CCC; 
+             display: block;
+             margin:15px auto  0 ;
+             width: 600px;
+             height: 20px;
+			 line-height:20px;
+	         color: #666666;
+}
+.searchingBtn:hover {background-color:#50c9c4;}
+.searchingTxt {
+	width: 521px;
+    height:38px;
+	padding:10px;
+    font: 16px;
+   	background: transparent;
+    border:1px solid #169BD5;
+	vertical-align: bottom;
+}
+
+.nav-tabs>li>a {border-radius:0;}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
+{ border-top: solid 3px #50c9c4;
+font-weight:bolder;
+	}
+	.nav-tabs>li>a {
+    padding: 10px 30px;
+	font-size:16px;
+	
+}
+.nav-tabs{background:#eeeeee;}
+.tab-content {
+    background: #fff;
+    /* border:1px solid #ddd */;
+	border-top:none;
+	display: block;
+}
+.longTop {
+    font-size: 14px;
+    color: #ababab;
+    padding: 15px 20px 15px 20px;
+}
+.cc20000{
+    color: #ff4c78;
+}
+
+.search_con{ 
+	/* padding:10px 20px; */
+    color: #005bac;
+	display: block;
+	line-height: 25px;   
+	font-size: 16px;
+}
+.search_list_01{ font-weight:bolder;}
+.search_list_01 a{
+	color:#005bac;
+}
+.search_list_02{ color:#555; }
+.search_list_03{ color:#999999; font-size:12px;}
+.search_span{ padding-right:10px;}
+.search_a{ padding:10px 20px;
+ border:1px solid #005bac; 
+   background: transparent;
+ }
+ .search_a:hover{ background:#50c9c4;
+  color:#FFF;
+  border:none;
+  text-decoration:none;
+    cursor: pointer;
+ }
+ 
+ hr {
+    margin:0px; 
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+

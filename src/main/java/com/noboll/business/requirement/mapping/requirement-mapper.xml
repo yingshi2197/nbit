@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.requirement.dao.RequirementDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.requirement.entity.Requirement" resultMap="requirement.result">
+        <![CDATA[
+			select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName
+			 from 
+			 	requirement q
+			 left join dict d1 on d1.id=q.period
+			  left join dict d2 on d2.id=q.address
+			   left join dict d3 on d3.id=q.level
+			   left join dict d4 on d4.id=q.position_id
+			 where 
+				 q.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.requirement.entity.Requirement">
+		update requirement 
+		set
+			name = #{name},customer_id = #{customerId},code = #{code},
+			level = #{level},period = #{period},position_id = #{positionId},
+			duty = #{duty},
+			num = #{num},
+			demand = #{demand},address = #{address},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.requirement.entity.Requirement">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into requirement
+		(id, name, customer_id, code,level, period,position_id,duty,num,demand,address,description,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, #{customerId}, #{code},#{level}, #{period},#{positionId},#{duty},#{num},#{demand},#{address},#{description},<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<!-- <update id="deleteEntity" parameterType="string">
+		update requirement set
+		delete_flag = '1'
+		where id = #{id}
+	</update> -->
+	<delete id="deleteEntity" parameterType="string">
+		delete from requirement where id = #{id}
+	</delete>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="requirement.result">
+		select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName
+			 from 
+			 	requirement q
+			 left join dict d1 on d1.id=q.period
+			  left join dict d2 on d2.id=q.address
+			   left join dict d3 on d3.id=q.level
+			   left join dict d4 on d4.id=q.position_id
+		where 1=1
+		<if test="_parameter.containsKey('name')">
+			and q.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('code')">
+			and q.code LIKE CONCAT('%',
+			CONCAT(#{code,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('addressName')">
+			and q.address =#{addressName,jdbcType=VARCHAR}
+		</if>
+		order by q.create_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="requirement.result">
+    	select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName
+			 from 
+			 	requirement q
+			 left join dict d1 on d1.id=q.period
+			  left join dict d2 on d2.id=q.address
+			   left join dict d3 on d3.id=q.level
+			   left join dict d4 on d4.id=q.position_id
+			 where 
+				 q.id = #{id}
+    </select>
+
+</mapper>

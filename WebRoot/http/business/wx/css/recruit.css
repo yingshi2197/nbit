@@ -1,0 +1,218 @@
+@charset "utf-8";
+
+
+.main-header{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    padding-bottom: .1rem;
+    background-color: #ffffff;
+    z-index: 9999;
+}
+.search{
+    width: 100%;
+    background-color: #e5e5e5;
+    padding: 0.07rem 0.05rem;
+    height: 0.49rem;
+    vertical-align: middle;
+    position: relative;
+}
+.search .search-input{
+    width: 86%;
+    height: 0.32rem;
+    color: #b5b5b5;
+    border-radius: .16rem;
+    border: none;
+    outline: none;
+    background: #fff url("../imgaes/magnifier.png") no-repeat 0.05rem 0.07rem;
+    display: block;
+    font-size: 0.14rem;
+    padding: 0 0.05rem 0 .25rem;
+}
+.search .search-button{
+    height: 0.32rem;
+    font-size: 0.18rem;
+    padding: 0 0.08rem;
+    font-family: "黑体";
+    color: #368cc9;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 0.07rem;
+    right: 1%;
+}
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: .05rem;
+}
+.choice{
+    padding: 0.20rem 0.1rem;
+    font-size: .14rem;
+    text-align: center;
+}
+.form-inline,.form-group{
+    display: inline-block;
+    vertical-align: middle;
+}
+.form-group{
+    width: 48%;
+}
+.form-control{
+    display: inline-block;
+    /*height: 0.34rem;*/
+    width: 60%;
+    padding: .06rem .12rem ;
+    background: #ffffff;
+    color: #b5b5b5;
+    border: 1px solid #ccc;
+    border-radius: .04rem;
+}
+.position-info{
+    font-size: .14rem;
+    padding: .08rem .1rem;
+    background-color: #e5e5e5;
+    clear: both;
+}
+.main-body{
+    max-width: 6.4rem;
+    padding: 0;
+    margin: 0 auto;
+}
+.details{
+    padding: 1.62rem .1rem .60rem .1rem;
+}
+.panel{
+    margin-bottom: .15rem;
+    background-color: #fff;
+    border: .01rem solid transparent;
+    border-radius: .04rem;
+    -webkit-box-shadow: 0 .01rem .01rem rgba(0,0,0,.05);
+    box-shadow: 0 .01rem .01rem rgba(0,0,0,.05);
+}
+.panel-default{
+    border-color: #e5e5e5;
+}
+.panel-header{
+    font-size: .17rem;
+    padding: .1rem .15rem;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: .03rem;
+    border-top-right-radius: .03rem;
+    position: relative;
+}
+.panel-default>.panel-header{
+    background-color: #e5e5e5;
+}
+.select-box{
+    position: absolute;
+    top: .1rem;
+    right: .05rem;
+}
+
+.select-box input[type="checkbox"]{
+    background-color: #ffffff;
+    width: .5rem;
+    height: .20rem;
+}
+.panel-body{
+    background-color: #f2f2f2;
+    font-size: .14rem;
+    color: #8e8e8e;
+    padding: .1rem;
+}
+.panel-body .table{
+    width: 100%;
+}
+.table>tbody>tr,.table>tbody>tr>td{
+    border: none;
+    line-height: 1.8;
+    /*padding-top: 0.06rem;
+    padding-bottom: 0.06rem;*/
+}
+.p_down{
+    text-align: center;
+    background: url("../imgaes/down.png") no-repeat center;
+    cursor: pointer;
+}
+
+.p_up{
+    text-align: center;
+    background: url("../imgaes/up.png") no-repeat center;
+    cursor: pointer;
+}
+
+.load{
+    text-align: center;
+    margin-bottom: .10rem;
+}
+.load button{
+    padding: .06rem .2rem;
+    font-size: .14rem;
+    color: #8e8e8e;
+    background-color: #f2f2f2;
+    border: .01rem solid #e5e5e5;
+    border-radius: .15rem;
+    cursor: pointer;
+}
+.warning{
+    padding: .06rem .1rem;
+    font-size: .13rem;
+    color: red;
+    background-color: #fec8b1;
+    border-top: .01rem solid #f77781;
+    border-bottom: .01rem solid #f77781;
+}
+.footer-but{
+    width: 100%;
+    text-align: center;
+    padding: .2rem 0;
+    border-top: .01rem solid #e5e5e5;
+    position: fixed;
+    bottom: 0;
+    background-color: #ffffff;
+}
+
+.footer-but button{
+    padding: .1rem .35rem;
+    background-color: #368cc9;
+    font-size: .16rem;
+    font-weight: 500;
+    color: #ffffff;
+    border: none;
+    border-radius: .2rem;
+    cursor: pointer;
+}
+.footer-but button.but1{
+    margin-right: .2rem;
+}
+
+/*媒体查询，大于480px小于640px*/
+@media (min-width: 480px) and (max-width: 640px) {
+    .search .search-input{
+        width: 86%;
+    }
+}
+
+/*媒体查询,小于480px*/
+@media (max-width: 480px) {
+    .search .search-input{
+        width: 78%;
+    }
+}
+/*媒体查询,小于320px*/
+@media (max-width: 320px) {
+    .search .search-input{
+        width: 75%;
+    }
+}
+
+.p_more{
+	display: none;
+}
+
+.form-inline{
+    width: 100%;
+}

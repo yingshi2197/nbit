@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.dict.dao.DictTypeDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->
+	<select id="getEntity" parameterType="string" resultType="com.noboll.business.dict.entity.DictType" resultMap="dictType.result">
+        <![CDATA[
+            select * from dict_type where id = #{id} and delete_flag='0'
+        ]]>
+	</select>
+
+	<update id="updateEntity" parameterType="com.noboll.business.dict.entity.DictType">
+		update dict_type set
+		name = #{name}, 
+		code = #{code}, 
+		description=#{description},
+		<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.dict.entity.DictType">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+	       <include refid="system.generatedId"></include>
+	    </selectKey>
+		insert into dict_type
+			(id, name, code, description,delete_flag,<include refid="system.user_column_insert"></include>)
+		values	
+			(#{id}, #{name}, #{code}, #{description},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update dict_type set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+
+	<select id="getList" resultType="list" parameterType="map" resultMap="dictType.result">
+		select * from dict_type
+		where delete_flag='0'
+		<if test="_parameter.containsKey('name')">
+			and name LIKE CONCAT('%', CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('code')">
+			and code LIKE CONCAT('%', CONCAT(#{code,jdbcType=VARCHAR}, '%'))
+		</if>
+		order by last_modify_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="dictType.result">
+    	select * from dict_type 
+    	where delete_flag=0
+    </select>
+</mapper>

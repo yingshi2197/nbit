@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.log.dao.DeployLogDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.log.entity.DeployLog" resultMap="log.result">
+        <![CDATA[
+           	select p.*,pj.name projectName
+			 from 
+			 	deploy_log p
+			 	left join project pj on pj.id=p.project_id
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	<update id="updateEntity" parameterType="com.noboll.business.log.entity.DeployLog">
+		update deploy_log 
+		set
+			status = #{status},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+	
+	
+	<insert id="saveEntity" parameterType="com.noboll.business.log.entity.DeployLog">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into deploy_log
+		(id, version, project_id,status,source,target,path, reason,description,delete_flag,increase,start,start_time,container,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{version}, #{projectId}, #{status}, #{source},#{target},#{path},#{reason},#{description},'0',#{increase},#{start},#{startTime},#{container},<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update deploy_log set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="log.result">
+		select p.* 
+		from deploy_log p
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('projectId')">
+			and p.project_id =#{projectId,jdbcType=VARCHAR}
+		</if>
+		order by p.create_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="log.result">
+    	select p.*,pj.code code
+    	 from deploy_log p
+    	 left join project pj on pj.id=p.project_id
+    	where p.delete_flag=0 and pj.delete_flag='0' 
+    	<if test="_parameter.containsKey('startTime')">
+			and  DATE_FORMAT(p.start_time, "%Y-%m-%d %H:%i:%s") <![CDATA[ <= ]]> DATE_FORMAT(#{startTime}, "%Y-%m-%d %H:%i:%s")
+			and p.start_time is not null 
+		</if>
+		<if test="_parameter.containsKey('status')">
+			and  p.status=#{status}
+		</if>
+    </select>
+    
+    <update id="deploy" parameterType="com.noboll.business.log.entity.DeployLog">
+		update deploy_log set
+		status=#{status},reason=#{reason},deploy_time=#{deployTime}
+		where id = #{id}
+	</update>
+
+</mapper>

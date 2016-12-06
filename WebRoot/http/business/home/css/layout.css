@@ -1,0 +1,85 @@
+/* manage-logo */
+.manage-loginbg {
+	background-color: #008cd6;
+}
+
+.manage-login {
+	margin-top: 10px;
+	font-family: "Microsoft YaHei";
+}
+
+.manage-login .manage-login-login {
+	height: 80px;
+	padding-left: 10px;
+	background: url(../images/logo-01..png) no-repeat right top;
+}
+
+.manage-login .manage-login-login img {
+	padding-top: 42px;
+}
+
+.manage-login .manage-login-form {
+	margin-top: 70px;
+	background-color: #d3edfb;
+}
+
+.manage-login .manage-login-form .manage-login-heading {
+	padding-top: 22px;
+	padding-bottom: 22px;
+	background-color: #005bac;
+	font-size: 24px;
+	color: #fff;
+	text-align: center;
+}
+
+.manage-login .manage-login-form .form-horizontal {
+	padding: 48px 42px;
+	padding-bottom: 30px;
+}
+
+.manage-login .manage-login-form .form-horizontal .form-group {
+	margin-bottom: 30px;
+	margin-left: 0;
+	margin-right: 0;
+	text-align : center;
+}
+
+.manage-login .manage-login-form .form-horizontal .form-group .input-group-addon
+	{
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+.manage-login .manage-login-form .form-horizontal .form-group .form-control
+	{
+	height: 45px;
+}
+
+.manage-login .manage-login-form .form-horizontal .form-group .btn-primary
+	{
+	padding: 10px 50px;
+	font-size: 16px;
+	background-color: #008cd6;
+	border-color: #008cd6;
+}
+
+.manage-login .manage-login-form .form-horizontal .form-group .btn-primary:hover
+	{
+	background-color: #00a1e9;
+	border-color: #00a1e9;
+}
+
+.manage-login .manage-login-form .form-horizontal .form-group .btn-register
+	{
+	padding: 10px 50px;
+	font-size: 16px;
+	background-color: #4EBFE5; 
+	border-color: #4EBFE5;
+}
+
+.manage-login .manage-login-form .form-horizontal .form-group .btn-register:hover
+	{
+	background-color: #7DCEF4;
+	border-color: #7DCEF4; 
+}
+

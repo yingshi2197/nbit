@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<roleMenu>
+		<role>admin</role>
+		<formal>1</formal><!-- 是否允许部署正式系统，1表示允许，0表示不允许 -->
+		<menu>
+			<!-- 为空时表示可以访问所有菜单 -->
+		</menu>
+	</roleMenu>
+	<roleMenu>
+		<role>test</role>
+		<formal>0</formal><!-- 是否允许部署正式系统，1表示允许，0表示不允许 -->
+		<menu>
+			toLogin.do,
+			home.do,
+			business/log/toAdd.do,
+			business/log/add.do,
+			business/project/toList.do,
+			business/project/list.do,
+			business/project/toProjectLog.do,
+			business/log/toList.do,
+			business/log/list.do,
+			progress/getProgress.do,
+			business/log/toView.do,
+			logout.do
+		</menu>
+	</roleMenu>
+	<roleMenu>
+		<role>develop</role>
+		<formal>0</formal><!-- 是否允许部署正式系统，1表示允许，0表示不允许 -->
+		<menu>
+			<!-- 不为空时表示只可以访问如下菜单 -->
+			toLogin.do,
+			home.do,
+			business/project/toList.do,
+			business/project/toProjectLog.do,
+			business/project/list.do,
+			business/log/toList.do,
+			business/log/list.do,
+			business/log/toView.do,
+			progress/getProgress.do,
+			logout.do
+		</menu>
+	</roleMenu>
+</root>

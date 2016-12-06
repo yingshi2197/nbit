@@ -1,0 +1,114 @@
+#navbar_top li a{
+	color:#FFF;
+	}
+#navbar_top li{
+	height:62px;
+	width:70px;
+    text-align: center;
+	}
+#navbar_top li:hover{ 
+background:#0396db;
+}
+.cur{ 
+background:#50c9c4;
+}
+
+#navbar_top home li a:hover{
+	background:none;
+	}
+
+.img_tt{
+   margin-right:3px;
+   }
+.task_01{ 
+ margin-right:5px;
+   }
+.task_02{
+   margin-right:15px;
+   }
+.task_03{
+   padding-left:5px;
+   }
+
+   
+.dropdown{ padding-top:15px; 
+	color:#FFF;
+	text-decoration:none;
+	} 
+.dropdown a:hover{  
+	text-decoration:none;
+	} 
+#notice_ul{background:#005bac;
+	min-width:120px; 
+	text-align:left;
+	}
+	#dropdown_notice{background-color: transparent;}
+
+#dropdownMenu1,#dropdown_role{
+	background-color:transparent;
+	text-decoration:none;}
+#dropdown_01,#dropdown_02{
+	background:#005bac;
+	min-width:120px; 
+	text-align:center;
+	}
+#dropdown_01 li a:hover{
+	background:#50c9c4;
+	color:#FFF;
+	}
+#dropdown_02 li a:hover,#notice_ul li a:hover{
+	background:#bbd45e; 
+	color:#FFF;
+	text-decoration:none;
+	}
+#dropdown_02,#dropdown_01,#notice_ul{margin-top:-1px;}
+
+	.table_td_name{
+	max-width:100px;
+			text-overflow:ellipsis;
+			overflow:hidden;
+			white-space:nowrap;
+			color:#005bac;
+		}
+		.img-circle{
+			max-width:35px;}
+	
+.panel-heading-home{padding-left: 5px;!important;margin:0px; background:#eeeeee;}
+.panel-heading-home img{padding:0px 10px; }
+#requirementNew.table{ width:90%; margin:auto; border:1px solid #ddd;}
+#requirementNew.table td{height:52.25px;}
+#requirementNew.table img{margin:0px 10px; }
+#requirementNew.table th,#requirementNew.table td,#resumeTjnew.table th,#resumeTjnew.table td{
+				text-align:center; 
+				vertical-align:middle;
+				}
+		
+#resumeTjnew.table{ width:90%; margin:auto; border:1px solid #ddd;}
+#resumeTjnew.table td{height:52.25px;}
+i{padding-left:5px;}
+#userRecommendMore.table{ width:88%; margin:auto; border:1px solid #ddd;  margin-right:2px;}
+#recommendUserNew.table{ width:88%; margin:auto; border:1px solid #ddd; margin-left:2px;}
+#recommendUserNew.table img{ margin-left:15px;}
+#requirementNew th span.active{ background:#bfe6fb; box-shadow:none;border:none;}
+#userRecommendMore > tbody > tr > td, #recommendUserNew.table> tbody > tr > td{ max-height:46px; line-height:46px; padding:0;vertical-align:middle;	}
+
+#resumeTjnew th{ height:55px;} 
+
+.qqsv_main{position:fixed; bottom:100px;right:0; z-index:1000;width:auto;height:auto;}	
+.qqsv {background: url(../images/qqsv.png) top center no-repeat; height:250px; overflow:hidden; }
+.qqsv li { list-style:none outside;width:98px;margin:0 auto; text-align:center; line-height:28px;}
+.qqsv li a {color:#069; margin-left:0px;}
+.qqsv .top {height:100px;}
+.qqsv .close { cursor:pointer; display:block;width:20px;height:20px; position:absolute; right:0;top:16px;}
+.qqsv_plus {background: url(../images/qqsv_on.png) top center no-repeat; height:20px; overflow:hidden;cursor: pointer; }
+.qqsv_plus li { list-style:none outside;}
+
+
+
+ .number1, .number2,.number3{text-align:center; color:#FFF; width:40px;font-family: constantia;
+  font-size: 20px;}
+  .number1{ background:url(../images/sprite_1.png) no-repeat 10px 10px ; }
+   .number2{ background:url(../images/sprite_2.png) no-repeat 10px 10px ;}
+ .number3{ background:url(../images/sprite_3.png) no-repeat 10px 10px ;}
+  .number4{  text-align:center; width:40px;font-family: constantia;font-size: 20px;}
+

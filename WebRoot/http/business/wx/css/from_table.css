@@ -1,0 +1,89 @@
+@charset "utf-8";
+/*表单*/
+.main-body{
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+    max-width: 6.4rem;
+    padding: 0;
+    margin: 0 auto;
+}
+.form-information{
+    padding: .2rem .10rem .10rem .10rem;
+    font-size: .14rem;
+}
+.form-information form{
+    display: table;
+}
+.form-table{
+    width: 100%;
+    display: table;
+}
+.form-table>tbody>tr>td{
+    padding: .03rem .05rem;
+}
+label{
+    font-weight: normal;
+}
+.form-table>tbody>tr>td label{
+    position: relative;
+    font-weight: normal;
+}
+
+input[type="radio" i] {
+    display: inline-block;
+}
+input[typ="radio" i]:checked{
+    background-color: red;
+}
+.form-table input[type="date"]::-webkit-outer-spin-button{
+    background: red;
+}
+.form-table .from-input,.form-table .myself-area{
+    font-size: .15rem;
+    background-color: #ffffff;
+    border: .01rem solid #b5b5b5;
+    border-radius: .04rem;
+    padding: .08rem .05rem;
+    width: 97%;
+}
+.form-table .form-btn{
+    font-size: .16rem;
+    color: #ffffff;
+    padding: .1rem .35rem;
+    background-color: #368cc9;
+    border: none;
+    border-radius: .2rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+.font-center{
+    text-align: center;
+}
+.font-red{
+    font-weight: normal;
+    color: red;
+    padding-left: 0;
+    position: absolute;
+    top: .04rem;
+    right: 0;
+}
+
+.form-table .cell-left{
+    text-align: center;
+    vertical-align: middle;
+}
+/*媒体查询,小于360px*/
+@media (max-width: 360px) {
+    .form-information{
+       font-size: .14rem;
+    }
+    .form-table>tbody>tr>td:first-child {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+/*媒体查询,大于400px*/
+@media (min-width: 400px){
+    .form-information{
+        font-size: .155rem;
+    }
+}

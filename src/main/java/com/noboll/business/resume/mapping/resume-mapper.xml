@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.resume.dao.ResumeDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.resume.entity.Resume" resultMap="resume.result">
+        <![CDATA[
+           	select p.*,d1.name sexName,d3.name degreeName,d4.name payName,d5.name nativeName,d6.name yearsName
+			 from 
+			 	resume p
+			 left join dict d1 on d1.id=p.sex
+			   left join dict d3 on d3.id=p.degree
+			    left join dict d4 on d4.id=p.pay
+			    left join dict d5 on d5.id=p.native
+			    left join dict d6 on d6.id=p.years
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.resume.entity.Resume">
+		update resume 
+		set
+			name = #{name},
+			years = #{years},
+			join_time = #{joinTime},
+			school = #{school},
+			finish_time = #{finishTime},
+			user_id = #{userId},
+			degree = #{degree},
+			school = #{school},
+			sex = #{sex},mobile = #{mobile},
+			address = #{address},birthday = #{birthday},
+			contact = #{contact},contact_mobile = #{contactMobile},
+			pay = #{pay},native = #{native_},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.resume.entity.Resume">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into resume
+		(id, name, sex, mobile,school, address,description,years,join_time,finish_time,user_id,
+			degree,contact,contact_mobile,pay,native,
+			delete_flag,birthday,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, #{sex}, #{mobile},#{school}, #{address},#{description},#{years},#{joinTime},#{finishTime},#{userId},
+			#{degree}, #{contact}, #{contactMobile}, #{pay}, #{native_},
+		'0',#{birthday},<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update resume set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="resume.result">
+		select p.*,d1.name sexName,d3.name degreeName,d4.name payName,d5.name nativeName,d6.name yearsName
+			 from 
+			 	resume p
+			 left join dict d1 on d1.id=p.sex
+			   left join dict d3 on d3.id=p.degree
+			    left join dict d4 on d4.id=p.pay
+			    left join dict d5 on d5.id=p.native
+			    left join dict d6 on d6.id=p.years
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('name')">
+			and p.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('degreeName')">
+			and p.degree =#{degreeName,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('payName')">
+			and p.pay =#{payName,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('mobile')">
+			and p.mobile =#{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('sexName')">
+			and p.sex=#{sexName} 
+		</if>
+		order by p.last_modify_time,p.create_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="resume.result">
+    	select p.*,d1.name sexName,d3.name degreeName,d4.name payName,d5.name nativeName,d6.name yearsName
+			 from 
+			 	resume p
+			 left join dict d1 on d1.id=p.sex
+			   left join dict d3 on d3.id=p.degree
+			    left join dict d4 on d4.id=p.pay
+			    left join dict d5 on d5.id=p.native
+			    left join dict d6 on d6.id=p.years
+    	where p.delete_flag=0
+    </select>
+
+</mapper>

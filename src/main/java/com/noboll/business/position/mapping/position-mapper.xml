@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.position.dao.PositionDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.position.entity.Position" resultMap="position.result">
+        <![CDATA[
+           	select p.*,d1.name typeName,d2.name addressName,d3.name educationName,d4.name workLifeName
+			 from 
+			 	position p
+			 left join dict d1 on d1.id=p.type
+			  left join dict d2 on d2.id=p.address
+			   left join dict d3 on d3.id=p.education
+			    left join dict d4 on d4.id=p.work_life
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.position.entity.Position">
+		update position 
+		set
+			name = #{name},
+			type = #{type},requirement = #{requirement},duty = #{duty},
+			salary_low = #{salaryLow},salary_high = #{salaryHigh},address = #{address},
+			education = #{education},status = '0',
+			work_life = #{workLife},num = #{num},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.position.entity.Position">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into position
+		(id, name, type, requirement,duty, salary_low,salary_high,address,education,work_life,description,num,delete_flag,status,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, #{type}, #{requirement},#{duty}, #{salaryLow},#{salaryHigh},#{address},#{education},#{workLife},#{description},#{num},'0','0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update position set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<update id="publish" parameterType="string">
+		update position set
+		status='1',
+		publish_time=current_timestamp()
+		where id = #{id}
+	</update>
+	
+	<update id="finish" parameterType="string">
+		update position set
+		status='2',
+		publish_time=null
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="position.result">
+		select p.*,d1.name typeName,d2.name addressName,d3.name educationName,d4.name workLifeName
+		from position p
+		left join dict d1 on d1.id=p.type
+			  left join dict d2 on d2.id=p.address
+			   left join dict d3 on d3.id=p.education
+			    left join dict d4 on d4.id=p.work_life 
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('name')">
+			and p.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('addressName')">
+			and p.address =#{addressName,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('typeName')">
+			and p.type =#{typeName,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('status')">
+			and p.status =#{status,jdbcType=VARCHAR}
+		</if>
+		order by p.publish_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="position.result">
+    	select p.*,d1.name typeName,d2.name addressName,d3.name educationName,d4.name workLifeName
+    	 from position p
+    	 left join dict d1 on d1.id=p.type
+			  left join dict d2 on d2.id=p.address
+			   left join dict d3 on d3.id=p.education
+			    left join dict d4 on d4.id=p.work_life 
+    	where delete_flag=0
+    </select>
+
+</mapper>

@@ -1,0 +1,165 @@
+@CHARSET "UTF-8";
+	body
+		{
+			font: normal 14px/1.4 "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
+		}
+		div
+		{
+			display:block;
+		}
+		a
+		{
+			text-decoration:none;
+			opacity: 1;
+			color: #fff;
+		 }
+		input,button{ outline:none; }
+		::-moz-focus-inner{border:0px;}   /*去除按钮点击时出现的虚线边框*/
+        .login_bg
+        {
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			background-size: cover;
+        }
+		.login_header {
+			position:absolute;
+			top:0;
+			left:0;
+			right:0;
+			}
+		.container {
+			position:relative;
+			top:50%;
+			margin: 0 auto;
+			width: 260px;
+			
+			}
+		#logo
+		{
+			display: block;
+			text-align: center;
+			font-weight: bold;
+			font-size: 50px;
+			color: white;
+			height: 100%;
+		}
+		#subheading 
+		{
+		  position: relative;
+		  width: 517px;
+		  left: 50%;
+		  margin: 10px 0 16px -258px;
+		  font-size: 15px;
+		  font-weight: normal;
+		  color: #fff;
+		  text-align: center;
+		}
+		.signup_forms
+		{
+			width:260px;	
+		}
+		.signup_forms_container
+		{
+			overflow: hidden;
+			background: #fff;
+			border-radius:3px;	
+		}
+		.form_user,.form_password,form_username
+		{
+			width:260px;
+			height:45px;
+			margin:0px;
+        	padding:0px;
+			border:0px;	
+		}
+		.form_password,.form_username,.form_confirm_password{border-top: 1px solid #e3e3e3;}
+		.signup_forms input
+		{
+			padding: 11px 10px 11px 13px;
+			width: 100%;
+			margin:0px;
+        	background: 0;
+			font: 16px/1.4 "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
+			border:0px;	
+		}
+		#signup_forms_submit{
+		  margin-top:8px;		
+		  width:260px;
+		  height:45px;
+		  background:#529ECC;
+		  border:0px;
+		  border-radius:3px;
+		  cursor:pointer;              <!--CSS属性设置鼠标为手型-->
+		 }
+		 #signup_forms_submit span{
+			 color: #fff;
+			 font: "Helvetica Neue",Arial,Helvetica,sans-serif;
+			 font-size: 16px;}
+		.footer
+		 {
+			position: fixed;
+			top: auto;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		 }
+		 .footer_signup_link
+		 {
+			 position: absolute;
+			 width:141px;
+			 height:78px;
+			 bottom: 0;
+			 padding: 0 20px;
+			 margin: 0 0 13px 0;
+			 line-height: 25px;
+			 text-align: center;
+			 opacity: 1;
+			 color: #fff;
+		 }
+		 .signup_link
+		 {
+			  display: block;
+			  height: 45px;
+			  padding: 0 10px;
+			  margin: 0 0 8px 0;
+			  font-size: 16px;
+			  font-weight: bold;
+			  line-height: 45px;
+			  border: 0;
+			  border-radius: 2px;
+			  color: #fff;
+              background: rgba(255,255,255,0.33);
+		}
+		.link
+		{
+			font-size: 14px;
+			padding-right: 5px;
+			margin-right: 12px;
+			color: #fff;
+		}
+		.design_show
+		{
+			position: fixed;
+			bottom: 0;
+			right: 0;
+			padding: 0 12px;
+			margin: 0 0 13px 0;
+			line-height: 25px;
+		}
+		.designer_info
+		{
+			position: relative;
+			color: #FFFFFF;
+		}
+		#face
+		{
+			margin: 0 0 0 10px;
+			border-radius:20px;
+			padding: 0;
+			vertical-align: middle;
+			height: 24px;
+			width: 24px;
+		}

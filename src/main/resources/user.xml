@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<user>
+		<id>10000</id>
+		<role>admin</role>
+		<name>管理员</name>
+		<loginId>admin</loginId>
+		<password>admin@9424</password>
+	</user>
+	<user>
+		<id>10001</id>
+		<role>test</role>
+		<name>测试人员</name>
+		<loginId>test</loginId>
+		<password>test@2016</password>
+	</user>
+	<user>
+		<id>10002</id>
+		<role>develop</role>
+		<name>开发人员</name>
+		<loginId>develop</loginId>
+		<password>123456</password>
+	</user>
+</root>
