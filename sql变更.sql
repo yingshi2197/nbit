@@ -352,7 +352,7 @@ create table resume_intention
 (
    id                   varchar(40) not null,
    resume_id            varchar(200) comment '简历id',
-   intention            char(10) comment '意向地区，来源数据字典',
+   intention            varchar(40) comment '意向地区，来源数据字典',
    create_user_id       varchar(40),
    create_time          datetime,
    last_modify_user_id  varchar(40),
@@ -386,7 +386,7 @@ create table resume_position
 (
    id                   varchar(40) not null,
    resume_id            varchar(200) comment '简历id',
-   position_id          char(10) comment '意向地区，来源数据字典',
+   position_id          varchar(40) comment '意向地区，来源数据字典',
    create_user_id       varchar(40),
    create_time          datetime,
    last_modify_user_id  varchar(40),

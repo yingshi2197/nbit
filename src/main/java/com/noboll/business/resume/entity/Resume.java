@@ -41,6 +41,10 @@ public class Resume extends BaseEntity {
 	private String nativeName;//籍贯
 	private String sexName;//性别
 	private String yearsName;//工作年限
+	private String positionIds;//求职岗位
+	private String positionNames;//求职岗位
+	private String intentionIds;//意向地区
+	private String intentionNames;//意向地区
 	// Property accessors
 	public String getName() {
 		return name;
@@ -173,6 +177,30 @@ public class Resume extends BaseEntity {
 	}
 	public void setYearsName(String yearsName) {
 		this.yearsName = yearsName;
+	}
+	public String getPositionIds() {
+		return positionIds;
+	}
+	public void setPositionIds(String positionIds) {
+		this.positionIds = positionIds;
+	}
+	public String getPositionNames() {
+		return positionNames;
+	}
+	public void setPositionNames(String positionNames) {
+		this.positionNames = positionNames;
+	}
+	public String getIntentionIds() {
+		return intentionIds;
+	}
+	public void setIntentionIds(String intentionIds) {
+		this.intentionIds = intentionIds;
+	}
+	public String getIntentionNames() {
+		return intentionNames;
+	}
+	public void setIntentionNames(String intentionNames) {
+		this.intentionNames = intentionNames;
 	}
 
 	

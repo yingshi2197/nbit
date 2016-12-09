@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.resumePosition.dao.ResumePositionDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.resumePosition.entity.ResumePosition" resultMap="resumePosition.result">
+        <![CDATA[
+           	select p.*,d1.name positionName
+			 from 
+			 	resume_position p
+			 left join dict d1 on d1.id=p.position_id
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.resumePosition.entity.ResumePosition">
+		update resume_position 
+		set
+			resume_id = #{resumeId},
+			position_id = #{positionId},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.resumePosition.entity.ResumePosition">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into resume_position
+		(id, resume_id, position_id,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{resumeId}, #{positionId},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update resume_position set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="resumePosition.result">
+		select p.*,d1.name positionName
+			 from 
+			 	resume_position p
+			 left join dict d1 on d1.id=p.position_id
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('resumeId')">
+			and p.resume_id =#{resumeId,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('positionId')">
+			and p.position_id =#{positionId,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('positionName')">
+			and d1.name LIKE CONCAT('%',
+			CONCAT(#{positionName,jdbcType=VARCHAR}, '%'))
+		</if>
+		
+		order by p.last_modify_time,p.create_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="resumePosition.result">
+    	select p.*,d1.name positionName
+			 from 
+			 	resume_position p
+			 left join dict d1 on d1.id=p.position_id
+    	where p.delete_flag='0'
+    </select>
+    
+    <delete id="deleteByResumeId" parameterType="string">
+		delete from resume_position where resume_id = #{resumeId}
+	</delete>
+	
+	 <!-- 批量新增到数据库 -->
+	<insert id="batchInsert" parameterType="com.noboll.business.resumePosition.entity.ResumePosition">
+		insert into resume_position
+		(id, resume_id, position_id,delete_flag,create_time,create_user_id,last_modify_time,last_modify_user_id)
+		values
+		<foreach item="item" index="index" collection="list" 
+                   open=" " separator="," close=" ">
+        (
+	        uuid(), #{item.resumeId}, #{item.positionId},'0', CURRENT_TIMESTAMP(),#{item.createUserId},CURRENT_TIMESTAMP(), #{item.lastModifyUserId}
+        )  
+       </foreach>
+	</insert>
+	
+
+</mapper>

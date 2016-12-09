@@ -82,16 +82,18 @@ var choose={
 		roleUrlChoose:{name:"角色菜单选择器",url:"manage/roleUrl/toChoose.do"},
 		requirementChoose:{name:"需求选择器",url:"manage/requirement/toChoose.do"},
 		// 需求选择器 chooseData='{type="0"}'  type 1表示多选，0表示单选，默认为0 ,hasPeopleGap:是否要过滤缺口人数为0的 auditStatus:招聘状态,filter:1表示要做常规招聘可以选择所有需求，尖刀招聘只能选择尖刀或者常规+尖刀的需求过滤
-		positionChoose:{name:"岗位选择器",url:"manage/dictionary/toChoose.do"},
-		// 岗位选择器parentCode:父级code  type 1表示多选，0表示单选，默认为0
 		requirementSimpleChoose:{name:"需求选择器",url:"manage/requirement/toSimpleChoose.do"},
 		// 简单需求选择器(只显示基本字段，如薪资范围等字段不显示) chooseData='{type="0"}'  type 1表示多选，0表示单选，默认为0 ,hasPeopleGap:是否要过滤缺口人数为0的 auditStatus:招聘状态
 		roleChoose:{name:"角色选择",url:"manage/role/toChoose.do"},
 		// 部门选择器 chooseData='{type="0",filter:"1"}'  type 1表示多选，0表示单选，默认为0. filter 1表示查询角色及子角色，0表示查询所有,2表示查询子角色，默认为1
 		custPositionChoose:{name:"客户职位选择器",url:"manage/dictionary/toCustPositionChoose.do"},
 		// 岗位选择器customerId:客户id  type 1表示多选，0表示单选，默认为0
-		userChoose_yggx:{name:"员工关系选择",url:"manage/user/toChooseYggx.do"}
+		userChoose_yggx:{name:"员工关系选择",url:"manage/user/toChooseYggx.do"},
 		//员工关系选择器， customerId:客户id，根据客户的负责人过滤，isFilterCustomer：是否要根据客户过滤所负责的现场专员，不过滤为0，为空或者其他表示过滤
+		positionChoose:{name:"岗位选择器",url:"business/dict/toChoose.do?parentCode=position&type=1"},
+		// 岗位选择器parentCode:父级code  type 1表示多选，0表示单选，默认为0
+		intentionChoose:{name:"意向地区选择器",url:"business/dict/toChoose.do?parentCode=address&type=1"}
+		// 意向地区选择器
 }
 
 // 定义自动填充路径

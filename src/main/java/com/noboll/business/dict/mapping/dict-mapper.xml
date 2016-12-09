@@ -104,6 +104,9 @@
 		<if test="_parameter.containsKey('typeId')">
 			and sd.type_id = #{typeId}
 		</if>
+		<if test="_parameter.containsKey('parentCode')">
+			and sdt.code = #{parentCode}
+		</if>
 
 		order by sd.seq
 	</select>

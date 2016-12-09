@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<div class="container tab-form1">
 	  		 <div class="table-responsive">
-				<div class="panel-heading-choose"><spring:message code="com.noboll.business.manage.dictionary"/></div>
+				<div class="panel-heading-choose"><spring:message code="数据字典选择器"/></div>
 			  	<div id="searchDiv"></div>
 				<table id="table-javascript" ></table>
 	    	</div>
@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		       	$("#table-javascript").initBootTable({
 		       		method: 'post',
 		       		searchDiv:"searchDiv",
-	                url: 'manage/dictionary/choose.do?parentCode=<c:out value="${parentCode}" />',
+	                url: 'business/dict/choose.do?parentCode=<c:out value="${parentCode}" />',
 	                addUrl:"",
 	                striped: true,
 	                pagination: true,
@@ -64,10 +64,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				                		</c:otherwise>
 				                	</c:choose>
 				                	{field: 'id',title:'id',visible:false}, 
-				                    {field: 'name',title: '<spring:message code="com.noboll.business.manage.dictionary.name"/>',align: 'left',valign: 'middle',sortable: false,searchable:true,filterLen:40,width:"36%"}, //名称
-				                    {field: 'typeName',title: '<spring:message code="com.noboll.business.manage.dictionary.type"/>',align: 'left',valign: 'middle',sortable: false,searchable:true,filterLen:40,width:"30%"}, //类型
+				                    {field: 'name',title: '<spring:message code="名称"/>',align: 'left',valign: 'middle',sortable: false,searchable:true,filterLen:40,width:"36%"}, //名称
+				                    {field: 'typeName',title: '<spring:message code="类型"/>',align: 'left',valign: 'middle',sortable: false,searchable:true,filterLen:40,width:"30%"}, //类型
 				                    //{field: 'code',title: '<spring:message code="com.noboll.business.manage.dictionary.code"/>',align: 'left',valign: 'top',searchable:true},	//描述
-				                    {field: 'description',title: '<spring:message code="com.noboll.business.manage.dictionary.description"/>',align: 'left',valign: 'top'},	//描述	
+				                    {field: 'description',title: '<spring:message code="描述"/>',align: 'left',valign: 'top'},	//描述	
 				                    {field: 'fullName',title: '<spring:message code="fullName"/>',align: 'left',valign: 'top',visible:false}	//描述	
 				                  ] 
 	            	});

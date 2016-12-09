@@ -54,7 +54,7 @@ public class ResumeController extends BaseController<Resume> {
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	@ResponseBody
 	public Object addResume(Resume resume) {
-		resumeService.saveEntity(resume);
+		resumeService.saveResume(resume);
 		return InitUtil.sucessMessage("新增成功");
 	}
 
@@ -70,7 +70,7 @@ public class ResumeController extends BaseController<Resume> {
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	@ResponseBody
 	public Object editResume(Resume resume) {
-		resumeService.updateEntity(resume);
+		resumeService.updateResume(resume);
 		return InitUtil.sucessMessage("修改成功");
 	}
 	

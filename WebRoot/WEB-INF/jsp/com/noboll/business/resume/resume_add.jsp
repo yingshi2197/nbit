@@ -48,47 +48,21 @@
 						<input type="text" class="form-control required" name="name"
 							id="name" 	placeholder="请输入姓名"	 value="<c:out value="${resume.name}" />" maxlength="200" />
 					</div>
-
-					<label for="sex" class="col-xs-2 control-label">性别</label>
+					<label for="name" class="col-xs-2 control-label">求职岗位</label>
 					<div class="col-xs-4 form-control-1">
-						<select class="form-control select required" dictCode="sex" name="sex"  dictValue="<c:out value="${resume.sex}" />"></select>
+						<input type="hidden" class="form-control required" name="positionIds" id="positionIds" value="<c:out value="${resume.positionIds}" />"/>
+						<input type="text" class="form-control required" name="positionNames"
+							id="positionNames" 	placeholder="请选择求职岗位"	 value="<c:out value="${resume.positionNames}" />" maxlength="200" />
+						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="positionChoose"  chooseField="id,name" chooseId="positionIds" 
+				         chooseValue="positionNames" chooseWidth="850px" chooseHeight="500px"></a>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label for="birthday" class="col-xs-2 control-label">出生日期</label>
+					<label for="work_life" class="col-xs-2 control-label">工作年限</label>
 					<div class="col-xs-4 form-control-1">
-                 	  <input type="text"  class="form-control required date" name="birthday" id="birthday"  format="yyyy-MM-dd"
-			             placeholder="请输入出生日期"
-			             value="<fmt:formatDate value="${resume.birthday}" type="both" pattern="yyyy-MM-dd"/>"  readonly/>
-                   </div>
-				
-					<label for="mobile" class="col-xs-2 control-label">移动电话</label>
-					<div class="col-xs-4 form-control-1">
-						<input type="text" class="form-control required" name="mobile"
-							id="mobile" 	placeholder="请输入移动电话"	 value="<c:out value="${resume.mobile}" />" maxlength="20" />
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="school" class="col-xs-2 control-label">毕业院校</label>
-					<div class="col-xs-4 form-control-1">
-						<input type="text" class="form-control required" name="school"
-							id="school" 	placeholder="请输入毕业院校"	 value="<c:out value="${resume.school}" />" maxlength="200" />
-					</div>
-					
-					<label for="education" class="col-xs-2 control-label">学历</label>
-					<div class="col-xs-4 form-control-1">
-						<select class="form-control select required" dictCode="degree" name="degree"  dictValue="<c:out value="${resume.degree}" />">
+						<select class="form-control select required" dictCode="work_life" name="years"  dictValue="<c:out value="${resume.years}" />">
 						</select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="school" class="col-xs-2 control-label">毕业时间</label>
-					<div class="col-xs-4 form-control-1">
-						<input type="text"  class="form-control required date" name="finishTime" id="finishTime"  format="yyyy-MM-dd"
-			             placeholder="请输入毕业时间"
-			             value="<fmt:formatDate value="${resume.finishTime}" type="both" pattern="yyyy-MM-dd"/>"  readonly/>
 					</div>
 					
 					<label for="education" class="col-xs-2 control-label">参加工作时间</label>
@@ -100,10 +74,48 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="work_life" class="col-xs-2 control-label">工作年限</label>
+					<label for="school" class="col-xs-2 control-label">毕业院校</label>
 					<div class="col-xs-4 form-control-1">
-						<select class="form-control select required" dictCode="work_life" name="years"  dictValue="<c:out value="${resume.years}" />">
+						<input type="text" class="form-control required" name="school"
+							id="school" 	placeholder="请输入毕业院校"	 value="<c:out value="${resume.school}" />" maxlength="200" />
+					</div>
+					
+					<%-- <label for="major" class="col-xs-2 control-label">专业</label>
+					<div class="col-xs-4 form-control-1">
+						<input type="text" class="form-control required delSpace" name="major"
+							id="major" 	placeholder="请输入专业"	 value="<c:out value="${resume.major}" />" maxlength="200" />
+					</div> --%>
+					<label for="school" class="col-xs-2 control-label">毕业时间</label>
+					<div class="col-xs-4 form-control-1">
+						<input type="text"  class="form-control required date" name="finishTime" id="finishTime"  format="yyyy-MM-dd"
+			             placeholder="请输入毕业时间"
+			             value="<fmt:formatDate value="${resume.finishTime}" type="both" pattern="yyyy-MM-dd"/>"  readonly/>
+					</div>
+					
+				</div>
+				<div class="form-group">
+					
+					<label for="education" class="col-xs-2 control-label">学历</label>
+					<div class="col-xs-4 form-control-1">
+						<select class="form-control select required" dictCode="degree" name="degree"  dictValue="<c:out value="${resume.degree}" />">
 						</select>
+					</div>
+					
+					<label for="mobile" class="col-xs-2 control-label">移动电话</label>
+					<div class="col-xs-4 form-control-1">
+						<input type="text" class="form-control required" name="mobile"
+							id="mobile" 	placeholder="请输入移动电话"	 value="<c:out value="${resume.mobile}" />" maxlength="20" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="name" class="col-xs-2 control-label">意向地区</label>
+					<div class="col-xs-4 form-control-1">
+						<input type="hidden" class="form-control required" name="intentionIds" id="intentionIds" value="<c:out value="${resume.intentionIds}" />"/>
+						<input type="text" class="form-control required" name="intentionNames"
+							id="intentionNames" 	placeholder="请选择意向地区"	 value="<c:out value="${resume.intentionNames}" />" maxlength="200" />
+						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="intentionChoose"  chooseField="id,name" chooseId="intentionIds" 
+				         chooseValue="intentionNames" chooseWidth="850px" chooseHeight="500px"></a>
 					</div>
 					<label for="work_life" class="col-xs-2 control-label">期望薪资</label>
 					<div class="col-xs-4 form-control-1">
@@ -113,16 +125,32 @@
 				</div>
 				
 				<div class="form-group">
+					<label for="birthday" class="col-xs-2 control-label">出生日期</label>
+						<div class="col-xs-4 form-control-1">
+	                 	  <input type="text"  class="form-control required date" name="birthday" id="birthday"  format="yyyy-MM-dd"
+				             placeholder="请输入出生日期"
+				             value="<fmt:formatDate value="${resume.birthday}" type="both" pattern="yyyy-MM-dd"/>"  readonly/>
+	                   </div>
+	                   
 					<label for="name" class="col-xs-2 control-label">联系人</label>
 					<div class="col-xs-4 form-control-1">
 						<input type="text" class="form-control required" name="contact"
 							id="contact" 	placeholder="请输入联系人"	 value="<c:out value="${resume.contact}" />" maxlength="200" />
 					</div>
-
+				</div>
+				
+				<div class="form-group">
 					<label for="sex" class="col-xs-2 control-label">联系人电话</label>
 					<div class="col-xs-4 form-control-1">
 						<input type="text" class="form-control required mobile" name="contactMobile"
 							id="contactMobile" 	placeholder="请输入联系人电话"	 value="<c:out value="${resume.contactMobile}" />" maxlength="200" />
+					</div>
+					
+					<label for="address" class="col-xs-2 control-label">住址</label>
+					<div class="col-xs-4 form-control-1">
+						<input class="form-control required"
+							name="address" id="address"
+							placeholder="请输入住址" value="<c:out value="${ resume.address}"/>" />
 					</div>
 				</div>
 				
@@ -133,14 +161,10 @@
 						<select class="form-control select" dictCode="native" name="native_"  dictValue="<c:out value="${resume.native_}" />">
 						</select>
 					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="address" class="col-xs-2 control-label">住址</label>
+					
+					<label for="sex" class="col-xs-2 control-label">性别</label>
 					<div class="col-xs-4 form-control-1">
-						<textarea class="form-control required-2"
-							name="address" id="address" rows="3" cols="6"
-							placeholder="请输入住址"><c:out value="${ resume.address}"/></textarea>
+						<select class="form-control select required" dictCode="sex" name="sex"  dictValue="<c:out value="${resume.sex}" />"></select>
 					</div>
 				</div>
 				
