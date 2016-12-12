@@ -63,8 +63,11 @@
 					
 					<label for="education" class="col-xs-2 control-label">职位</label>
 					<div class="col-xs-4 form-control-1">
-						<select class="form-control select required" dictCode="position" name="positionId"  dictValue="<c:out value="${requirement.positionId}" />">
-						</select>
+						<input type="hidden" class="form-control required" name="positionId" id="positionIds" value="<c:out value="${requirement.positionId}" />"/>
+						<input type="text" class="form-control required" name="positionName"
+							id="positionNames" 	placeholder="请选择求职岗位"	 value="<c:out value="${requirement.positionName}" />" maxlength="200" />
+						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="positionChoose"  chooseField="id,name" chooseId="positionIds" 
+				         chooseValue="positionNames" chooseWidth="850px" chooseHeight="500px"></a>
 					</div>
 				</div>
 				

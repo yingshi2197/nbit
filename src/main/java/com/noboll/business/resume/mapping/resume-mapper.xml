@@ -25,7 +25,7 @@
 					select rp.resume_id,GROUP_CONCAT(rp.position_id) positionIds,GROUP_CONCAT(d7.name) positionNames
 					from resume r
 					left join resume_position rp on rp.resume_id = r.id
-					left join dict d7 on d7.id = rp.position_id
+					left join position d7 on d7.id = rp.position_id
 					where r.id = #{id} 
 					group by r.id
 				) po on po.resume_id = p.id

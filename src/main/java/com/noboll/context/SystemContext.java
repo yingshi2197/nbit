@@ -6,12 +6,11 @@ import javax.annotation.Resource;
 
 import com.noboll.business.user.entity.RoleMenu;
 import com.noboll.business.user.entity.User;
-import com.noboll.core.base.entity.BaseEntity;
 import com.noboll.core.cache.service.CacheService;
 import com.noboll.core.context.BaseContext;
 import com.noboll.core.util.XmlUtil;
 
-public class SystemContext extends BaseContext<BaseEntity> {
+public class SystemContext extends BaseContext<User> {
 
 	@Resource
 	private CacheService cacheService;
@@ -22,4 +21,5 @@ public class SystemContext extends BaseContext<BaseEntity> {
 		cacheService.put("user", users);
 		cacheService.put("roleMenu", roleMenus);
 	}
+	
 }

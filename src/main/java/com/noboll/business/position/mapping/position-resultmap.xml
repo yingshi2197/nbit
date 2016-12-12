@@ -10,17 +10,9 @@
     	<id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="type" column="type"/>
-        <result property="requirement" column="requirement"/>
-        <result property="duty" column="duty"/>
-        <result property="salaryLow" column="salary_low"/>
-        <result property="salaryHigh" column="salary_high"/>
-        <result property="address" column="address"/>
-        
-        <result property="publishTime" column="publish_time"/>
-        <result property="education" column="education"/>
-        <result property="workLife" column="work_life"/>
+        <result property="ename" column="ename"/>
+        <result property="code" column="code"/>
         <result property="description" column="description"/>
-        <result property="num" column="num"/>
         
         <result property="deleteFlag" column="delete_flag"/>
         <result property="createUserId" column="create_user_id"/>

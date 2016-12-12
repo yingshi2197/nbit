@@ -18,6 +18,8 @@ public class User extends BaseEntity {
 	private String formal;
 	
 	private List<String> menus=new ArrayList<String>();
+	
+	private String customerId;// 客户id
 
 	public String getLoginId() {
 		return loginId;
@@ -65,6 +67,14 @@ public class User extends BaseEntity {
 
 	public void setFormal(String formal) {
 		this.formal = formal;
+	}
+
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 	
 	

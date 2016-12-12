@@ -15,11 +15,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <base href="<%=basePath%>">
     
-    <title>职位列表</title>
+    <title>职位类型</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">  
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="职位类型">
+	<meta http-equiv="description" content="职位类型">
 	
 	<spring:message code="jsp.include.basecss"/>
 	<spring:message code="jsp.include.listcssforback"/>
@@ -28,13 +30,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  	<div class="container tab-form1">
-	  		 <div class="table-responsive">
-				<div class="panel-heading-choose">职位列表</div>
-			  	<div id="searchDiv"></div>
-				<table id="table-javascript" ></table>
-	    	</div>
-    	</div>
+  <div class="container">
+  		 <div class="table-responsive ">
+			<div class="panel-heading-choose">职位类型列表</div>
+		  	<div id="searchDiv"></div>
+			<table id="table-javascript" ></table>
+		</div>
+  	</div>
     	<spring:message code="jsp.include.basejs"/>
     	<spring:message code="jsp.include.listjsforback"/>
     	
@@ -44,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		       	$("#table-javascript").initBootTable({
 		       		method: 'post',
 		       		searchDiv:"searchDiv",
-	                url: 'business/position/list.do?type=<c:out value="${type}" />',
+	                url: 'business/position/typeList.do',
 	                addUrl:"",
 	                striped: true,
 	                pagination: true,
@@ -52,19 +54,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-	                	{name:'新增',position:'top',select:"",css:"add",dialog:{url:"business/position/toAdd.do?type=<c:out value='${type}' />",width:"500px"}},//新增
-	                	{name:'修改',position:'row',css:"edit",a:'',dialog:{url:"business/position/toEdit.do",width:"500px"}},//修改	         	
-	                	{name:'删除',position:'row',css:"remove",type:"ajax",url:"business/position/remove.do"}//删除
+	                	{name:'修改',position:'row',css:"edit",a:'',dialog:{url:"business/dict/toEdit.do",width:"450px"}},//修改	         	
+	                	{name:'子项列表',position:'row',css:"edit",a:'',dialog:{url:"business/position/toList.do?type={id}",height:"550px",width:"800px"}}//子项列表	         	
 	                ],
 	                clickToSelect: true,
 	                columns: [
-				                	//{field: 'statu_msb',checkbox: true},   //复选框
+				                	//{field: 'statu_msb',checkbox: true},  //复选框
 				                	{field: 'id',title:'id',visible:false}, 
-				                    {field: 'name',title: '名称',align: 'center',valign: 'middle',sortable: false,searchable:true}, //名称
-				                    {field: 'typeName',title: '类型',align: 'center',valign: 'middle',sortable: false}, //类型
-				                    {field: 'code',index:'code',title: '编码',align: 'left',valign: 'top',searchable:true},	//描述
-				                    {field: 'description',index:'login_id',title: '描述',align: 'left',valign: 'top'}	//描述	
-				                   		                    
+				                    {field: 'name',title: '名称',align: 'center',valign: 'middle',sortable: false,searchable:true,filterLen:30}, //名称
+				                    {field: 'code',index:'login_id',title: '编码',align: 'left',valign: 'top',filterLen:20},	//编码
+				                    {field: 'description',index:'description',title: '描述',align: 'left',valign: 'top'}	//描述			                    
 				                  ]
 	            	});
 		    	});

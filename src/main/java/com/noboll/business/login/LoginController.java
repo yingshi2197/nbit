@@ -51,6 +51,8 @@ public class LoginController {
 				    }
 				    user.setMenus(menus);
 				    user.setFormal(formal);
+				    // TODO 客户id处理
+				    user.setCustomerId("");
 				    SystemContext.setLoginUser(user);
 					return InitUtil.sucessMessage("登录成功！");
 				} catch (Exception e) {

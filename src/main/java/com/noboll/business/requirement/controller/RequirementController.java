@@ -49,7 +49,7 @@ public class RequirementController extends BaseController<Requirement> {
 	@RequestMapping("/add")
 	@ResponseBody
 	public Object addRequirement(Requirement requirement) {
-		requirementService.saveEntity(requirement);
+		requirementService.saveRequirement(requirement);
 		return InitUtil.sucessMessage("新增成功");
 	}
 
@@ -65,7 +65,7 @@ public class RequirementController extends BaseController<Requirement> {
 	@RequestMapping("/edit")
 	@ResponseBody
 	public Object editRequirement(Requirement requirement) {
-		requirementService.updateEntity(requirement);
+		requirementService.updateRequirement(requirement);
 		return InitUtil.sucessMessage("修改成功");
 	}
 	

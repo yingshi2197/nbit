@@ -18,7 +18,7 @@
 			 left join dict d1 on d1.id=q.period
 			  left join dict d2 on d2.id=q.address
 			   left join dict d3 on d3.id=q.level
-			   left join dict d4 on d4.id=q.position_id
+			   left join position d4 on d4.id=q.position_id
 			 where 
 				 q.id = #{id} 
         ]]>
@@ -65,7 +65,7 @@
 			 left join dict d1 on d1.id=q.period
 			  left join dict d2 on d2.id=q.address
 			   left join dict d3 on d3.id=q.level
-			   left join dict d4 on d4.id=q.position_id
+			   left join position d4 on d4.id=q.position_id
 		where 1=1
 		<if test="_parameter.containsKey('name')">
 			and q.name LIKE CONCAT('%',
@@ -88,7 +88,7 @@
 			 left join dict d1 on d1.id=q.period
 			  left join dict d2 on d2.id=q.address
 			   left join dict d3 on d3.id=q.level
-			   left join dict d4 on d4.id=q.position_id
+			   left join position d4 on d4.id=q.position_id
 			 where 
 				 q.id = #{id}
     </select>

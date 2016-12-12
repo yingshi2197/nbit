@@ -12,13 +12,10 @@
 	<select id="getEntity" parameterType="string"
 		resultType="com.noboll.business.position.entity.Position" resultMap="position.result">
         <![CDATA[
-           	select p.*,d1.name typeName,d2.name addressName,d3.name educationName,d4.name workLifeName
+           	select p.*,d1.name typeName
 			 from 
 			 	position p
 			 left join dict d1 on d1.id=p.type
-			  left join dict d2 on d2.id=p.address
-			   left join dict d3 on d3.id=p.education
-			    left join dict d4 on d4.id=p.work_life
 			 where 
 				 p.id = #{id} 
         ]]>
@@ -29,10 +26,7 @@
 		update position 
 		set
 			name = #{name},
-			type = #{type},requirement = #{requirement},duty = #{duty},
-			salary_low = #{salaryLow},salary_high = #{salaryHigh},address = #{address},
-			education = #{education},status = '0',
-			work_life = #{workLife},num = #{num},
+			type = #{type},ename = #{ename},code = #{code},
 			description=#{description},
 			<include refid="system.user_value_update"></include>
 		where id = #{id}
@@ -43,9 +37,9 @@
 			<include refid="system.generatedId"></include>
 		</selectKey>
 		insert into position
-		(id, name, type, requirement,duty, salary_low,salary_high,address,education,work_life,description,num,delete_flag,status,<include refid="system.user_column_insert"></include>)
+		(id, name, type, ename,code,description,delete_flag,<include refid="system.user_column_insert"></include>)
 		values
-		(#{id}, #{name}, #{type}, #{requirement},#{duty}, #{salaryLow},#{salaryHigh},#{address},#{education},#{workLife},#{description},#{num},'0','0',<include refid="system.user_value_insert"></include>)
+		(#{id}, #{name}, #{type}, #{ename},#{code},#{description},'0',<include refid="system.user_value_insert"></include>)
 	</insert>
 
 	<update id="deleteEntity" parameterType="string">
@@ -54,53 +48,32 @@
 		where id = #{id}
 	</update>
 	
-	<update id="publish" parameterType="string">
-		update position set
-		status='1',
-		publish_time=current_timestamp()
-		where id = #{id}
-	</update>
-	
-	<update id="finish" parameterType="string">
-		update position set
-		status='2',
-		publish_time=null
-		where id = #{id}
-	</update>
-	
 	<select id="getList" resultType="list" parameterType="map"
 		resultMap="position.result">
-		select p.*,d1.name typeName,d2.name addressName,d3.name educationName,d4.name workLifeName
-		from position p
-		left join dict d1 on d1.id=p.type
-			  left join dict d2 on d2.id=p.address
-			   left join dict d3 on d3.id=p.education
-			    left join dict d4 on d4.id=p.work_life 
+		select p.*,d1.name typeName
+	 	from 
+		 	position p
+	 	left join dict d1 on d1.id=p.type 
 		where p.delete_flag = '0' 
 		<if test="_parameter.containsKey('name')">
 			and p.name LIKE CONCAT('%',
 			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
 		</if>
-		<if test="_parameter.containsKey('addressName')">
-			and p.address =#{addressName,jdbcType=VARCHAR}
+		<if test="_parameter.containsKey('type')">
+			and p.type =#{type,jdbcType=VARCHAR}
 		</if>
 		<if test="_parameter.containsKey('typeName')">
 			and p.type =#{typeName,jdbcType=VARCHAR}
 		</if>
-		<if test="_parameter.containsKey('status')">
-			and p.status =#{status,jdbcType=VARCHAR}
-		</if>
-		order by p.publish_time desc
+		order by p.create_time desc
 	</select>
 	
 	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="position.result">
-    	select p.*,d1.name typeName,d2.name addressName,d3.name educationName,d4.name workLifeName
-    	 from position p
-    	 left join dict d1 on d1.id=p.type
-			  left join dict d2 on d2.id=p.address
-			   left join dict d3 on d3.id=p.education
-			    left join dict d4 on d4.id=p.work_life 
-    	where delete_flag=0
+    	select p.*,d1.name typeName
+	 	from 
+		 	position p
+	 	left join dict d1 on d1.id=p.type 
+    	where delete_flag='0'
     </select>
 
 </mapper>

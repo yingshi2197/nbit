@@ -71,6 +71,7 @@
 							class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 							<li><a id="sysHref" class="click_a" href="javascript:void(0);"  url="business/dictType/toList.do">数据字典</a></li>
+							<li><a id="sysPositionHref" class="click_a" href="javascript:void(0);"  url="business/position/toTypeList.do">职位管理</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -93,6 +94,7 @@
 		temp["requirementSearchHref"]=[{name:"需求",url:""},{name:"需求搜索页",url:"business/requirement/toSearchList.do"}];
 		temp["resumeHref"]=[{name:"简历",url:""},{name:"我的简历",url:"business/resume/toList.do"}];
 		temp["sysHref"]=[{name:"系统管理",url:""},{name:"数据字典",url:"business/dictType/toList.do"}];
+		temp["sysPositionHref"]=[{name:"系统管理",url:""},{name:"职位管理",url:"business/position/toTypeList.do"}];
 
 		function click(obj) {
 			$(".active").removeClass("active");

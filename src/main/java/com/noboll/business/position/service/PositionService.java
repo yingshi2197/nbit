@@ -6,6 +6,5 @@ import com.noboll.core.base.service.BaseService;
 
 
 public interface PositionService extends BaseService<Position> {
-	public void publish(String id);
-	public void finish(String id);
+	
 }

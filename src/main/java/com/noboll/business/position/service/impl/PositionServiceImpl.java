@@ -20,11 +20,4 @@ public class PositionServiceImpl extends BaseServiceImpl<Position> implements Po
 		return positionDao;
 	}
 	
-	public void publish(String id) {
-		positionDao.publish(id);
-	}
-	
-	public void finish(String id) {
-		positionDao.finish(id);
-	}
 }

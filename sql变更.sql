@@ -272,7 +272,7 @@ alter table label comment '标签表';
 create table position
 (
    id                   varchar(40) not null,
-   type                 char(10) comment '职位类型，来源数据字典',
+   type                 varchar(40) comment '职位类型，来源数据字典',
    name                 varchar(200) comment '职位名称',
    ename                char(10) comment '职位英文名',
    code                 varchar(40) comment '职位编码',

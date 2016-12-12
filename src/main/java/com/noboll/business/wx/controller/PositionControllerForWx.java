@@ -66,9 +66,9 @@ public class PositionControllerForWx extends BaseController<Position> {
 		for(int i=0;i<idarr.length;i++) {
 			String id=idarr[i];
 			Position p=positionService.getEntity(id);
-			if(p==null||!"1".equals(p.getStatus())) {
+//			if(p==null||!"1".equals(p.getStatus())) {
 				sb.append("职位{"+i+"}不存在或者已经结束！</br>");
-			}
+//			}
 		}
 		if(!StringUtil.isEmpty(sb.toString()))
 			return InitUtil.errorMessage(sb.toString()); 
@@ -112,7 +112,7 @@ public class PositionControllerForWx extends BaseController<Position> {
 	@RequestMapping("/publish")
 	@ResponseBody
 	public Object publish(String id) {
-		positionService.publish(id);
+//		positionService.publish(id);
 		return InitUtil.sucessMessage("发布成功");
 	}
 

@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <base href="<%=basePath%>">
     
-    <title>职位列表</title>
+    <title><spring:message code="职位选择器"/></title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -23,14 +23,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<spring:message code="jsp.include.basecss"/>
 	<spring:message code="jsp.include.listcssforback"/>
-	<link rel="stylesheet" href="http/business/login/css/public.css">
 	
   </head>
   
   <body>
   	<div class="container tab-form1">
 	  		 <div class="table-responsive">
-				<div class="panel-heading-choose">职位列表</div>
+				<div class="panel-heading-choose"><spring:message code="职位选择器"/></div>
 			  	<div id="searchDiv"></div>
 				<table id="table-javascript" ></table>
 	    	</div>
@@ -44,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		       	$("#table-javascript").initBootTable({
 		       		method: 'post',
 		       		searchDiv:"searchDiv",
-	                url: 'business/position/list.do?type=<c:out value="${type}" />',
+	                url: 'business/position/choose.do',
 	                addUrl:"",
 	                striped: true,
 	                pagination: true,
@@ -52,20 +51,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-	                	{name:'新增',position:'top',select:"",css:"add",dialog:{url:"business/position/toAdd.do?type=<c:out value='${type}' />",width:"500px"}},//新增
-	                	{name:'修改',position:'row',css:"edit",a:'',dialog:{url:"business/position/toEdit.do",width:"500px"}},//修改	         	
-	                	{name:'删除',position:'row',css:"remove",type:"ajax",url:"business/position/remove.do"}//删除
+	                	{name:"选择",position:'top',select:'<c:out value="${type }" />',css:"select",func:function(data){tools.getDialogParent().setValue(data)},a:'',url:""} // 选择
 	                ],
 	                clickToSelect: true,
 	                columns: [
-				                	//{field: 'statu_msb',checkbox: true},   //复选框
+				                	<c:choose>
+				                		<c:when test="${type==1}">
+				                		{field: 'statu_msb',checkbox: true},
+				                		</c:when>
+				                		<c:otherwise>
+				                		{field: 'statu_msb',radio: true},
+				                		</c:otherwise>
+				                	</c:choose>
 				                	{field: 'id',title:'id',visible:false}, 
-				                    {field: 'name',title: '名称',align: 'center',valign: 'middle',sortable: false,searchable:true}, //名称
-				                    {field: 'typeName',title: '类型',align: 'center',valign: 'middle',sortable: false}, //类型
-				                    {field: 'code',index:'code',title: '编码',align: 'left',valign: 'top',searchable:true},	//描述
-				                    {field: 'description',index:'login_id',title: '描述',align: 'left',valign: 'top'}	//描述	
-				                   		                    
-				                  ]
+				                    {field: 'name',title: '<spring:message code="名称"/>',align: 'left',valign: 'middle',sortable: false,searchable:true,filterLen:40,width:"36%"}, //名称
+				                    {field: 'typeName',title: '<spring:message code="类型"/>',align: 'left',valign: 'middle',sortable: false,searchable:true,filterLen:40,width:"30%"}, //类型
+				                    //{field: 'code',title: '<spring:message code="com.noboll.business.manage.dictionary.code"/>',align: 'left',valign: 'top',searchable:true},	//描述
+				                    {field: 'description',title: '<spring:message code="描述"/>',align: 'left',valign: 'top'},	//描述	
+				                    {field: 'fullName',title: '<spring:message code="fullName"/>',align: 'left',valign: 'top',visible:false}	//描述	
+				                  ] 
 	            	});
 		    	});
 		    	
