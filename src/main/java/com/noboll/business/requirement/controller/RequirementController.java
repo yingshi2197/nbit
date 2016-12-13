@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noboll.business.requirement.constant.RequirementConstant;
 import com.noboll.business.requirement.entity.Requirement;
 import com.noboll.business.requirement.service.RequirementService;
+import com.noboll.context.SystemContext;
 import com.noboll.core.base.controller.BaseController;
 import com.noboll.core.base.entity.Page;
 import com.noboll.core.base.entity.QueryParam;
@@ -89,8 +91,26 @@ public class RequirementController extends BaseController<Requirement> {
 	public Object searchListRequirement(HttpServletRequest request,Model model,String typeId) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
 		Page<Requirement> page = InitUtil.initPage(request);
-		page = requirementService.getPageList("com.noboll.business.requirement.dao.RequirementDao.getList", queryParam,
+		queryParam.addParam("status", RequirementConstant.REQUIREMENT_STATUS_FB);
+		queryParam.addParam("userId", SystemContext.getLoginUser().getId());
+		page = requirementService.getPageList("com.noboll.business.requirement.dao.RequirementDao.getSearchList", queryParam,
 				page);
 		return page;
+	}
+	
+	// 异步返回操作信息
+	@RequestMapping("/publish")
+	@ResponseBody
+	public Object publish(String id) {
+		requirementService.publish(id);
+		return InitUtil.sucessMessage("操作成功");
+	}
+	
+	// 异步返回操作信息
+	@RequestMapping("/finish")
+	@ResponseBody
+	public Object finish(String id) {
+		requirementService.finish(id);
+		return InitUtil.sucessMessage("操作成功");
 	}
 }

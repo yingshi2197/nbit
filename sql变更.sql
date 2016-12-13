@@ -50,6 +50,7 @@ create table contact
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -74,6 +75,7 @@ create table customer
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -91,6 +93,7 @@ create table customer_label
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -110,6 +113,7 @@ create table deliver
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -130,6 +134,7 @@ create table dict
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+   delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -149,6 +154,7 @@ create table dict_type
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+   delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -173,6 +179,7 @@ create table entrant
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+   delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -192,6 +199,7 @@ create table evaluate
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -214,6 +222,7 @@ create table experience
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -242,6 +251,7 @@ create table interview
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -261,6 +271,7 @@ create table label
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -281,6 +292,7 @@ create table position
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -303,10 +315,12 @@ create table requirement
    demand               text comment '岗位要求',
    address              varchar(40) comment '地点，来源数据字典',
    description          text comment '岗位描述',
+   status          		varchar(40) comment '需求状态，0草稿，1已发布',
    create_user_id       varchar(40),
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -340,6 +354,7 @@ create table resume
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -357,6 +372,7 @@ create table resume_intention
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -374,6 +390,7 @@ create table resume_label
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -391,6 +408,7 @@ create table resume_position
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -415,6 +433,7 @@ create table user_info
    create_time          datetime,
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

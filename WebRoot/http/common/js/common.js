@@ -90,10 +90,12 @@ var choose={
 		// 岗位选择器customerId:客户id  type 1表示多选，0表示单选，默认为0
 		userChoose_yggx:{name:"员工关系选择",url:"manage/user/toChooseYggx.do"},
 		//员工关系选择器， customerId:客户id，根据客户的负责人过滤，isFilterCustomer：是否要根据客户过滤所负责的现场专员，不过滤为0，为空或者其他表示过滤
-		positionChoose:{name:"职位选择器",url:"business/position/toChoose.do?type=1"},
+		positionChoose:{name:"职位选择",url:"business/position/toChoose.do?type=1"},
 		// 岗位选择器parentCode:父级code  type 1表示多选，0表示单选，默认为0
-		intentionChoose:{name:"意向地区选择器",url:"business/dict/toChoose.do?parentCode=address&type=1"}
+		intentionChoose:{name:"意向地区选择",url:"business/dict/toChoose.do?parentCode=address&type=1"},
 		// 意向地区选择器
+		myResumeChoose:{name:"我的简历选择",url:"business/resume/toMyChoose.do?type=0"}
+		// 我的简历选择器
 }
 
 // 定义自动填充路径

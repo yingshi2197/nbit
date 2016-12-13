@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.noboll.business.position.service.PositionService;
 import com.noboll.business.resume.entity.Resume;
 import com.noboll.business.resume.service.ResumeService;
+import com.noboll.context.SystemContext;
 import com.noboll.core.base.controller.BaseController;
 import com.noboll.core.base.entity.Page;
 import com.noboll.core.base.entity.QueryParam;
+import com.noboll.core.util.StringUtil;
 import com.noboll.util.InitUtil;
 
 @Controller
@@ -80,6 +82,29 @@ public class ResumeController extends BaseController<Resume> {
 	public Object removeResume(String id) {
 		resumeService.deleteEntity(id);
 		return InitUtil.sucessMessage("删除成功");
+	}
+	
+	// 跳转到我的简历选择列表页面
+	@RequestMapping("/toMyChoose")
+	public String toMyChoose(Model model, String type) {
+		if (StringUtil.isEmpty(type)) {
+			type = "0";
+		}
+
+		model.addAttribute("type", type);
+		return "business/resume/resume_my_choose";
+	}
+
+	// 获取我的简历选择器数据
+	@RequestMapping(value = "/myChoose", method = RequestMethod.POST)
+	@ResponseBody
+	public Object myChoose(HttpServletRequest request) {
+		QueryParam queryParam = InitUtil.initQueryParam(request);
+		queryParam.getMap().put("userId", SystemContext.getLoginUser().getId());
+
+		Page<Resume> page = InitUtil.initPage(request);
+		page = resumeService.getPageList("com.noboll.business.resume.dao.ResumeDao.getList",queryParam, page);
+		return page;
 	}
 
 }

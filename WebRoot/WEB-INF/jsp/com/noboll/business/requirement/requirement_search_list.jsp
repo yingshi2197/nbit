@@ -77,19 +77,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                striped: true,
 	                permissionOperate:function(data){
 	                	var op={};
-	                	/* if(data.status=="1") {
-	                		op["remove"]="false";
+	                	if(data.deliverStatus=="1") {
+	                		op["deliver"]="false";
+	                	}else{
+	                		op["deliverDetail"]="false";
 	                	}
-	                	if(data.status=="0") {
-	                		op["apply"]="false";
-	                		op["finish"]="false";
-	                	}
-	                	if(data.status=="2") {
-	                		op["apply"]="false";
-	                		op["edit"]="false";
-	                		op["remove"]="false";
-	                		op["finish"]="false";
-	                	} */
 	                	return op;
 	                }, 
 	                pagination: true,
@@ -99,12 +91,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
 	                	/* {name:'发布',position:'row',css:"publish",type:"ajax",url:"business/requirement/publish.do"},//发布 
 	                	{name:'结束',position:'row',css:"finish",type:"ajax",url:"business/requirement/finish.do"},//结束  */
-	                	{name:'投递',position:'row',css:"deliver",a:'',dialog:{url:"business/deliver/toAdd.do",width:"850px",height:"500px"}}//投递
+	                	{name:'投递简历',position:'row',css:"deliver",a:'',dialog:{url:"business/deliver/toAdd.do",width:"600px",height:"320px"}},//投递
+	                	{name:'投递详情',position:'row',css:"deliverDetail",a:'',func:unfinish,url:""}//投递详情
 	                ],
 	                clickToSelect: true,
 	                columns: [
 				                	//{field: 'statu_msb',checkbox: true},   //复选框
 				                	{field: 'id',title:'id',visible:false}, 
+				                	{field: 'deliverStatus',title:'deliverStatus',visible:false}, 
 				                    {field: 'code',title: '需求编码',align: 'center',valign: 'middle',sortable: true,searchable:true}, //编码
 				                    {field: 'name',title: '名称',align: 'center',valign: 'middle',sortable: true,searchable:true}, //名称
 				                    {field: 'addressName',index:'address',title: '地址',align: 'left',valign: 'top',searchable:true,type:'select:address',selectCode:"id"},	//描述
@@ -117,18 +111,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            	});
 		    	});
 		    	
-		    	/* function formateStatus(value) {
-		    		if("1"==value) {
-		    			return "发布";
-		    		}else if("2"==value) {
-		    			return "结束";
-		    		}else {
-		    			return "未发布";
-		    		}
-		    	} */
-		    	
 		    	function searchByButton(){
 		    		$("#table-javascript").search('search-Class','table-javascript','searchDiv');
+		    	}
+		    	
+		    	function unfinish(){
+		    		alert("暂未实现！");
 		    	}
 		    	
     	</script>

@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <base href="<%=basePath%>">
     
-    <title>我的简历</title>
+    <title><spring:message code="我的简历选择"/></title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -23,14 +23,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<spring:message code="jsp.include.basecss"/>
 	<spring:message code="jsp.include.listcssforback"/>
-	<link rel="stylesheet" href="http/business/login/css/public.css">
 	
   </head>
   
   <body>
-  	<div class="container">
+  	<div class="container tab-form1">
 	  		 <div class="table-responsive">
-				<div class="panel-heading-choose">我的简历</div>
+				<div class="panel-heading-choose"><spring:message code="我的简历选择器"/></div>
 			  	<div id="searchDiv"></div>
 				<table id="table-javascript" ></table>
 	    	</div>
@@ -44,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		       	$("#table-javascript").initBootTable({
 		       		method: 'post',
 		       		searchDiv:"searchDiv",
-	                url: 'business/resume/list.do',
+	                url: 'business/resume/myChoose.do',
 	                addUrl:"",
 	                striped: true,
 	                pagination: true,
@@ -52,35 +51,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-	                	{name:'修改',resume:'row',css:"edit",a:'',dialog:{url:"business/resume/toEdit.do",width:"850px",height:"500px"}}//修改	
+	                	{name:"选择",position:'top',select:'<c:out value="${type }" />',css:"select",func:function(data){tools.getDialogParent().setValue(data)},a:'',url:""} // 选择
 	                ],
 	                clickToSelect: true,
 	                columns: [
-				                	//{field: 'statu_msb',checkbox: true},   //复选框
+				                	<c:choose>
+				                		<c:when test="${type==1}">
+				                		{field: 'statu_msb',checkbox: true},
+				                		</c:when>
+				                		<c:otherwise>
+				                		{field: 'statu_msb',radio: true},
+				                		</c:otherwise>
+				                	</c:choose>
 				                	{field: 'id',title:'id',visible:false}, 
 				                    {field: 'name',title: '姓名',align: 'center',valign: 'middle',searchable:true}, //名称
-				                    {field: 'sexName',index:"sex",title: '类型',align: 'center',valign: 'middle',searchable:true,type:'select:sex',selectCode:"id"}, //类型
+				                    {field: 'sexName',index:"sex",title: '性别',align: 'center',valign: 'middle'}, //性别
 				                    {field: 'mobile',title: '联系电话',align: 'center',valign: 'middle',searchable:true}, //名称
-				                    {field: 'major',title: '专业',align: 'center',valign: 'middle',searchable:true}, //名称
-				                    {field: 'addressName',index:'address',title: '工作地点',align: 'left',valign: 'top',searchable:true,type:'select:address',selectCode:"id"},	//描述
-				                    {field: 'workLifeName',title: '年限',align: 'left',valign: 'top'},//描述
-				                    {field: 'educationName',title: '学历',align: 'left',valign: 'top'},//描述
-				                    {field: 'positionName',title: '申请职位',align: 'left',valign: 'top'},//描述
-				                    {field: 'statusName',formatter:formateStatus,title: '状态',align: 'left',valign: 'top',searchable:true,type:'select:resume_status',selectCode:"id"},//描述
-				                    
-				                    {field: 'applyTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '申请时间',align: 'left',valign: 'top'}	//上传时间
-				                   		                    
-				                  ]
+				                    {field: 'yearsName',title: '工作年限',align: 'center',valign: 'middle',searchable:true}, //工作年限
+				                    {field: 'address',index:'address',title: '住址',align: 'left',valign: 'top'},	//住址
+				                    {field: 'degreeName',title: '学历',align: 'left',valign: 'top'},//描述
+				                    {field: 'createTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '创建时间',align: 'left',valign: 'top'}	//上传时间
+				                  ] 
 	            	});
 		    	});
-		    	
-		    	function formateStatus(value) {
-		    		if(value) {
-		    			return value;
-		    		}else {
-		    			return "申请中";
-		    		}
-		    	}
 		    	
     	</script>
   </body>

@@ -16,5 +16,15 @@ public interface RequirementService extends BaseService<Requirement> {
 	 * 修改需求
 	 */
 	public void updateRequirement(Requirement requirement);
+
+	/**
+	 * 发布需求
+	 */
+	public void publish(String id);
+	
+	/**
+	 * 结束需求
+	 */
+	public void finish(String id);
 	
 }

@@ -24,6 +24,7 @@ public class Requirement extends BaseEntity  {
 	private String address;// 地点，来源数据字典
 	private String description;//岗位描述
 	private String deleteFlag;
+	private String status;// 状态
 
 	// Property accessors
 	private String typeName;  // 职位类型
@@ -31,6 +32,8 @@ public class Requirement extends BaseEntity  {
 	private String periodName;// 周期名称
 	private String levelName;// 级别名称
 	private String positionName;//职位名称
+	private String statusName;// 状态
+	private String deliverStatus;// 是否已经投递，0代表没有，1代表已经投递过，用于需求搜索页(招聘浏览)中判断是否显示投递简历按钮
 	
 	
 	public String getId() {
@@ -141,7 +144,25 @@ public class Requirement extends BaseEntity  {
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
 	}
-
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getStatusName() {
+		return statusName;
+	}
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+	public String getDeliverStatus() {
+		return deliverStatus;
+	}
+	public void setDeliverStatus(String deliverStatus) {
+		this.deliverStatus = deliverStatus;
+	}
+	
 	
 
 	

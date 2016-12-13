@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.deliver.dao.DeliverDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.deliver.entity.Deliver" resultMap="deliver.result">
+        <![CDATA[
+           	select p.*
+			 from 
+			 	deliver p
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.deliver.entity.Deliver">
+		update deliver 
+		set
+			resume_id = #{resumeId},
+			requirement_id = #{requirementId},deliver_time = #{deliverTime},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.deliver.entity.Deliver">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into deliver
+		(id, resume_id, requirement_id, deliver_time,description,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{resumeId}, #{requirementId}, #{deliverTime},#{description},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update deliver set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="deliver.result">
+		select p.*
+	 	from 
+		 	deliver p
+	 	left join resume r on r.id=p.resume_id and r.delete_flag='0'
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('resumeId')">
+			and p.resume_id LIKE CONCAT('%',
+			CONCAT(#{resumeId,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('userId')">
+			and r.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('requirementId')">
+			and p.requirement_id =#{requirementId,jdbcType=VARCHAR}
+		</if>
+		order by p.create_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="deliver.result">
+    	select p.*
+	 	from 
+		 	deliver p
+    	where delete_flag='0'
+    </select>
+    
+	<select id="getByRequirementAndUserId" resultType="list" resultMap="deliver.result">
+		select p.*
+	 	from 
+		 	deliver p
+	 	left join resume r on r.id=p.resume_id and r.delete_flag='0'
+			where p.delete_flag='0' and r.user_id = #{userId,jdbcType=VARCHAR}
+			and p.requirement_id =#{requirementId,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

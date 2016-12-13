@@ -24,6 +24,7 @@
         <result property="createTime" column="create_time"/>
         <result property="lastModifyUserId"   column="last_modify_user_id"/>
         <result property="lastModifyTime" column="last_modify_time"/>    
+        <result property="status" column="status"/>    
         
     </resultMap>
 	

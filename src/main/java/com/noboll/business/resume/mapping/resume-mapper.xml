@@ -110,6 +110,9 @@
 		<if test="_parameter.containsKey('sexName')">
 			and p.sex=#{sexName} 
 		</if>
+		<if test="_parameter.containsKey('userId')">
+			and p.user_id=#{userId} 
+		</if>
 		order by p.last_modify_time,p.create_time desc
 	</select>
 	

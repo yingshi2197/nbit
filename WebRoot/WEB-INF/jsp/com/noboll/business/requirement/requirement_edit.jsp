@@ -124,8 +124,8 @@
 				</div>
 				
 				<div class="tab-form-submit">
-					<button type="submit" class="btn btn-success">
-						提交
+					<button type="submit" class="btn btn-success" >
+						保存
 					</button>
 					<button type="button" class="btn btn-warning"
 						onclick="closeDialog();">
@@ -152,7 +152,7 @@
 		function closeDialog() {
 			tools.closeDialog();
 		}
-
+		
 	</script>
 </body>
 </html>

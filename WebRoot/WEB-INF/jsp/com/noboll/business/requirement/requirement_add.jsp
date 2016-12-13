@@ -41,6 +41,8 @@
 				class="form-horizontal" role="form" method="post">
 				<input type="hidden" name="id"
 					value="<c:out value="${requirement.id}" />" /> 
+				<input type="hidden" name="status" id="status"
+					value="1" /> 
 				<div class="form-group">
 					<label for="name" class="col-xs-2 control-label">需求编码</label>
 					<div class="col-xs-4 form-control-1">
@@ -125,7 +127,11 @@
 				
 				<div class="tab-form-submit">
 					<button type="submit" class="btn btn-success">
-						提交
+						保存并发布
+					</button>
+					<!-- 保存为草稿 -->
+					<button type="button" class="btn btn-success" onclick="saveDraft()">
+						保存为草稿
 					</button>
 					<button type="button" class="btn btn-warning"
 						onclick="closeDialog();">
@@ -151,6 +157,12 @@
 						
 		function closeDialog() {
 			tools.closeDialog();
+		}
+		
+		// 保存为草稿
+		function saveDraft(){
+			$("#status").val("0");
+			$("#myform").submit();
 		}
 
 	</script>

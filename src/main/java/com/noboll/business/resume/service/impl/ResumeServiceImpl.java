@@ -10,6 +10,7 @@ import com.noboll.business.resume.entity.Resume;
 import com.noboll.business.resume.service.ResumeService;
 import com.noboll.business.resumeIntention.service.ResumeIntentionService;
 import com.noboll.business.resumePosition.service.ResumePositionService;
+import com.noboll.context.SystemContext;
 import com.noboll.core.base.dao.BaseDao;
 import com.noboll.core.base.service.impl.BaseServiceImpl;
 import com.noboll.core.util.StringUtil;
@@ -33,6 +34,7 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 
 	@Override
 	public void saveResume(Resume resume) {
+		resume.setUserId(SystemContext.getLoginUser().getId());// 简历所属用户
 		super.saveEntity(resume);
 		
 		// 处理简历与求职岗位关联关系
@@ -53,6 +55,7 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 
 	@Override
 	public void updateResume(Resume resume) {
+		resume.setUserId(SystemContext.getLoginUser().getId());// 简历所属用户
 		super.updateEntity(resume);
 		
 		// 处理简历与求职岗位关联关系

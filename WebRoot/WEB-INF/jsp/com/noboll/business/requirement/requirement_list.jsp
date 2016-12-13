@@ -49,19 +49,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                striped: true,
 	                permissionOperate:function(data){
 	                	var op={};
-	                	/* if(data.status=="1") {
-	                		op["remove"]="false";
-	                	}
-	                	if(data.status=="0") {
-	                		op["apply"]="false";
+	                	if(data.status!="1") {// 不为已发布
 	                		op["finish"]="false";
 	                	}
-	                	if(data.status=="2") {
-	                		op["apply"]="false";
+	                	if(data.status!="0") {// 不为草稿
 	                		op["edit"]="false";
 	                		op["remove"]="false";
-	                		op["finish"]="false";
-	                	} */
+	                		op["publish"]="false";
+	                	}
 	                	return op;
 	                }, 
 	                pagination: true,
@@ -71,8 +66,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
 	                	{name:'新增',position:'top',select:"",css:"add",dialog:{url:"business/requirement/toAdd.do",width:"850px",height:"500px"}},//新增
 	                	{name:'修改',position:'row',css:"edit",a:'',dialog:{url:"business/requirement/toEdit.do",width:"850px",height:"500px"}},//修改	
-	                	/* {name:'发布',position:'row',css:"publish",type:"ajax",url:"business/requirement/publish.do"},//发布 
-	                	{name:'结束',position:'row',css:"finish",type:"ajax",url:"business/requirement/finish.do"},//结束  */
+	                	{name:'发布',position:'row',css:"publish",type:"ajax",url:"business/requirement/publish.do"},//发布 
+	                	{name:'结束',position:'row',css:"finish",type:"ajax",url:"business/requirement/finish.do"},//结束 
 	                	//{name:'申请',position:'row',css:"apply",a:'',dialog:{url:"business/resume/toAdd.do",width:"850px",height:"500px"}},//修改	       	
 	                	{name:'删除',position:'row',css:"remove",type:"ajax",url:"business/requirement/remove.do"}//删除
 	                ],
@@ -87,20 +82,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				                    {field: 'num',title: '需求人数',align: 'left',valign: 'top'},//需求人数
 				                    {field: 'periodName',title: '周期',align: 'left',valign: 'top'},//周期
 				                    {field: 'positionName',title: '职位',align: 'left',valign: 'top'},//职位
+				                    {field: 'status',formatter:formateStatus,title: '状态',align: 'left',valign: 'top'},//状态
 				                    {field: 'createTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '创建时间',align: 'left',valign: 'top'}	//创建时间
 				                  ]
 	            	});
 		    	});
 		    	
-		    	/* function formateStatus(value) {
+		    	function formateStatus(value) {
 		    		if("1"==value) {
-		    			return "发布";
+		    			return "已发布";
 		    		}else if("2"==value) {
-		    			return "结束";
+		    			return "已结束";
 		    		}else {
-		    			return "未发布";
+		    			return "草稿";
 		    		}
-		    	} */
+		    	}
 		    	
     	</script>
   </body>

@@ -78,6 +78,9 @@
 		<if test="_parameter.containsKey('addressName')">
 			and q.address =#{addressName,jdbcType=VARCHAR}
 		</if>
+		<if test="_parameter.containsKey('status')">
+			and q.status = #{status,jdbcType=VARCHAR}
+		</if>
 		order by q.create_time desc
 	</select>
 	
@@ -93,4 +96,44 @@
 				 q.id = #{id}
     </select>
 
+	<update id="updateStatus" parameterType="com.noboll.business.requirement.entity.Requirement">
+		update requirement 
+		set
+			status=#{status},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+	
+	<select id="getSearchList" resultType="list" parameterType="map"
+		resultMap="requirement.result">
+		select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName,
+		case when de.user_id is null or de.user_id='' then '0' else '1' end deliverStatus
+			 from 
+			 	requirement q
+			 left join dict d1 on d1.id=q.period
+			  left join dict d2 on d2.id=q.address
+			   left join dict d3 on d3.id=q.level
+			   left join position d4 on d4.id=q.position_id
+			   left join (select de.requirement_id,re.user_id from deliver de
+				   left join resume re on re.id = de.resume_id and re.delete_flag='0'
+				   where de.delete_flag='0' and re.user_id = #{userId}
+			   ) de on de.requirement_id = q.id
+		where 1=1
+		<if test="_parameter.containsKey('name')">
+			and q.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('code')">
+			and q.code LIKE CONCAT('%',
+			CONCAT(#{code,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('addressName')">
+			and q.address =#{addressName,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('status')">
+			and q.status = #{status,jdbcType=VARCHAR}
+		</if>
+		order by q.create_time desc
+	</select>
+	
 </mapper>
