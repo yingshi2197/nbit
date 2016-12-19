@@ -94,7 +94,9 @@ var choose={
 		// 岗位选择器parentCode:父级code  type 1表示多选，0表示单选，默认为0
 		intentionChoose:{name:"意向地区选择",url:"business/dict/toChoose.do?parentCode=address&type=1"},
 		// 意向地区选择器
-		myResumeChoose:{name:"我的简历选择",url:"business/resume/toMyChoose.do?type=0"}
+		myResumeChoose:{name:"我的简历选择",url:"business/resume/toMyChoose.do?type=0"},
+		// 我的简历选择器
+		industryChoose:{name:"行业选择",url:"business/dict/toChoose.do?parentCode=industry&type=0"}
 		// 我的简历选择器
 }
 

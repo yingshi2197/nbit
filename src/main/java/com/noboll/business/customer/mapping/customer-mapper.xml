@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.customer.dao.CustomerDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.customer.entity.Customer" resultMap="customer.result">
+        <![CDATA[
+           	select c.*,d1.name industryName,d2.name natureName,d3.name scaleName
+			from customer c
+			left join dict d1 on d1.id = c.industry and d1.delete_flag='0'
+			left join dict d2 on d2.id = c.nature and d2.delete_flag='0'
+			left join dict d3 on d3.id = c.scale and d3.delete_flag='0' 
+			 where 
+				 c.delete_flag='0' 
+				 and c.id = #{id}
+        ]]>
+	</select>
+	
+	<update id="updateEntity" parameterType="com.noboll.business.customer.entity.Customer">
+		update customer 
+		set
+			name = #{name},
+			fund = #{fund},
+			found_time = #{foundTime},
+			industry = #{industry},
+			nature = #{nature},
+			scale = #{scale},
+			address = #{address},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.customer.entity.Customer">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into customer
+		(id, name, status, fund,found_time, industry,nature,scale,address,description,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, '0', #{fund}, #{foundTime}, #{industry}, #{nature}, #{scale},#{address}, #{description},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update customer set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="customer.result">
+		select c.*,d1.name industryName,d2.name natureName,d3.name scaleName
+		from customer c
+		left join dict d1 on d1.id = c.industry and d1.delete_flag='0'
+		left join dict d2 on d2.id = c.nature and d2.delete_flag='0'
+		left join dict d3 on d3.id = c.scale and d3.delete_flag='0'
+		where c.delete_flag = '0'
+		<if test="_parameter.containsKey('name')">
+			and c.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('statusName')">
+			and c.status = #{statusName}
+		</if>
+		<if test="_parameter.containsKey('industryName')">
+			and c.industry = #{industryName}
+		</if>
+		<if test="_parameter.containsKey('natureName')">
+			and c.nature = #{natureName}
+		</if>
+		<if test="_parameter.containsKey('scaleName')">
+			and c.scale = #{scaleName
+			}
+		</if>
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="customer.result">
+    	select c.*,d1.name industryName,d2.name natureName,d3.name scaleName
+		from customer c
+		left join dict d1 on d1.id = c.industry and d1.delete_flag='0'
+		left join dict d2 on d2.id = c.nature and d2.delete_flag='0'
+		left join dict d3 on d3.id = c.scale and d3.delete_flag='0'
+		where c.delete_flag = '0'
+    </select>
+    
+    <update id="updateStatus" parameterType="com.noboll.business.customer.entity.Customer">
+		update customer 
+		set
+			status=#{status},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+</mapper>

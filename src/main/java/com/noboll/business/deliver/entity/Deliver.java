@@ -23,6 +23,8 @@ public class Deliver extends BaseEntity  {
 	
 	private String resumeName;// 简历名称
 	private String requirementName;// 需求名称
+	private String customerName;// 客户名称
+	private String address;// 需求地址
 	
 	public String getResumeId() {
 		return resumeId;
@@ -66,5 +68,18 @@ public class Deliver extends BaseEntity  {
 	public void setRequirementName(String requirementName) {
 		this.requirementName = requirementName;
 	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 	
 }
