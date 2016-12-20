@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.user.dao.UserInfoDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.user.entity.UserInfo" resultMap="userInfo.result">
+        <![CDATA[
+          	select u.*,c.name customerName
+			from user_info u
+			left join customer c on c.id = u.customer_id and u.delete_flag='0'
+			 where 
+				 u.delete_flag='0' 
+				 and u.id = #{id}
+        ]]>
+	</select>
+	
+	<update id="updateEntity" parameterType="com.noboll.business.user.entity.UserInfo">
+		update user_info 
+		set
+			name = #{name},
+			role = #{role},
+			phone = #{phone},
+			photo = #{photo},
+			sex = #{sex},
+			email = #{email},
+			customer_id= #{customerId},
+			login_id = #{loginId},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.user.entity.UserInfo">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into user_info
+		(id, name, role, phone,photo, sex,email,customer_id,login_id,password,description,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, #{role}, #{phone}, #{photo}, #{sex}, #{email}, #{customerId}, #{loginId},#{password}, #{description},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update user_info set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="userInfo.result">
+		select u.*,c.name customerName
+		from user_info u
+		left join customer c on c.id = u.customer_id and u.delete_flag='0'
+		where u.delete_flag = '0'
+		<if test="_parameter.containsKey('name')">
+			and u.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('loginId')">
+			and u.login_id LIKE CONCAT('%',
+			CONCAT(#{loginId,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('roleName')">
+			and u.role = #{roleName,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="userInfo.result">
+    	select u.*,c.name customerName
+		from user_info u
+		left join customer c on c.id = u.customer_id and u.delete_flag='0'
+		where u.delete_flag = '0'
+    </select>
+    
+</mapper>

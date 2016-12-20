@@ -67,7 +67,7 @@
 					<label for="industry" class="col-xs-2 control-label">行业</label>
 					<div class="col-xs-4 form-control-1">
 						<input type="hidden" class="form-control required" name="industry" id="industry" value="<c:out value="${customer.industry}" />"/>
-						<input type="text" class="form-control required" name="industryName"
+						<input type="text" class="form-control" name="industryName"
 							id="industryName" 	placeholder="请选择行业"	 value="<c:out value="${customer.industryName}" />" maxlength="200" />
 						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="industryChoose"  chooseField="id,name" chooseId="industry" 
 				         chooseValue="industryNameName" chooseWidth="850px" chooseHeight="500px"></a>

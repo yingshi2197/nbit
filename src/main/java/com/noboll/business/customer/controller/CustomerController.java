@@ -110,9 +110,6 @@ public class CustomerController extends BaseController<Customer> {
 		if (StringUtil.isEmpty(type)) {
 			type = "0";
 		}
-		if (!StringUtil.isEmpty(parentCode)) {
-			model.addAttribute("parentCode", parentCode);
-		}
 
 		model.addAttribute("type", type);
 		return "business/customer/customer_choose";
@@ -123,11 +120,8 @@ public class CustomerController extends BaseController<Customer> {
 	@ResponseBody
 	public Object choose(HttpServletRequest request,String parentCode) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
-		if (!StringUtil.isEmpty(parentCode)) {
-			queryParam.getMap().put("parentCode", parentCode);
-		}
-
 		Page<Customer> page = InitUtil.initPage(request);
+		queryParam.addParam("statusName", "0");// 只查询有效的客户
 		page = customerService.getPageList("com.noboll.business.customer.dao.CustomerDao.getList",queryParam, page);
 		return page;
 	}

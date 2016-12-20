@@ -51,7 +51,7 @@
 					<label for="name" class="col-xs-2 control-label">求职岗位</label>
 					<div class="col-xs-4 form-control-1">
 						<input type="hidden" class="form-control required" name="positionIds" id="positionIds" value="<c:out value="${resume.positionIds}" />"/>
-						<input type="text" class="form-control required" name="positionNames"
+						<input type="text" class="form-control" name="positionNames"
 							id="positionNames" 	placeholder="请选择求职岗位"	 value="<c:out value="${resume.positionNames}" />" maxlength="200" />
 						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="positionChoose"  chooseField="id,name" chooseId="positionIds" 
 				         chooseValue="positionNames" chooseWidth="850px" chooseHeight="500px"></a>
@@ -103,7 +103,7 @@
 					
 					<label for="mobile" class="col-xs-2 control-label">移动电话</label>
 					<div class="col-xs-4 form-control-1">
-						<input type="text" class="form-control required" name="mobile"
+						<input type="text" class="form-control required mobile" name="mobile"
 							id="mobile" 	placeholder="请输入移动电话"	 value="<c:out value="${resume.mobile}" />" maxlength="20" />
 					</div>
 				</div>
@@ -112,7 +112,7 @@
 					<label for="name" class="col-xs-2 control-label">意向地区</label>
 					<div class="col-xs-4 form-control-1">
 						<input type="hidden" class="form-control required" name="intentionIds" id="intentionIds" value="<c:out value="${resume.intentionIds}" />"/>
-						<input type="text" class="form-control required" name="intentionNames"
+						<input type="text" class="form-control" name="intentionNames"
 							id="intentionNames" 	placeholder="请选择意向地区"	 value="<c:out value="${resume.intentionNames}" />" maxlength="200" />
 						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="intentionChoose"  chooseField="id,name" chooseId="intentionIds" 
 				         chooseValue="intentionNames" chooseWidth="850px" chooseHeight="500px"></a>

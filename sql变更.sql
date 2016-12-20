@@ -421,6 +421,7 @@ create table user_info
 (
    id                   varchar(40) not null,
    name                 varchar(200) comment '姓名',
+   role                 varchar(40) comment '角色，暂时放这',
    phone                varchar(200) comment '电话',
    photo                varchar(400) comment '头像',
    sex                  varchar(40) comment '性别，0表示男，1表示女',

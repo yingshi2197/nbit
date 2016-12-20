@@ -88,16 +88,11 @@ var choose={
 		// 部门选择器 chooseData='{type="0",filter:"1"}'  type 1表示多选，0表示单选，默认为0. filter 1表示查询角色及子角色，0表示查询所有,2表示查询子角色，默认为1
 		custPositionChoose:{name:"客户职位选择器",url:"manage/dictionary/toCustPositionChoose.do"},
 		// 岗位选择器customerId:客户id  type 1表示多选，0表示单选，默认为0
-		userChoose_yggx:{name:"员工关系选择",url:"manage/user/toChooseYggx.do"},
-		//员工关系选择器， customerId:客户id，根据客户的负责人过滤，isFilterCustomer：是否要根据客户过滤所负责的现场专员，不过滤为0，为空或者其他表示过滤
-		positionChoose:{name:"职位选择",url:"business/position/toChoose.do?type=1"},
-		// 岗位选择器parentCode:父级code  type 1表示多选，0表示单选，默认为0
-		intentionChoose:{name:"意向地区选择",url:"business/dict/toChoose.do?parentCode=address&type=1"},
-		// 意向地区选择器
-		myResumeChoose:{name:"我的简历选择",url:"business/resume/toMyChoose.do?type=0"},
-		// 我的简历选择器
-		industryChoose:{name:"行业选择",url:"business/dict/toChoose.do?parentCode=industry&type=0"}
-		// 我的简历选择器
+		positionChoose:{name:"职位选择",url:"business/position/toChoose.do?type=1"},// 岗位选择器parentCode:父级code  type 1表示多选，0表示单选，默认为0
+		intentionChoose:{name:"意向地区选择",url:"business/dict/toChoose.do?parentCode=address&type=1"},// 意向地区选择器
+		myResumeChoose:{name:"我的简历选择",url:"business/resume/toMyChoose.do?type=0"},// 我的简历选择器
+		industryChoose:{name:"行业选择",url:"business/dict/toChoose.do?parentCode=industry&type=0"},// 行业选择器
+		customerChoose:{name:"客户选择",url:"business/customer/toChoose.do?type=0"}// 客户选择器
 }
 
 // 定义自动填充路径
@@ -112,8 +107,9 @@ var autoComplete={
  * ajaxUrl根据typeCode进行异步获取数据字典
  */
 var dictionary={
-		ajaxUrl:"business/dict/queryByTypeCode.do"
+		ajaxUrl:"business/dict/queryByTypeCode.do",
 		// 不要再在这里添加其他数据字典了，以后统一在msb/src/java/dictionary.properties中添加数据字典（不需要保存到数据库中的数据字典）
+		role:[{"customer":"客户","applicant":"求职者"}]
 }
 
 
