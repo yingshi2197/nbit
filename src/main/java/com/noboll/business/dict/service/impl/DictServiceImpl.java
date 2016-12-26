@@ -79,5 +79,12 @@ public class DictServiceImpl extends BaseServiceImpl<Dict>
 	public List<Dict> queryByTypeCode(String typeCode) {
 		return dictDao.queryByTypeCode(typeCode);
 	}
+	
+	/**
+	 * 通过数据字典编码查找数据字典
+	 */
+	public Dict getByCode(String dictCode){
+		return dictDao.getByCode(dictCode);
+	}
 
 }

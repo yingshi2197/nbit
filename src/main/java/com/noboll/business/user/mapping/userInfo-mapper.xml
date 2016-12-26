@@ -67,8 +67,8 @@
 			and u.login_id LIKE CONCAT('%',
 			CONCAT(#{loginId,jdbcType=VARCHAR}, '%'))
 		</if>
-		<if test="_parameter.containsKey('roleName')">
-			and u.role = #{roleName,jdbcType=VARCHAR}
+		<if test="_parameter.containsKey('role')">
+			and u.role = #{role,jdbcType=VARCHAR}
 		</if>
 	</select>
 	

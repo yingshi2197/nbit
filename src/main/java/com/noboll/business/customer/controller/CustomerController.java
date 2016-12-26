@@ -51,7 +51,7 @@ public class CustomerController extends BaseController<Customer> {
 
 	// 跳转到新增页面
 	@RequestMapping("/toAdd")
-	public String toAddCustomer(Model model,String typeId) {
+	public String toAddCustomer(Model model) {
 		return "business/customer/customer_add";
 	}
 
@@ -105,8 +105,7 @@ public class CustomerController extends BaseController<Customer> {
 
 	// 跳转到列表页面
 	@RequestMapping("/toChoose")
-	public String toCustomerChoose(Model model, String parentCode,
-			String type) {
+	public String toCustomerChoose(Model model, String type) {
 		if (StringUtil.isEmpty(type)) {
 			type = "0";
 		}
@@ -118,7 +117,7 @@ public class CustomerController extends BaseController<Customer> {
 	// 获取选择器数据
 	@RequestMapping(value = "/choose", method = RequestMethod.POST)
 	@ResponseBody
-	public Object choose(HttpServletRequest request,String parentCode) {
+	public Object choose(HttpServletRequest request) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
 		Page<Customer> page = InitUtil.initPage(request);
 		queryParam.addParam("statusName", "0");// 只查询有效的客户

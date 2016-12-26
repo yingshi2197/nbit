@@ -12,13 +12,14 @@
 	<select id="getEntity" parameterType="string"
 		resultType="com.noboll.business.requirement.entity.Requirement" resultMap="requirement.result">
         <![CDATA[
-			select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName
+			select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName,c.name customerName
 			 from 
 			 	requirement q
 			 left join dict d1 on d1.id=q.period
 			  left join dict d2 on d2.id=q.address
 			   left join dict d3 on d3.id=q.level
 			   left join position d4 on d4.id=q.position_id
+			   left join customer c on c.id=q.customer_id
 			 where 
 				 q.id = #{id} 
         ]]>
@@ -43,9 +44,9 @@
 			<include refid="system.generatedId"></include>
 		</selectKey>
 		insert into requirement
-		(id, name, customer_id, code,level, period,position_id,duty,num,demand,address,description,<include refid="system.user_column_insert"></include>)
+		(id, name, customer_id, code,level, period,position_id,duty,num,demand,address,description,delete_flag,<include refid="system.user_column_insert"></include>)
 		values
-		(#{id}, #{name}, #{customerId}, #{code},#{level}, #{period},#{positionId},#{duty},#{num},#{demand},#{address},#{description},<include refid="system.user_value_insert"></include>)
+		(#{id}, #{name}, #{customerId}, #{code},#{level}, #{period},#{positionId},#{duty},#{num},#{demand},#{address},#{description},'0',<include refid="system.user_value_insert"></include>)
 	</insert>
 
 	<!-- <update id="deleteEntity" parameterType="string">
@@ -59,13 +60,14 @@
 	
 	<select id="getList" resultType="list" parameterType="map"
 		resultMap="requirement.result">
-		select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName
+		select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName,c.name customerName
 			 from 
 			 	requirement q
 			 left join dict d1 on d1.id=q.period
 			  left join dict d2 on d2.id=q.address
 			   left join dict d3 on d3.id=q.level
 			   left join position d4 on d4.id=q.position_id
+			   left join customer c on c.id=q.customer_id
 		where 1=1
 		<if test="_parameter.containsKey('name')">
 			and q.name LIKE CONCAT('%',
@@ -80,6 +82,22 @@
 		</if>
 		<if test="_parameter.containsKey('status')">
 			and q.status = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('customerName')">
+			and c.name like CONCAT('%',
+			CONCAT(#{customerName,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('positionName')">
+			and d4.name like CONCAT('%',
+			CONCAT(#{positionName,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('pcName')">
+			and (d4.name like CONCAT('%',
+				CONCAT(#{pcName,jdbcType=VARCHAR}, '%'))
+				OR
+				c.name like CONCAT('%',
+				CONCAT(#{pcName,jdbcType=VARCHAR}, '%'))
+			)
 		</if>
 		order by q.create_time desc
 	</select>
@@ -107,7 +125,7 @@
 	<select id="getSearchList" resultType="list" parameterType="map"
 		resultMap="requirement.result">
 		select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName,
-		case when de.user_id is null or de.user_id='' then '0' else '1' end deliverStatus
+		case when de.user_id is null or de.user_id='' then '0' else '1' end deliverStatus,c.name customerName
 			 from 
 			 	requirement q
 			 left join dict d1 on d1.id=q.period
@@ -118,6 +136,7 @@
 				   left join resume re on re.id = de.resume_id and re.delete_flag='0'
 				   where de.delete_flag='0' and re.user_id = #{userId}
 			   ) de on de.requirement_id = q.id
+			   left join customer c on c.id=q.customer_id
 		where 1=1
 		<if test="_parameter.containsKey('name')">
 			and q.name LIKE CONCAT('%',
@@ -132,6 +151,18 @@
 		</if>
 		<if test="_parameter.containsKey('status')">
 			and q.status = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('customerName')">
+			and c.name like CONCAT('%',
+			CONCAT(#{customerName,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('pcName')">
+			and (d4.name like CONCAT('%',
+				CONCAT(#{pcName,jdbcType=VARCHAR}, '%'))
+				OR
+				c.name like CONCAT('%',
+				CONCAT(#{pcName,jdbcType=VARCHAR}, '%'))
+			)
 		</if>
 		order by q.create_time desc
 	</select>

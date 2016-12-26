@@ -106,5 +106,22 @@ public class ResumeController extends BaseController<Resume> {
 		page = resumeService.getPageList("com.noboll.business.resume.dao.ResumeDao.getList",queryParam, page);
 		return page;
 	}
+	
+	// 跳转到需求搜索页面
+	@RequestMapping("/toSearchList")
+	public String toSearchListResume(HttpServletRequest request,Model model) {
+		return "business/resume/resume_search_list";
+	}
+
+	// 异步返回json数据
+	@RequestMapping("/searchList")
+	@ResponseBody
+	public Object searchListResume(HttpServletRequest request,Model model) {
+		QueryParam queryParam = InitUtil.initQueryParam(request);
+		Page<Resume> page = InitUtil.initPage(request);
+		page = resumeService.getPageList("com.noboll.business.resume.dao.ResumeDao.getSearchList", queryParam,
+				page);
+		return page;
+	}
 
 }

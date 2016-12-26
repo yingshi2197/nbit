@@ -26,14 +26,14 @@ public class RequirementController extends BaseController<Requirement> {
 	
 	// 跳转到列表页面
 	@RequestMapping("/toList")
-	public String toListRequirement(HttpServletRequest request,Model model,String typeId) {
+	public String toListRequirement(HttpServletRequest request,Model model) {
 		return "business/requirement/requirement_list";
 	}
 
 	// 异步返回json数据
 	@RequestMapping("/list")
 	@ResponseBody
-	public Object listRequirement(HttpServletRequest request,Model model,String typeId) {
+	public Object listRequirement(HttpServletRequest request,Model model) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
 		Page<Requirement> page = InitUtil.initPage(request);
 		page = requirementService.getPageList("com.noboll.business.requirement.dao.RequirementDao.getList", queryParam,
@@ -81,14 +81,14 @@ public class RequirementController extends BaseController<Requirement> {
 	
 	// 跳转到需求搜索页面
 	@RequestMapping("/toSearchList")
-	public String toSearchListRequirement(HttpServletRequest request,Model model,String typeId) {
+	public String toSearchListRequirement(HttpServletRequest request,Model model) {
 		return "business/requirement/requirement_search_list";
 	}
 
 	// 异步返回json数据
 	@RequestMapping("/searchList")
 	@ResponseBody
-	public Object searchListRequirement(HttpServletRequest request,Model model,String typeId) {
+	public Object searchListRequirement(HttpServletRequest request,Model model) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
 		Page<Requirement> page = InitUtil.initPage(request);
 		queryParam.addParam("status", RequirementConstant.REQUIREMENT_STATUS_FB);

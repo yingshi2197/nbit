@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<div class="container">
 	  		 <div class="table-responsive">
-				<div class="panel-heading-choose">我的投递列表</div>
+				<div class="panel-heading-choose">投递管理-客户</div>
 			  	<div id="searchDiv"></div>
 				<table id="table-javascript" ></table>
 	    	</div>
@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		       	$("#table-javascript").initBootTable({
 		       		method: 'post',
 		       		searchDiv:"searchDiv",
-	                url: 'business/deliver/myList.do',
+	                url: 'business/deliver/customerList.do',
 	                addUrl:"",
 	                striped: true,
 	                pagination: true,
@@ -58,10 +58,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                columns: [
 				                	//{field: 'statu_msb',checkbox: true},   //复选框
 				                	{field: 'id',title:'id',visible:false}, 
-				                    {field: 'customerName',title: '公司名称',align: 'center',valign: 'middle',searchable:true}, //公司名称
+// 				                    {field: 'customerName',title: '公司名称',align: 'center',valign: 'middle',searchable:true}, //公司名称
 				                    {field: 'requirementName',title: '需求名称',align: 'center',valign: 'middle'}, //需求名称
 				                    {field: 'positionName',title: '申请岗位',align: 'center',valign: 'middle',searchable:true}, //招聘岗位
 				                    {field: 'addressName',index:'address',title: '地址',align: 'left',valign: 'top'},	//地址
+				                    {field: 'resumeName',title: '简历',align: 'center',valign: 'middle',searchable:true}, //投递人
+				                    {field: 'yearsName',title: '工作年限',align: 'center',valign: 'middle',searchable:true,type:'select:work_life',selectCode:"id"}, //工作年限
+				                    {field: 'degreeName',title: '学历',align: 'left',valign: 'top',searchable:true,type:'select:degree',selectCode:"id"},//学历
 				                    {field: 'deliverTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '投递时间',align: 'left',valign: 'top'}	//上传时间
 				                  ]
 	            	});

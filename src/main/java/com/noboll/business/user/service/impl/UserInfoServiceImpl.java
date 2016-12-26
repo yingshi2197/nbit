@@ -45,7 +45,7 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfo>
 			Customer customer = customerService.getEntity(customerId);
 			if (null == customer || CustomerConstant.STATUS_DISABLED.equals(customer.getStatus())) 
 				throw new BusinessException("客户不存在或已经禁用！");
-		}else if(UserInfoConstant.ROLE_APPLICANT.equals(role)){
+		}else if(UserInfoConstant.ROLE_APPLICANT.equals(role) || UserInfoConstant.ROLE_ADMIN.equals(role)){
 			userInfo.setCustomerId(null);
 		}else{
 			throw new BusinessException("角色不合法！");
@@ -64,7 +64,7 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfo>
 			Customer customer = customerService.getEntity(customerId);
 			if (null == customer || CustomerConstant.STATUS_DISABLED.equals(customer.getStatus())) 
 				throw new BusinessException("客户不存在或已经禁用！");
-		}else if(UserInfoConstant.ROLE_APPLICANT.equals(role)){
+		}else if(UserInfoConstant.ROLE_APPLICANT.equals(role) || UserInfoConstant.ROLE_ADMIN.equals(role)){
 			userInfo.setCustomerId(null);
 		}else{
 			throw new BusinessException("角色不合法！");

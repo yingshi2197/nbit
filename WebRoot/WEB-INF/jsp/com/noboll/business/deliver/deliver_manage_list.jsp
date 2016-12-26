@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<div class="container">
 	  		 <div class="table-responsive">
-				<div class="panel-heading-choose">我的投递列表</div>
+				<div class="panel-heading-choose">投递管理-管理员</div>
 			  	<div id="searchDiv"></div>
 				<table id="table-javascript" ></table>
 	    	</div>
@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		       	$("#table-javascript").initBootTable({
 		       		method: 'post',
 		       		searchDiv:"searchDiv",
-	                url: 'business/deliver/myList.do',
+	                url: 'business/deliver/manageList.do',
 	                addUrl:"",
 	                striped: true,
 	                pagination: true,
@@ -52,7 +52,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-//                             {name:'评价',position:'top',select:"",css:"add",dialog:{url:"business/evaluate/toAdd.do",width:"850px",height:"500px"}}//评价
+                            {name:'电话确认',position:'row',select:"",css:"add",dialog:{url:"business/interview/toDhInterview.do",width:"850px",height:"500px"}},//电话确认、预约时间
+//                             {name:'预约时间',position:'top',select:"",css:"add",dialog:{url:"business/interview/toAppointment.do",width:"850px",height:"500px"}},//预约时间
+//                             {name:'报到入职',position:'top',select:"",css:"add",dialog:{url:"business/entrant/toAdd.do",width:"850px",height:"500px"}}//报到入职
 	                ],
 	                clickToSelect: true,
 	                columns: [
@@ -62,6 +64,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				                    {field: 'requirementName',title: '需求名称',align: 'center',valign: 'middle'}, //需求名称
 				                    {field: 'positionName',title: '申请岗位',align: 'center',valign: 'middle',searchable:true}, //招聘岗位
 				                    {field: 'addressName',index:'address',title: '地址',align: 'left',valign: 'top'},	//地址
+				                    {field: 'resumeName',title: '简历',align: 'center',valign: 'middle',searchable:true}, //投递人
+				                    {field: 'yearsName',title: '工作年限',align: 'center',valign: 'middle',searchable:true,type:'select:work_life',selectCode:"id"}, //工作年限
+				                    {field: 'degreeName',title: '学历',align: 'left',valign: 'top',searchable:true,type:'select:degree',selectCode:"id"},//学历
 				                    {field: 'deliverTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '投递时间',align: 'left',valign: 'top'}	//上传时间
 				                  ]
 	            	});

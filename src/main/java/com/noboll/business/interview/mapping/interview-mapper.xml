@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.interview.dao.InterviewDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.interview.entity.Interview" resultMap="interview.result">
+        <![CDATA[
+           	select i.*,d1.name typeName,d2.name resultName,de.resume_id resumeId
+			from interview i
+			left join dict d1 on d1.id = i.type and d1.delete_flag='0' 
+			left join dict d2 on d2.id = i.result and d2.delete_flag='0' 
+			left join deliver de on de.id = i.deliver_id and de.delete_flag='0' 
+			 where 
+				 i.delete_flag='0' 
+				 and i.id = #{id}
+        ]]>
+	</select>
+	
+	<update id="updateEntity" parameterType="com.noboll.business.interview.entity.Interview">
+		update interview 
+		set
+			name = #{name},
+			time = #{time},
+			address = #{address},
+			interviewer = #{interviewer},
+			result = #{result},
+			reason = #{reason},
+			next_time = #{nextTime},
+			enter_time = #{enterTime},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.interview.entity.Interview">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into interview
+		(id, name, deliver_id, user_id,customer_id, time,address,interviewer,type,result,
+		reason,next_time,enter_time,description,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, #{deliverId}, #{userId}, #{customerId}, #{time}, #{address}, #{interviewer},#{type}, #{result},
+		 #{reason}, #{nextTime}, #{enterTime}, #{description},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update interview set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="interview.result">
+			select i.*,d1.name typeName,d2.name resultName
+			from interview i
+			left join dict d1 on d1.id = i.type and d1.delete_flag='0' 
+			left join dict d2 on d2.id = i.result and d2.delete_flag='0' 
+			 where 
+				 i.delete_flag='0' 
+			<if test="_parameter.containsKey('name')">
+				and i.name LIKE CONCAT('%',
+				CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+			</if>
+			<if test="_parameter.containsKey('typeName')">
+				and i.type = #{typeName}
+			</if>
+			<if test="_parameter.containsKey('resultName')">
+				and i.result = #{resultName}
+			</if>
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="interview.result">
+    	select i.*,d1.name typeName,d2.name resultName
+			from interview i
+			left join dict d1 on d1.id = i.type and d1.delete_flag='0' 
+			left join dict d2 on d2.id = i.result and d2.delete_flag='0' 
+			 where 
+				 i.delete_flag='0'
+    </select>
+    
+	<select id="getByDeliverIdAndType"
+		resultType="com.noboll.business.interview.entity.Interview" resultMap="interview.result">
+        <![CDATA[
+           	select i.*,d1.name typeName,d2.name resultName
+			from interview i
+			left join dict d1 on d1.id = i.type and d1.delete_flag='0' 
+			left join dict d2 on d2.id = i.result and d2.delete_flag='0' 
+			 where 
+				 i.delete_flag='0' 
+				 and i.deliver_id = #{deliverId}
+				 and i.type = (select id from dict where code = #{type} and delete_flag='0')
+        ]]>
+	</select>
+    
+</mapper>

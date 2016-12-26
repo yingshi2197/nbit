@@ -12,6 +12,7 @@ import com.noboll.business.deliver.entity.Deliver;
 import com.noboll.business.deliver.service.DeliverService;
 import com.noboll.business.requirement.entity.Requirement;
 import com.noboll.business.requirement.service.RequirementService;
+import com.noboll.business.user.entity.User;
 import com.noboll.context.SystemContext;
 import com.noboll.core.base.controller.BaseController;
 import com.noboll.core.base.entity.Page;
@@ -83,6 +84,42 @@ public class DeliverController extends BaseController<Deliver> {
 	public Object removeDeliver(String id) {
 		deliverService.deleteEntity(id);
 		return InitUtil.sucessMessage("删除成功");
+	}
+	
+	// 投递管理-管理员列表
+	@RequestMapping("/toManageList")
+	public String toManageList(HttpServletRequest request,Model model) {
+		return "business/deliver/deliver_manage_list";
+	}
+
+	// 投递管理-管理员列表数据
+	@RequestMapping("/manageList")
+	@ResponseBody
+	public Object manageList(HttpServletRequest request,Model model) {
+		QueryParam queryParam = InitUtil.initQueryParam(request);
+		Page<Deliver> page = InitUtil.initPage(request);
+		page = deliverService.getPageList("com.noboll.business.deliver.dao.DeliverDao.getList", queryParam,
+				page);
+		return page;
+	}
+	
+	// 投递管理-客户列表
+	@RequestMapping("/toCustomerList")
+	public String toCustomerList(HttpServletRequest request,Model model) {
+		return "business/deliver/deliver_customer_list";
+	}
+
+	// 投递管理-客户列表数据
+	@RequestMapping("/customerList")
+	@ResponseBody
+	public Object customerList(HttpServletRequest request,Model model) {
+		QueryParam queryParam = InitUtil.initQueryParam(request);
+		Page<Deliver> page = InitUtil.initPage(request);
+		User user = (User)SystemContext.getLoginUser();
+		queryParam.addParam("customerId", user.getCustomerId());
+		page = deliverService.getPageList("com.noboll.business.deliver.dao.DeliverDao.getList", queryParam,
+				page);
+		return page;
 	}
 	
 }

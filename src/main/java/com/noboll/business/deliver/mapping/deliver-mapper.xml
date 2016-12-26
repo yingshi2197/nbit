@@ -12,11 +12,19 @@
 	<select id="getEntity" parameterType="string"
 		resultType="com.noboll.business.deliver.entity.Deliver" resultMap="deliver.result">
         <![CDATA[
-           	select p.*
-			 from 
+           	select p.*,r.name resumeName,c.name customerName,po.name positionName,req.name requirementName,d1.name addressName,
+				rd1.name degreeName,rd2.name yearsName,c.id customerId
+		 	from 
 			 	deliver p
-			 where 
-				 p.id = #{id} 
+		 	left join resume r on r.id=p.resume_id and r.delete_flag='0'
+		 	left join dict rd1 on rd1.id=r.degree and rd1.delete_flag='0'
+		    left join dict rd2 on rd2.id=r.years and rd2.delete_flag='0'
+		 	left join requirement req on req.id = p.requirement_id and req.delete_flag='0'
+		 	left join customer c on c.id = req.customer_id and req.delete_flag='0'
+		 	left join position po on po.id=req.position_id and po.delete_flag='0'
+		 	left join dict d1 on d1.id=req.address and d1.delete_flag='0'
+			where p.delete_flag = '0' 
+					and p.id = #{id} 
         ]]>
 	</select>
 	
@@ -49,10 +57,17 @@
 	
 	<select id="getList" resultType="list" parameterType="map"
 		resultMap="deliver.result">
-		select p.*
+		select p.*,r.name resumeName,c.name customerName,po.name positionName,req.name requirementName,d1.name addressName,
+		rd1.name degreeName,rd2.name yearsName,c.id customerId
 	 	from 
 		 	deliver p
 	 	left join resume r on r.id=p.resume_id and r.delete_flag='0'
+	 	left join dict rd1 on rd1.id=r.degree and rd1.delete_flag='0'
+	    left join dict rd2 on rd2.id=r.years and rd2.delete_flag='0'
+	 	left join requirement req on req.id = p.requirement_id and req.delete_flag='0'
+	 	left join customer c on c.id = req.customer_id and req.delete_flag='0'
+	 	left join position po on po.id=req.position_id and po.delete_flag='0'
+	 	left join dict d1 on d1.id=req.address and d1.delete_flag='0'
 		where p.delete_flag = '0' 
 		<if test="_parameter.containsKey('resumeId')">
 			and p.resume_id LIKE CONCAT('%',
@@ -64,7 +79,24 @@
 		<if test="_parameter.containsKey('requirementId')">
 			and p.requirement_id =#{requirementId,jdbcType=VARCHAR}
 		</if>
-		order by p.create_time desc
+		<if test="_parameter.containsKey('customerId')">
+			and req.customer_id =#{customerId,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('customerName')">
+			and c.name LIKE CONCAT('%',
+			CONCAT(#{customerName,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('positionName')">
+			and po.name LIKE CONCAT('%',
+			CONCAT(#{positionName,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('degreeName')">
+			and rd1.id  =#{degreeName,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('yearsName')">
+			and rd2.id  =#{yearsName,jdbcType=VARCHAR}
+		</if>
+		order by p.deliver_time desc
 	</select>
 	
 	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="deliver.result">

@@ -25,6 +25,10 @@ public class UserInfoConstant {
 	 * 角色-求职者
 	 */
 	public static final String ROLE_APPLICANT = "applicant";
+	/**
+	 * 角色-管理员
+	 */
+	public static final String ROLE_ADMIN = "admin";
 	public static final String ROLE_CUSTOMER_NAME = "客户";
 	public static final String ROLE_APPLICANT_NAME = "求职者";
 	

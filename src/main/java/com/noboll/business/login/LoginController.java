@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noboll.business.user.entity.RoleMenu;
 import com.noboll.business.user.entity.User;
+import com.noboll.business.user.entity.UserInfo;
 import com.noboll.context.SystemContext;
 import com.noboll.core.cache.service.CacheService;
+import com.noboll.core.util.Md5Util;
 import com.noboll.core.util.StringUtil;
 import com.noboll.util.InitUtil;
 
@@ -30,17 +32,17 @@ public class LoginController {
 	@RequestMapping(value = "/login" , method = RequestMethod.POST)
 	@ResponseBody
 	public Object login(String loginId, String password,HttpSession session,HttpServletRequest request) {
-		if(StringUtil.isEmpty(loginId)||StringUtil.isEmpty(password)) {
+		if (StringUtil.isEmpty(loginId) || StringUtil.isEmpty(password)) {
 			return InitUtil.errorMessage("账号和密码不能为空！");
 		}
-		List<User> list=(List<User>) cacheService.get("user");
-		for(User user:list) {
-			if(loginId.equals(user.getLoginId())&&password.equals(user.getPassword())) {
+		List<UserInfo> list=(List<UserInfo>) cacheService.get("user");
+		for(UserInfo userInfo:list) {
+			if(loginId.equals(userInfo.getLoginId()) && Md5Util.MD5(password).equals(userInfo.getPassword())) {
 				 try {
 					List<RoleMenu> roleMenus=(List<RoleMenu>) cacheService.get("roleMenu");
-					   
+
 				    List<String> menus=new ArrayList<String>();
-				    String[] temp=user.getRole().split(",");
+				    String[] temp=userInfo.getRole().split(",");
 				    List<String> roles=Arrays.asList(temp);
 				    String formal="0";
 				    for(RoleMenu rm:roleMenus) {
@@ -49,10 +51,14 @@ public class LoginController {
 						   menus.addAll(rm.getAllMenu());
 					   }
 				    }
+				    User user = new User(); 
 				    user.setMenus(menus);
 				    user.setFormal(formal);
-				    // TODO 客户id处理
-				    user.setCustomerId("");
+				    user.setCustomerId(user.getCustomerId());
+				    user.setId(userInfo.getId());
+				    user.setName(userInfo.getName());
+				    user.setLoginId(userInfo.getId());
+				    user.setRole(userInfo.getRole());
 				    SystemContext.setLoginUser(user);
 					return InitUtil.sucessMessage("登录成功！");
 				} catch (Exception e) {
@@ -61,7 +67,7 @@ public class LoginController {
 				}  
 			}
 		}
-		return InitUtil.errorMessage("账号和密码错误！");
+		return InitUtil.errorMessage("账号或密码错误！");
 	}
 	
 	@RequestMapping(value = "/logout")

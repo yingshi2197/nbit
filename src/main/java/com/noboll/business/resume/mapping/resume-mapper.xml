@@ -101,9 +101,6 @@
 		<if test="_parameter.containsKey('degreeName')">
 			and p.degree =#{degreeName,jdbcType=VARCHAR}
 		</if>
-		<if test="_parameter.containsKey('payName')">
-			and p.pay =#{payName,jdbcType=VARCHAR}
-		</if>
 		<if test="_parameter.containsKey('mobile')">
 			and p.mobile =#{mobile,jdbcType=VARCHAR}
 		</if>
@@ -112,6 +109,9 @@
 		</if>
 		<if test="_parameter.containsKey('userId')">
 			and p.user_id=#{userId} 
+		</if>
+		<if test="_parameter.containsKey('yearsName')">
+			and d6.id = #{yearsName,jdbcType=VARCHAR}
 		</if>
 		order by p.last_modify_time,p.create_time desc
 	</select>
@@ -127,5 +127,66 @@
 			    left join dict d6 on d6.id=p.years
     	where p.delete_flag=0
     </select>
+    
+    
+    <select id="getSearchList" resultType="list" parameterType="map"
+		resultMap="resume.result">
+		select p.*,d1.name sexName,d3.name degreeName,d4.name payName,d5.name nativeName,d6.name yearsName,
+		po.positionIds,po.positionNames,inte.intentionIds,inte.intentionNames
+			 from 
+			 	resume p
+			 left join dict d1 on d1.id=p.sex
+			   left join dict d3 on d3.id=p.degree
+			    left join dict d4 on d4.id=p.pay
+			    left join dict d5 on d5.id=p.native
+			    left join dict d6 on d6.id=p.years
+			    left join (
+					select rp.resume_id,GROUP_CONCAT(rp.position_id) positionIds,GROUP_CONCAT(d7.name) positionNames
+					from resume r
+					left join resume_position rp on rp.resume_id = r.id
+					left join position d7 on d7.id = rp.position_id
+					group by r.id
+				) po on po.resume_id = p.id
+		    	left join (
+					select ri.resume_id,GROUP_CONCAT(ri.intention) intentionIds,GROUP_CONCAT(d8.name) intentionNames
+					from resume r
+					left join resume_intention ri on ri.resume_id = r.id
+					left join dict d8 on d8.id = ri.intention
+					group by r.id
+				) inte on inte.resume_id = p.id
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('name')">
+			and p.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('degreeName')">
+			and p.degree =#{degreeName,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('mobile')">
+			and p.mobile =#{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('sexName')">
+			and p.sex=#{sexName} 
+		</if>
+		<if test="_parameter.containsKey('userId')">
+			and p.user_id=#{userId} 
+		</if>
+		<if test="_parameter.containsKey('intentionName')">
+			and inte.intentionIds LIKE CONCAT('%',
+			CONCAT(#{intentionName,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('yearsName')">
+			and d6.id = #{yearsName,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('pyName')">
+			and (po.positionNames LIKE CONCAT('%',
+			CONCAT(#{pyName,jdbcType=VARCHAR}, '%'))
+			OR
+			p.name LIKE CONCAT('%',
+			CONCAT(#{pyName,jdbcType=VARCHAR}, '%'))
+			)
+		</if>
+		order by p.last_modify_time,p.create_time desc
+	</select>
 
 </mapper>

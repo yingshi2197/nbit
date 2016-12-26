@@ -83,10 +83,7 @@
 				<div class="form-group">
 					<label for="role" class="col-xs-2 control-label">角色</label>
 					<div class="col-xs-4 form-control-1">
-						<select class="form-control required" name="role" id="role">
-							<option value="">请选择</option>
-							<option value="customer" <c:if test="${userInfo.role == 'customer' }">selected</c:if>>客户</option>
-							<option value="applicant" <c:if test="${userInfo.role == 'applicant' }">selected</c:if>>求职者</option>
+						<select class="form-control select required" dictCode="role" name="role" id="role" dictValue="<c:out value="${userInfo.role}" />">
 						</select>
 					</div>
 					
@@ -136,6 +133,9 @@
 		$(document)	.ready(
 		function() {
 			$("#myform").initForm({});
+			
+			$("#customerId").removeClass("required");
+			$("#customerId").siblings(".redStar").hide();
 		});
 						
 		function closeDialog() {
@@ -144,10 +144,15 @@
 		
 		$("#role").change(function(){
 			var value = $(this).val();
-			if("customer" == value)
+			if("customer" == value){
 				$("#customerDiv").show();
-			else
+				$("#customerId").addClass("required");
+				$("#customerId").siblings(".redStar").show();
+			}else{
 				$("#customerDiv").hide();
+				$("#customerId").removeClass("required");
+				$("#customerId").siblings(".redStar").hide();
+			}
 		});
 
 	</script>

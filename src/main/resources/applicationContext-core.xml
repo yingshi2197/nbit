@@ -93,7 +93,7 @@
                         value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect"></property>
                 </bean>
                 <bean class="com.noboll.core.interceptor.MybatisInterceptor">
-                	<property name="context" ref="systemContext"></property>
+<!--                 	<property name="context" ref="systemContext"></property> -->
                 </bean>
             </list>
         </property>

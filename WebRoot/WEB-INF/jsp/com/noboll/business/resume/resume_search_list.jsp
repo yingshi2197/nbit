@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <base href="<%=basePath%>">
     
-    <title>需求搜索页</title>
+    <title>简历搜索页</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -40,8 +40,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  		<div class="col-xs-9">
 				<div class="row">
   					<form id="myform">
-						<select class="search-Class select searchingSelect" dictCode="address" name="addressName" style="display:inline;"></select>
-						<input placeholder="输入职位名称或者公司名称搜索" name="pcName" id="pcName" class="search-Class searchingTxt" type="text"/>
+						<select class="search-Class select searchingSelect" placeholder="地区" dictCode="address" name="intentionName" style="display:inline;"></select>
+						<select class="search-Class select searchingSelect" placeholder="工作年限" dictCode="work_life" name="yearsName" style="display:inline;"></select>
+						<input placeholder="输入简历姓名或者求职岗位搜索" name="pyName" id="pyName" class="search-Class searchingTxt" type="text"/>
 						<button class="searchingBtn" type="button" id="btnSearch" onclick="searchByButton();">搜
 								索</button>
 					</form> 
@@ -72,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			$("#myform").initForm({});
 		       	$("#table-javascript").initBootTable({
 		       		method: 'post',
-	                url: 'business/requirement/searchList.do',
+	                url: 'business/resume/searchList.do',
 	                addUrl:"",
 	                striped: true,
 	                permissionOperate:function(data){
@@ -89,25 +90,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-	                	/* {name:'发布',position:'row',css:"publish",type:"ajax",url:"business/requirement/publish.do"},//发布 
-	                	{name:'结束',position:'row',css:"finish",type:"ajax",url:"business/requirement/finish.do"},//结束  */
-	                	{name:'投递简历',position:'row',css:"deliver",a:'',dialog:{url:"business/deliver/toAdd.do",width:"600px",height:"320px"}},//投递
-	                	{name:'投递详情',position:'row',css:"deliverDetail",a:'',func:unfinish,url:""}//投递详情
+	                	{name:'简历详情',position:'row',css:"resumeDetail",a:'',func:unfinish,url:""}//简历详情
 	                ],
 	                clickToSelect: true,
 	                columns: [
 				                	//{field: 'statu_msb',checkbox: true},   //复选框
 				                	{field: 'id',title:'id',visible:false}, 
-				                	{field: 'deliverStatus',title:'deliverStatus',visible:false}, 
-				                    {field: 'code',title: '需求编码',align: 'center',valign: 'middle',sortable: true,searchable:true}, //编码
-// 				                    {field: 'name',title: '需求名称',align: 'center',valign: 'middle',sortable: true,searchable:true}, //名称
-				                    {field: 'customerName',title: '公司名称',align: 'center',valign: 'middle',sortable: true,searchable:true}, //客户
-				                    {field: 'addressName',index:'address',title: '地址',align: 'left',valign: 'top',searchable:true,type:'select:address',selectCode:"id"},	//描述
-				                    {field: 'positionName',title: '职位',align: 'left',valign: 'top'},//职位
-				                    {field: 'levelName',title: '级别',align: 'left',valign: 'top'},//级别
-				                    {field: 'num',title: '需求人数',align: 'left',valign: 'top'},//需求人数
-				                    {field: 'periodName',title: '周期',align: 'left',valign: 'top'},//周期
-				                    {field: 'createTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '创建时间',align: 'left',valign: 'top'}	//创建时间
+				                	{field: 'name',title: '姓名',align: 'center',valign: 'middle',searchable:true}, //名称
+				                    {field: 'sexName',index:"sex",title: '性别',align: 'center',valign: 'middle'}, //性别
+				                    {field: 'yearsName',title: '工作年限',align: 'center',valign: 'middle',searchable:true}, //工作年限
+				                    {field: 'intentionNames',title: '意向地区',formatter:fmtPi,align: 'center',valign: 'middle',searchable:true}, //意向地区
+				                    {field: 'positionNames',title: '求职岗位',formatter:fmtPi,align: 'center',valign: 'middle',searchable:true}, //求职岗位
+				                    {field: 'address',index:'address',title: '住址',align: 'left',valign: 'top'},	//住址
+				                    {field: 'degreeName',title: '学历',align: 'left',valign: 'top'},//描述
+				                    {field: 'createTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '创建时间',align: 'left',valign: 'top'}	//上传时间
 				                  ]
 	            	});
 		    	});
@@ -120,6 +116,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		alert("暂未实现！");
 		    	}
 		    	
+		    	/** 格式化显示简历的意向地区和求职岗位：多个换行显示 */
+		    	function fmtPi(a,data){
+		    		if(a){
+		    			var str = a.replace(/,/g,'<br>');
+		    			return "<span title=\""+a+"\">"+str+"<span>";
+		    		}
+		    		return "-";
+		    	}
     	</script>
   </body>
 </html>

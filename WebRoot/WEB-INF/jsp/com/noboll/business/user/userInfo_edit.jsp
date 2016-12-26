@@ -85,17 +85,14 @@
 				<div class="form-group">
 					<label for="role" class="col-xs-2 control-label">角色</label>
 					<div class="col-xs-4 form-control-1">
-						<select class="form-control required" name="role" id="role">
-							<option value="">请选择</option>
-							<option value="customer" <c:if test="${userInfo.role == 'customer' }">selected</c:if>>客户</option>
-							<option value="applicant" <c:if test="${userInfo.role == 'applicant' }">selected</c:if>>求职者</option>
+						<select class="form-control select required" dictCode="role" name="role" id="role" dictValue="<c:out value="${userInfo.role}" />">
 						</select>
 					</div>
 					
 					<div id="customerDiv" style="display:none">
 					<label for="customerName" class="col-xs-2 control-label">客户</label>
 					<div class="col-xs-4 form-control-1">
-						<input type="hidden" class="form-control required" name="customerId" id="customerId" value="<c:out value="${userInfo.customerId}" />"/>
+						<input type="hidden" class="form-control" name="customerId" id="customerId" value="<c:out value="${userInfo.customerId}" />"/>
 						<input type="text" class="form-control" name="customerName"
 							id="customerName" 	placeholder="请选择关联客户"	 value="<c:out value="${userInfo.customerName}" />" maxlength="200" readonly/>
 						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="customerChoose"  chooseField="id,name" chooseId="customerId" 
@@ -138,10 +135,15 @@
 		$(document)	.ready(function() {
 			// 角色处理
 			var role = '<c:out value="${userInfo.role}"/>';
-			if("customer" == role)
+			if("customer" == role){
 				$("#customerDiv").show();
-			else
+				$("#customerId").addClass("required");
+				$("#customerId").siblings(".redStar").show();
+			}else{
 				$("#customerDiv").hide();
+				$("#customerId").removeClass("required");
+				$("#customerId").siblings(".redStar").hide();
+			}
 			
 			$("#myform").initForm({});
 		});
@@ -152,10 +154,15 @@
 		
 		$("#role").change(function(){
 			var value = $(this).val();
-			if("customer" == value)
+			if("customer" == value){
 				$("#customerDiv").show();
-			else
+				$("#customerId").addClass("required");
+				$("#customerId").siblings(".redStar").show();
+			}else{
 				$("#customerDiv").hide();
+				$("#customerId").removeClass("required");
+				$("#customerId").siblings(".redStar").hide();
+			}
 		});
 
 	</script>

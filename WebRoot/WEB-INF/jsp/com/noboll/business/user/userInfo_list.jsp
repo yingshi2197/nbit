@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				                    {field: 'phone',title: '手机',align: 'center',valign: 'middle',sortable: false}, //手机
 				                    {field: 'email',title: '邮箱',align: 'center',valign: 'middle',sortable: false}, //邮箱
 				                    {field: 'sexName',title: '性别',align: 'center',valign: 'middle',sortable: false}, //性别
-				                    {field: 'roleName',index:'roleName',title: '角色',align: 'left',valign: 'top',searchable:true,type:'select:role',selectCode:"id"}	//角色
+				                    {field: 'role',index:'role',formatter:"dictCode:role",title: '角色',align: 'left',valign: 'top',searchable:true,type:'select:role',selectCode:"id"}	//角色
 				                  ]
 	            	});
 		    	});

@@ -78,10 +78,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				                    {field: 'code',title: '需求编码',align: 'center',valign: 'middle',sortable: true,searchable:true}, //编码
 				                    {field: 'name',title: '名称',align: 'center',valign: 'middle',sortable: true,searchable:true}, //名称
 				                    {field: 'addressName',index:'address',title: '地址',align: 'left',valign: 'top',searchable:true,type:'select:address',selectCode:"id"},	//描述
+				                    {field: 'positionName',title: '职位',align: 'left',valign: 'top'},//职位
 				                    {field: 'levelName',title: '级别',align: 'left',valign: 'top'},//级别
 				                    {field: 'num',title: '需求人数',align: 'left',valign: 'top'},//需求人数
 				                    {field: 'periodName',title: '周期',align: 'left',valign: 'top'},//周期
-				                    {field: 'positionName',title: '职位',align: 'left',valign: 'top'},//职位
 				                    {field: 'status',formatter:formateStatus,title: '状态',align: 'left',valign: 'top'},//状态
 				                    {field: 'createTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '创建时间',align: 'left',valign: 'top'}	//创建时间
 				                  ]

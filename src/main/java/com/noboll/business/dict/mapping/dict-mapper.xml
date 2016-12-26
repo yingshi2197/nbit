@@ -116,5 +116,11 @@
     	 left join dict_type dt on dt.id=d.type_id and dt.delete_flag='0'
     	where d.delete_flag=0
     </select>
+    
+	<select id="getByCode" resultType="list"  parameterType="string" resultMap="dict.result">
+    	select d.*
+    	from dict d
+    	where d.delete_flag='0' and d.code = #{dictCode}
+    </select>
 
 </mapper>
