@@ -32,6 +32,8 @@ public class Dict extends BaseEntity  {
 	private String typeName;//类型名称
 	private String fullName;//完整名称，类别名称>项名称
 	
+	private QueryBean children;
+	
 	
 	// Constructors
 
@@ -140,6 +142,14 @@ public class Dict extends BaseEntity  {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	public QueryBean getChildren() {
+		return children;
+	}
+
+	public void setChildren(QueryBean children) {
+		this.children = children;
 	}
 	
 }

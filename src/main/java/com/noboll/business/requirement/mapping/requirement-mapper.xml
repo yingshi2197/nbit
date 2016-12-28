@@ -164,6 +164,18 @@
 				CONCAT(#{pcName,jdbcType=VARCHAR}, '%'))
 			)
 		</if>
+		<if test="_parameter.containsKey('position')">
+			and q.position_id = #{position}
+		</if>
+		<if test="_parameter.containsKey('industry')">
+			and c.industry = #{industry}
+		</if>
+		<if test="_parameter.containsKey('nature')">
+			and c.nature = #{nature}
+		</if>
+		<if test="_parameter.containsKey('position_type')">
+			and d4.type = #{position_type}
+		</if>
 		order by q.create_time desc
 	</select>
 	

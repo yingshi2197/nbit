@@ -69,11 +69,11 @@
 	</select>
 	
 	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="position.result">
-    	select p.*,d1.name typeName
+    	select p.*,d1.name typeName,d1.code typeCode
 	 	from 
 		 	position p
 	 	left join dict d1 on d1.id=p.type 
-    	where delete_flag='0'
+    	where p.delete_flag='0'
     </select>
 
 </mapper>

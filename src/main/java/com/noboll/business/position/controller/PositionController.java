@@ -40,7 +40,7 @@ public class PositionController extends BaseController<Position> {
 	public Object typeListPosition(HttpServletRequest request,Model model) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
 		Page<Dict> page = InitUtil.initPage(request);
-		queryParam.addParam("typeCode", "position");
+		queryParam.addParam("typeCode", "position_type");
 		page = dictService.getPageList("com.noboll.business.dict.dao.DictDao.queryByTypeCode", queryParam,
 				page);
 		return page;

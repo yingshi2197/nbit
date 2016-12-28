@@ -19,6 +19,7 @@ public class Position extends BaseEntity  {
 	private String deleteFlag;
 	
 	private String typeName;// 职位类型名称
+	private String typeCode;// 职位类型编码
 	
 	public String getName() {
 		return name;
@@ -62,7 +63,13 @@ public class Position extends BaseEntity  {
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}
-
+	public String getTypeCode() {
+		return typeCode;
+	}
+	public void setTypeCode(String typeCode) {
+		this.typeCode = typeCode;
+	}
+	
 	
 
 	

@@ -1,0 +1,21 @@
+*{margin:0;padding:0;list-style-type:none;}
+a,img{border:0;}
+body{font:12px/180% Arial, Helvetica, sans-serif;}
+/* select */
+.search-select{padding:5px 10px;border:#ddd 1px solid;border-radius:4px;margin:5% auto;font-size:12px}
+.search-select li{list-style:none;padding:5px 0 5px 5px}
+.search-select .select-list{border-bottom:#eee 1px dashed}
+.search-select dl{zoom:1;position:relative;line-height:24px;}
+.search-select dl:after{content:" ";display:block;clear:both;height:0;overflow:hidden}
+.search-select dt{float:left;display:inline;margin:0 0 5px 5px;}
+.search-select dd{float:left;display:inline;margin:0 0 5px 5px;}
+.search-select a{display:inline-block;white-space:nowrap;height:24px;padding:0 10px;text-decoration:none;color:#039;border-radius:2px;}
+.search-select a:hover{color:#fff;background-color:#83c1d0}
+.search-select .selected>a{color:#fff;background-color:#169BD5}
+.select-result dt{padding-left:50px;font-weight:bold} 
+.select-no{color:#999}
+.search-select .select-result a{padding-right:20px;background:#169BD5 url("close.gif") right 9px no-repeat}
+.search-select .select-result a:hover{background-position:right -15px}
+dt, dd {
+	line-height:2;
+}
