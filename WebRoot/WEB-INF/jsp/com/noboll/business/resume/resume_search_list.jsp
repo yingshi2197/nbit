@@ -26,6 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<spring:message code="jsp.include.listcssforback"/>
 	<link rel="stylesheet" href="http/business/login/css/public.css">
 	<link href="http/business/search/search.css" rel="stylesheet">
+	<link href="http/business/search/css/style.css" rel="stylesheet">
 	
   </head>
   
@@ -33,7 +34,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <div class="form-horizontal" id="searchDiv" style="height:600px">
 	  		<!-- 左侧：分类条件 begin -->
 	  		<div class="col-xs-3">
-	  		
+	  			<ul class="search-select">
+		  			<li class="select-result">
+						<dl><b>已选择：</b></dl> 
+						<dl class="selectr">  
+							<dd class="select-no">暂时没有选择过滤条件</dd>
+						</dl>
+					</li>
+			  		<c:forEach items="${conditionList }" var="condition" varStatus="index">
+							<li class="select-list">
+								<dl><b><c:out value="${condition.name }" /></b></dl>
+								<dl id="select_<c:out value="${index.index+1 }" />" class="selectw" queryCode="<c:out value="${condition.code }" />">
+									<dd queryCode="<c:out value="${condition.code }" />" queryValue="" class="select-all selected"><a href="javascript:void(0)">全部</a></dd>
+									<c:forEach items="${condition.list }" var="item">
+										<dd id="<c:out value="${item.code }" />" queryCode="<c:out value="${condition.code }" />" queryValue="<c:out value="${item.id }" />" typeCode="<c:out value="${item.typeCode }" />" code="<c:out value="${item.code }" />">
+											<a href="javascript:void(0)"><c:out value="${item.name }" /></a>
+										</dd>
+									</c:forEach>
+								</dl>
+								<!-- 子项 --> 
+								<c:forEach items="${condition.list }" var="item">
+									<c:if test="${not empty item.children }">
+										<dl id="select_<c:out value="${index.index+1 }" />_<c:out value="${item.code }" />" typeCode="<c:out value="${item.children.typeCode }" />" class="selectc select_<c:out value="${index.index+1 }" />" queryCode="<c:out value="${item.children.code }" />" style="display:none;padding:5px;border:#ddd 1px solid;border-radius:4px;">
+											<dd queryCode="<c:out value="${item.children.code }" />" queryValue="" typeCode="<c:out value="${item.children.typeCode }" />" class="select-all" style="float:left;display:inline;margin:0 0 5px 5px;"><a href="javascript:void(0)">全部</a></dd>
+											<c:forEach items="${item.children.list }" var="child">
+												<dd queryCode="<c:out value="${item.children.code }" />" queryValue="<c:out value="${child.id }" />" typeCode="<c:out value="${child.typeCode }" />" ><a href="javascript:void(0)"><c:out value="${child.name }" /></a></dd>
+											</c:forEach>
+										</dl> 
+									</c:if>
+								</c:forEach>	
+							</li>
+			  		</c:forEach>
+				</ul>
 	  		</div>
 	  		<!-- 左侧：分类条件 end -->
 	  		<!-- 右侧：列表 begin -->
@@ -41,8 +73,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row">
   					<form id="myform">
 						<select class="search-Class select searchingSelect" placeholder="地区" dictCode="address" name="intentionName" style="display:inline;"></select>
-						<select class="search-Class select searchingSelect" placeholder="工作年限" dictCode="work_life" name="yearsName" style="display:inline;"></select>
+<!-- 						<select class="search-Class select searchingSelect" placeholder="工作年限" dictCode="work_life" name="yearsName" style="display:inline;"></select> -->
 						<input placeholder="输入简历姓名或者求职岗位搜索" name="pyName" id="pyName" class="search-Class searchingTxt" type="text"/>
+						<!-- 左侧查询条件 -->
+						<c:forEach items="${conditionList }" var="condition" varStatus="index">
+							<input type="hidden" name="<c:out value="${condition.code }" />" id="<c:out value="${condition.code }" />" class="search-Class searchingTxt"/>
+							<c:forEach items="${condition.list }" var="item">
+								<c:if test="${not empty item.children }">
+									<input type="hidden" name="<c:out value="${item.children.code }" />" id="<c:out value="${item.children.code }" />" class="search-Class searchingTxt"/>
+								</c:if>
+							</c:forEach>
+						</c:forEach>
+						<!-- 左侧查询条件 end-->
 						<button class="searchingBtn" type="button" id="btnSearch" onclick="searchByButton();">搜
 								索</button>
 					</form> 
@@ -66,6 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<spring:message code="jsp.include.basejs"/>
     	<spring:message code="jsp.include.formjsforback" />
     	<spring:message code="jsp.include.listjsforback"/>
+    	<script type="text/javascript" src="http/business/search/js/script.js"></script>
     	
     	<script type="text/javascript">
     		

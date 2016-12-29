@@ -175,8 +175,8 @@
 			and inte.intentionIds LIKE CONCAT('%',
 			CONCAT(#{intentionName,jdbcType=VARCHAR}, '%'))
 		</if>
-		<if test="_parameter.containsKey('yearsName')">
-			and d6.id = #{yearsName,jdbcType=VARCHAR}
+		<if test="_parameter.containsKey('work_life')">
+			and d6.id = #{work_life,jdbcType=VARCHAR}
 		</if>
 		<if test="_parameter.containsKey('pyName')">
 			and (po.positionNames LIKE CONCAT('%',
@@ -185,6 +185,22 @@
 			p.name LIKE CONCAT('%',
 			CONCAT(#{pyName,jdbcType=VARCHAR}, '%'))
 			)
+		</if>
+		<if test="_parameter.containsKey('degree')">
+			and p.degree = #{degree,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('pay')">
+			and p.pay = #{pay,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('position_type')">
+			and exists 
+			(select 1 from resume_position rp left join position po on po.id = rp.position_id 
+				where rp.resume_id = p.id and po.type = #{position_type,jdbcType=VARCHAR})
+		</if>
+		<if test="_parameter.containsKey('position')">
+			and exists 
+			(select 1 from resume_position rp left join position po on po.id = rp.position_id 
+				where rp.resume_id = p.id and rp.position_id = #{position,jdbcType=VARCHAR})
 		</if>
 		order by p.last_modify_time,p.create_time desc
 	</select>

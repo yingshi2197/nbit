@@ -20,6 +20,10 @@ public class DictConstant {
 	public static final String DICT_TYPE_CODE_NATURE = "nature";
 	/** 薪资 */
 	public static final String DICT_TYPE_CODE_PAY = "pay";
+	/** 年限 */
+	public static final String DICT_TYPE_CODE_WORK_LIFE = "work_life";
+	/** 学历 */
+	public static final String DICT_TYPE_CODE_DEGREE = "degree";
 	/** 职位 */
 	public static final String DICT_TYPE_CODE_POSITION_NAME = "职位";
 	/** 企业行业 */
@@ -30,5 +34,9 @@ public class DictConstant {
 	public static final String DICT_TYPE_CODE_PAY_NAME = "薪资范围";
 	/** 职位类别 */
 	public static final String DICT_TYPE_CODE_POSITION_TYPE_NAME = "职位类别";
+	/** 年限 */
+	public static final String DICT_TYPE_CODE_WORK_LIFE_NAME = "年限";
+	/** 学历 */
+	public static final String DICT_TYPE_CODE_DEGREE_NAME = "学历";
 	
 }

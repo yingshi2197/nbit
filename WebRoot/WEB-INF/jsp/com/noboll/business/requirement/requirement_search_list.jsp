@@ -72,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  		<div class="col-xs-9">
 				<div class="row" style="padding:20px;">
   					<form id="myform">
-						<select class="search-Class select searchingSelect" dictCode="address" name="addressName" style="display:inline;"></select>
+						<select placeholder="地区" class="search-Class select searchingSelect" dictCode="address" name="addressName" style="display:inline;"></select>
 						<input placeholder="输入职位名称或者公司名称搜索" name="pcName" id="pcName" class="search-Class searchingTxt" type="text"/>
 						<!-- 左侧查询条件 -->
 						<c:forEach items="${conditionList }" var="condition" varStatus="index">
@@ -83,6 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</c:if>
 							</c:forEach>
 						</c:forEach>
+						<!-- 左侧查询条件 end-->
 						<button class="searchingBtn" type="button" id="btnSearch" onclick="searchByButton();">搜索</button>
 					</form> 
 				</div>

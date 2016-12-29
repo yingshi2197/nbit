@@ -1,5 +1,10 @@
 package com.noboll.business.resume.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noboll.business.dict.constant.DictConstant;
+import com.noboll.business.dict.entity.Dict;
+import com.noboll.business.dict.entity.QueryBean;
+import com.noboll.business.dict.service.DictService;
+import com.noboll.business.position.entity.Position;
 import com.noboll.business.position.service.PositionService;
 import com.noboll.business.resume.entity.Resume;
 import com.noboll.business.resume.service.ResumeService;
@@ -27,6 +37,8 @@ public class ResumeController extends BaseController<Resume> {
 	private ResumeService resumeService;
 	@Resource
 	private PositionService positionService;
+	@Resource
+	private DictService dictService;
 	
 	// 跳转到列表页面
 	@RequestMapping("/toList")
@@ -110,6 +122,39 @@ public class ResumeController extends BaseController<Resume> {
 	// 跳转到需求搜索页面
 	@RequestMapping("/toSearchList")
 	public String toSearchListResume(HttpServletRequest request,Model model) {
+		// 准备左侧查询条件数据字典
+				List<QueryBean> conditionList = new ArrayList<QueryBean>();// 这里为什么不用map，因为map无序，无法控制前端显示顺序
+				// 职位类别-级联
+				List<Dict> positionTypeList = dictService.queryByTypeCode(DictConstant.DICT_TYPE_CODE_POSITION_TYPE);
+				List<Position> positionList = positionService.getAllEntity(new HashMap<String, Object>());// 职位
+				Map<String, List<Position>> positionMap = new HashMap<String, List<Position>>();
+				for (Position position : positionList) {
+					if (positionMap.containsKey(position.getTypeCode()) && null != positionMap.get(position.getTypeCode())) {
+						positionMap.get(position.getTypeCode()).add(position);
+					}else{
+						List<Position> list = new ArrayList<Position>();
+						list.add(position);
+						positionMap.put(position.getTypeCode(), list);
+					}
+				}
+				for (Dict dict : positionTypeList){
+					if (positionMap.containsKey(dict.getCode()) && null != positionMap.get(dict.getCode())){
+						QueryBean queryBean = new QueryBean(DictConstant.DICT_TYPE_CODE_POSITION, DictConstant.DICT_TYPE_CODE_POSITION_NAME, positionMap.get(dict.getCode()));
+						queryBean.setTypeCode(dict.getCode());
+						dict.setChildren(queryBean);
+					}
+				}
+				conditionList.add(new QueryBean(DictConstant.DICT_TYPE_CODE_POSITION_TYPE,DictConstant.DICT_TYPE_CODE_POSITION_TYPE_NAME,positionTypeList));
+				// 学历
+				List<Dict> degreeList = dictService.queryByTypeCode(DictConstant.DICT_TYPE_CODE_DEGREE);
+				conditionList.add(new QueryBean(DictConstant.DICT_TYPE_CODE_DEGREE,DictConstant.DICT_TYPE_CODE_DEGREE_NAME,degreeList));
+				// 年限
+				List<Dict> workLifeList = dictService.queryByTypeCode(DictConstant.DICT_TYPE_CODE_WORK_LIFE);
+				conditionList.add(new QueryBean(DictConstant.DICT_TYPE_CODE_WORK_LIFE,DictConstant.DICT_TYPE_CODE_WORK_LIFE_NAME,workLifeList));
+				// 薪资
+				List<Dict> payList = dictService.queryByTypeCode(DictConstant.DICT_TYPE_CODE_PAY);
+				conditionList.add(new QueryBean(DictConstant.DICT_TYPE_CODE_PAY,DictConstant.DICT_TYPE_CODE_PAY_NAME,payList));
+				model.addAttribute("conditionList", conditionList);
 		return "business/resume/resume_search_list";
 	}
 
