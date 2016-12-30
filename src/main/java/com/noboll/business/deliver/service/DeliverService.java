@@ -20,5 +20,10 @@ public interface DeliverService extends BaseService<Deliver> {
 	 * @param userId 用户id
 	 */
 	public List<Deliver> getByRequirementAndUserId(String requirementId,String userId);
+
+	/**
+	 * 更新投递记录的状态和面试状态
+	 */
+	public void updateStatus(Deliver deliver);
 	
 }

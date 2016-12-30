@@ -69,6 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                	{name:'发布',position:'row',css:"publish",type:"ajax",url:"business/requirement/publish.do"},//发布 
 	                	{name:'结束',position:'row',css:"finish",type:"ajax",url:"business/requirement/finish.do"},//结束 
 	                	//{name:'申请',position:'row',css:"apply",a:'',dialog:{url:"business/resume/toAdd.do",width:"850px",height:"500px"}},//修改	       	
+	                	{name:'详情',position:'row',css:"requirementDetail",dialog:{url:"business/requirement/toView.do",width:"850px",height:"500px"}},//详情
 	                	{name:'删除',position:'row',css:"remove",type:"ajax",url:"business/requirement/remove.do"}//删除
 	                ],
 	                clickToSelect: true,

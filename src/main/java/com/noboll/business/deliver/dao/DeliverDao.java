@@ -16,4 +16,9 @@ public interface DeliverDao extends BaseDao<Deliver>{
 	 * @param userId 用户id
 	 */
 	public List<Deliver> getByRequirementAndUserId(@Param("requirementId")String requirementId,@Param("userId") String userId);
+
+	/**
+	 * 更新投递记录的状态和面试状态
+	 */
+	public void updateStatus(Deliver deliver);
 }

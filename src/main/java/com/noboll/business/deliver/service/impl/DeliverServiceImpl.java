@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.noboll.business.deliver.dao.DeliverDao;
 import com.noboll.business.deliver.entity.Deliver;
 import com.noboll.business.deliver.service.DeliverService;
+import com.noboll.business.dict.constant.DictConstant;
+import com.noboll.business.dict.entity.Dict;
+import com.noboll.business.dict.service.DictService;
 import com.noboll.business.requirement.constant.RequirementConstant;
 import com.noboll.business.requirement.entity.Requirement;
 import com.noboll.business.requirement.service.RequirementService;
@@ -29,6 +32,8 @@ public class DeliverServiceImpl extends BaseServiceImpl<Deliver> implements Deli
 	private RequirementService requirementService;
 	@Resource
 	private ResumeService resumeService;
+	@Resource
+	private DictService dictService;
 	
 	@Override
 	public BaseDao<Deliver> getBaseDao() {
@@ -45,7 +50,7 @@ public class DeliverServiceImpl extends BaseServiceImpl<Deliver> implements Deli
 			throw new BusinessException("请选择您要投递的招聘需求！");
 		
 		
-		// TODO 其他业务逻辑判断：需求、简历是否存在、需求是否还在招聘等
+		// 其他业务逻辑判断：需求、简历是否存在、需求是否还在招聘等
 		Resume resume = resumeService.getEntity(deliver.getResumeId());
 		if (null == resume)
 			throw new BusinessException("无效的简历！");
@@ -58,6 +63,10 @@ public class DeliverServiceImpl extends BaseServiceImpl<Deliver> implements Deli
 			throw new BusinessException("您已投递过该招聘需求，请勿重复投递！");
 		
 		deliver.setDeliverTime(new Date());// 简历投递时间
+		// 投递状态：待确认
+		Dict dict = dictService.getByCode(DictConstant.DICT_CODE_DELIVER_DAIQUEREN);
+		deliver.setStatus(dict.getId());
+		
 		this.saveEntity(deliver);
 	}
 	
@@ -67,6 +76,13 @@ public class DeliverServiceImpl extends BaseServiceImpl<Deliver> implements Deli
 	 */
 	public List<Deliver> getByRequirementAndUserId(String requirementId,String userId){
 		return deliverDao.getByRequirementAndUserId(requirementId,userId);
+	}
+	
+	/**
+	 * 更新投递记录的状态和面试状态
+	 */
+	public void updateStatus(Deliver deliver){
+		deliverDao.updateStatus(deliver);
 	}
 	
 }

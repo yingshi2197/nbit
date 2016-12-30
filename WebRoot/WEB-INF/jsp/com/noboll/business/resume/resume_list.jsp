@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <base href="<%=basePath%>">
     
-    <title>我的简历</title>
+    <title>简历列表</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<div class="container">
 	  		 <div class="table-responsive">
-				<div class="panel-heading-choose">我的简历</div>
+				<div class="panel-heading-choose">简历列表</div>
 			  	<div id="searchDiv"></div>
 				<table id="table-javascript" ></table>
 	    	</div>
@@ -52,8 +52,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-                        {name:'新增简历',position:'top',select:"",css:"add",dialog:{url:"business/resume/toAdd.do",width:"850px",height:"500px"}},//新增
-	                	{name:'完善简历',resume:'row',css:"edit",a:'',dialog:{url:"business/resume/toEdit.do",width:"850px",height:"500px"}}//修改	
 	                ],
 	                clickToSelect: true,
 	                columns: [

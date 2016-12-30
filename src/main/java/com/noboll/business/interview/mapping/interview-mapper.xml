@@ -89,7 +89,7 @@
 	<select id="getByDeliverIdAndType"
 		resultType="com.noboll.business.interview.entity.Interview" resultMap="interview.result">
         <![CDATA[
-           	select i.*,d1.name typeName,d2.name resultName
+           	select i.*,d1.name typeName,d2.name resultName,d2.code resultCode
 			from interview i
 			left join dict d1 on d1.id = i.type and d1.delete_flag='0' 
 			left join dict d2 on d2.id = i.result and d2.delete_flag='0' 

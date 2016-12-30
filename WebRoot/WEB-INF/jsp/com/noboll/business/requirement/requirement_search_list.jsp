@@ -72,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  		<div class="col-xs-9">
 				<div class="row" style="padding:20px;">
   					<form id="myform">
-						<select placeholder="地区" class="search-Class select searchingSelect" dictCode="address" name="addressName" style="display:inline;"></select>
+						<select placeholder="地区" class="search-Class select searchingSelect" dictCode="address" name="addressName" id="addressName" style="display:inline;"></select>
 						<input placeholder="输入职位名称或者公司名称搜索" name="pcName" id="pcName" class="search-Class searchingTxt" type="text"/>
 						<!-- 左侧查询条件 -->
 						<c:forEach items="${conditionList }" var="condition" varStatus="index">
@@ -91,8 +91,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="tab-content" id="tab-content">
 						<div role="tabpanel" class="tab-pane active" id="home">
 							<div class="longTop">
-								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-								Hi，您目前在 <span id="span_address">深圳</span> 搜索关键字 “ <b class=" cc20000"><span id="keyword">关键字</span></b> ”，共找到 <span id="total">999</span> 个内容。
+								<span style="display:none" id="remindDiv">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									Hi，您目前在<span id="span_address" class=" cc20000">所有地区</span><lable id="keywordLable">通过关键字 “<b class=" cc20000" id="keyword"></b> ”</lable>搜索招聘需求，共找到 <span id="total"></span> 个内容。
+								</span>	
 							</div>
 							<div class="table-responsive">
 								<table id="table-javascript" ></table>
@@ -134,13 +136,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                	/* {name:'发布',position:'row',css:"publish",type:"ajax",url:"business/requirement/publish.do"},//发布 
 	                	{name:'结束',position:'row',css:"finish",type:"ajax",url:"business/requirement/finish.do"},//结束  */
 	                	{name:'投递简历',position:'row',css:"deliver",a:'',dialog:{url:"business/deliver/toAdd.do",width:"600px",height:"320px"}},//投递
-	                	{name:'投递详情',position:'row',css:"deliverDetail",a:'',func:unfinish,url:""}//投递详情
+	                	{name:'需求详情',position:'row',css:"requirementDetail",dialog:{url:"business/requirement/toView.do",width:"850px",height:"500px"}},//需求详情
+	                	{name:'投递详情',position:'row',field:"deliverId",css:"deliverDetail",dialog:{url:"business/deliver/toView.do",width:"850px",height:"500px"}}//投递详情
 	                ],
+	                responseHandler: function (res) {//将搜索结果数量显示到页面中的标题
+	    				var total=res.total;//总数量
+	    				$("#total").html(total);
+	    	            return res;
+	    			},
 	                clickToSelect: true,
 	                columns: [
 				                	//{field: 'statu_msb',checkbox: true},   //复选框
 				                	{field: 'id',title:'id',visible:false}, 
 				                	{field: 'deliverStatus',title:'deliverStatus',visible:false}, 
+				                	{field: 'deliverId',title:'deliverId',visible:false}, 
 				                    {field: 'code',title: '需求编码',align: 'center',valign: 'middle',sortable: true,searchable:true}, //编码
 // 				                    {field: 'name',title: '需求名称',align: 'center',valign: 'middle',sortable: true,searchable:true}, //名称
 				                    {field: 'customerName',title: '公司名称',align: 'center',valign: 'middle',sortable: true,searchable:true}, //客户
@@ -155,11 +164,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	});
 		    	
 		    	function searchByButton(){
+		    		$("#remindDiv").show();
+		    		var keyword = $("#pcName").val();
+		    		if(keyword){
+		    			$("#keywordLable").show();
+		    			$("#keyword").html(keyword);
+		    		}else{
+		    			$("#keywordLable").hide();
+			    		$("#keyword").html("");
+		    		}
+		    		var addressId = $("#addressName").val();
+		    		var addressName = $("#addressName").find("option:selected").text();
+		    		if(addressId){
+		    			$("#span_address").html(addressName);
+		    		}else{
+			    		$("#span_address").html("全部地区");
+		    		}
 		    		$("#table-javascript").search('search-Class','table-javascript','searchDiv');
-		    	}
-		    	
-		    	function unfinish(){
-		    		alert("暂未实现！");
 		    	}
 		    	
     	</script>

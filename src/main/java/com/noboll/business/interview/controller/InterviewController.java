@@ -57,19 +57,19 @@ public class InterviewController extends BaseController<Interview> {
 		return page;
 	}
 
-	// 电话面试（新增、修改），含预约时间
+	// 电话面试（新增、修改）页面，含预约时间
 	@RequestMapping("/toDhInterview")
-	public String toAddInterview(Model model,String id) {
+	public String toDhInterview(Model model,String id) {
 		if (StringUtil.isEmpty(id)) 
 			throw new BusinessException("无投递记录！");
-		// 查找面试记录
-		Interview interview = interviewService.getDhByDeliverId(id);
-		model.addAttribute("interview", interview);
 		// 查找投递记录
 		Deliver deliver = deliverService.getEntity(id);
 		if (null == deliver || StringUtil.isEmpty(deliver.getResumeId())) 
 			throw new BusinessException("无投递记录！");
 		model.addAttribute("deliver", deliver);
+		// 查找面试记录
+		Interview interview = interviewService.getDhByDeliverId(id);
+		model.addAttribute("interview", interview);
 		// 查找简历记录
 		Resume resume = resumeService.getEntity(deliver.getResumeId());
 		model.addAttribute("resume", resume);
@@ -77,11 +77,44 @@ public class InterviewController extends BaseController<Interview> {
 		return "business/interview/interview_dhInterview";
 	}
 
-	// 电话面试（新增、修改），含预约时间，异步返回操作信息
+	// 电话面试（新增、修改）提交，含预约时间，异步返回操作信息
 	@RequestMapping("dhInterview")
 	@ResponseBody
-	public Object addInterview(Interview interview,Resume resume) {
+	public Object dhInterview(Interview interview,Resume resume) {
 		interviewService.saveUpdateDhInterview(interview,resume);
+		return InitUtil.sucessMessage("操作成功");
+	}
+	
+	// 现场面试（新增、修改）页面
+	@RequestMapping("/toXcInterview")
+	public String toXcInterview(Model model,String id) {
+		if (StringUtil.isEmpty(id)) 
+			throw new BusinessException("无投递记录！");
+		// 查找投递记录
+		Deliver deliver = deliverService.getEntity(id);
+		if (null == deliver || StringUtil.isEmpty(deliver.getResumeId())) 
+			throw new BusinessException("无投递记录！");
+		model.addAttribute("deliver", deliver);
+		// 查找现场面试记录
+		Interview interview = interviewService.getXcByDeliverId(id);
+		if (null == interview) {// 新增的时候，默认把电话面试的预约时间带出来作为现场面试的时间
+			interview = new Interview();
+			Interview interviewDh = interviewService.getDhByDeliverId(id);
+			interview.setTime(interviewDh.getNextTime());
+		}
+		model.addAttribute("interview", interview);
+		// 查找简历记录
+		Resume resume = resumeService.getEntity(deliver.getResumeId());
+		model.addAttribute("resume", resume);
+		
+		return "business/interview/interview_xcInterview";
+	}
+
+	// 现场面试（新增、修改）提交，异步返回操作信息
+	@RequestMapping("xcInterview")
+	@ResponseBody
+	public Object xcInterview(Interview interview) {
+		interviewService.saveUpdateXcInterview(interview);
 		return InitUtil.sucessMessage("操作成功");
 	}
 

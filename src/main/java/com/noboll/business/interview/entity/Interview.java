@@ -41,6 +41,7 @@ public class Interview extends BaseEntity  {
 	private String typeName;//类型
 	private String resultName;//结果
 	private String resumeId;//简历
+	private String resultCode;// 结果编码
 	
 	
 	public String getName() {
@@ -144,6 +145,12 @@ public class Interview extends BaseEntity  {
 	}
 	public void setResumeId(String resumeId) {
 		this.resumeId = resumeId;
+	}
+	public String getResultCode() {
+		return resultCode;
+	}
+	public void setResultCode(String resultCode) {
+		this.resultCode = resultCode;
 	}
 	
 	

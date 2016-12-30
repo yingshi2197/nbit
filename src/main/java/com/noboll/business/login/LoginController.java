@@ -54,7 +54,7 @@ public class LoginController {
 				    User user = new User(); 
 				    user.setMenus(menus);
 				    user.setFormal(formal);
-				    user.setCustomerId(user.getCustomerId());
+				    user.setCustomerId(userInfo.getCustomerId());
 				    user.setId(userInfo.getId());
 				    user.setName(userInfo.getName());
 				    user.setLoginId(userInfo.getId());

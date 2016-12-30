@@ -39,7 +39,7 @@
 	<div class="container">
 		<div class="tab-form1">
 			<form action="business/resume/add.do" id="myform"
-				class="form-horizontal" role="form" method="post">
+				class="form-horizontal" role="form" method="post" onsubmit="setJsonValue();">
 				<input type="hidden" name="id"
 					value="<c:out value="${resume.id}" />" /> 
 				<div class="form-group">
@@ -170,13 +170,21 @@
 				
 				<div class="form-group">
 					<div class="col-sm-offset-1 col-sm-11 form-control-1">
-						<!-- 岗位描述-->
+						<!-- 自我简介-->
 						<label for="description" class="control-label">自我简介</label>
 						<textarea class="form-control required-2"
 							name="description" id="description" rows="10" cols="6"
 							placeholder="请输入自我简介"><c:out value="${ resume.description}"/></textarea>
 					</div>
 				</div>
+				
+				<!--项目经历 begin  -->
+				<!-- <div class="col-xs-12 edit_item_title">
+					<img src="http/common/images/resume_img.png" /> <span>工作经历</span>
+					<input type="hidden" name="experienceJson" id="experienceJson">
+				</div>
+				<div id="experienceCondition"></div> -->
+				<!--项目经历 end  -->
 				
 				<div class="tab-form-submit">
 					<button type="submit" class="btn btn-success">
@@ -197,15 +205,34 @@
 	<spring:message code="jsp.include.basejs" />
 	<spring:message code="jsp.include.formjsforback" />
 	<spring:message code="jsp.include.listjsforback" />
+	<spring:message  code="jsp.include.tablejsforback"/>
 	<script type="text/javascript">
 		
-		$(document)	.ready(
-		function() {
+		$(document)	.ready(function() {
 			$("#myform").initForm({});
 		});
 						
 		function closeDialog() {
 			tools.closeDialog();
+		}
+		
+		// 项目经验
+		/* $("#experienceCondition").initTable(
+			{
+				data:[],
+				column:[{"title":"项目名称","prop":"name"},
+				        {"title":"开始时间","prop":"startTime","type":"date:yyyy-MM-dd"},
+				        {"title":"结束时间","prop":"endTime","type":"date:yyyy-MM-dd"},
+				        {"title":"项目描述","prop":"description"},
+				        {"title":"担任职务","prop":"positionId","type":"dialog:{chooseCode:\"positionChooseRadio\",chooseWidth:\"850px\",chooseHeight:\"500px\"}"},
+				        {"title":"职责","prop":"duty"}]
+			}
+		); */
+		
+		function setJsonValue() {
+			/* alert($("#experienceCondition").getTableData());
+			$("#experienceJson").val($("#experienceCondition").getTableData()); */
+			return true;
 		}
 
 	</script>

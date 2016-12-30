@@ -19,6 +19,8 @@ public class Deliver extends BaseEntity  {
 	private Date deliverTime;// 投递时间
 	private String description;
 	private String deleteFlag;
+	private String status;// 投递状态，数据字典：待确认、处理中、投递失败、面试通过、已入职
+	private String interviewStatus;// 面试状态，数据字典：电话面试未接听/不通过/通过，现场面试不通过/通过
 	
 	
 	private String resumeName;// 简历名称
@@ -29,7 +31,10 @@ public class Deliver extends BaseEntity  {
 	private String yearsName;// 工作年限
 	private String degreeName;// 学历
 	private String positionName;// 申请岗位
-	private String customerId;//客户id
+	private String customerId;// 客户id
+	private String statusName;// 投递状态
+	private String interviewStatusName;// 面试状态
+	private String interviewStatusCode;// 面试状态
 	
 	public String getResumeId() {
 		return resumeId;
@@ -115,6 +120,37 @@ public class Deliver extends BaseEntity  {
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getStatusName() {
+		return statusName;
+	}
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+	public String getInterviewStatus() {
+		return interviewStatus;
+	}
+	public void setInterviewStatus(String interviewStatus) {
+		this.interviewStatus = interviewStatus;
+	}
+	public String getInterviewStatusName() {
+		return interviewStatusName;
+	}
+	public void setInterviewStatusName(String interviewStatusName) {
+		this.interviewStatusName = interviewStatusName;
+	}
+	public String getInterviewStatusCode() {
+		return interviewStatusCode;
+	}
+	public void setInterviewStatusCode(String interviewStatusCode) {
+		this.interviewStatusCode = interviewStatusCode;
+	}
+	
 	
 	
 }

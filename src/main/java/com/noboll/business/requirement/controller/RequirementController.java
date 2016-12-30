@@ -13,19 +13,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noboll.business.deliver.entity.Deliver;
 import com.noboll.business.dict.constant.DictConstant;
 import com.noboll.business.dict.entity.Dict;
 import com.noboll.business.dict.entity.QueryBean;
 import com.noboll.business.dict.service.DictService;
+import com.noboll.business.interview.entity.Interview;
 import com.noboll.business.position.entity.Position;
 import com.noboll.business.position.service.PositionService;
 import com.noboll.business.requirement.constant.RequirementConstant;
 import com.noboll.business.requirement.entity.Requirement;
 import com.noboll.business.requirement.service.RequirementService;
+import com.noboll.business.resume.entity.Resume;
 import com.noboll.context.SystemContext;
 import com.noboll.core.base.controller.BaseController;
 import com.noboll.core.base.entity.Page;
 import com.noboll.core.base.entity.QueryParam;
+import com.noboll.core.exception.BusinessException;
+import com.noboll.core.util.StringUtil;
 import com.noboll.util.InitUtil;
 
 @Controller
@@ -99,7 +104,7 @@ public class RequirementController extends BaseController<Requirement> {
 	public String toSearchListRequirement(HttpServletRequest request,Model model) {
 		// 准备左侧查询条件数据字典
 		List<QueryBean> conditionList = new ArrayList<QueryBean>();// 这里为什么不用map，因为map无序，无法控制前端显示顺序
-		// 职位类别-级联
+		// 职位类别-职位-级联
 		List<Dict> positionTypeList = dictService.queryByTypeCode(DictConstant.DICT_TYPE_CODE_POSITION_TYPE);
 		List<Position> positionList = positionService.getAllEntity(new HashMap<String, Object>());// 职位
 		Map<String, List<Position>> positionMap = new HashMap<String, List<Position>>();
@@ -152,7 +157,7 @@ public class RequirementController extends BaseController<Requirement> {
 	@ResponseBody
 	public Object publish(String id) {
 		requirementService.publish(id);
-		return InitUtil.sucessMessage("操作成功");
+		return InitUtil.sucessMessage("发布成功");
 	}
 	
 	// 异步返回操作信息
@@ -161,5 +166,14 @@ public class RequirementController extends BaseController<Requirement> {
 	public Object finish(String id) {
 		requirementService.finish(id);
 		return InitUtil.sucessMessage("操作成功");
+	}
+	
+	// 跳转到详情页面
+	@RequestMapping("/toView")
+	public String toView(Model model,String id) {
+		// 需求信息
+		Requirement requirement = requirementService.getEntity(id);
+		model.addAttribute("requirement", requirement);
+		return "business/requirement/requirement_view";
 	}
 }

@@ -28,5 +28,15 @@ public interface InterviewService extends BaseService<Interview> {
 	 */
 	public void saveUpdateDhInterview(Interview interview, Resume resume);
 
+	/**
+	 * 通过投递记录id得到现场面试记录
+	 */
+	public Interview getXcByDeliverId(String deliverId);
+
+	/**
+	 * 新增\修改电话现场记录
+	 */
+	public void saveUpdateXcInterview(Interview interview);
+
 
 }

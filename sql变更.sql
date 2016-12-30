@@ -114,6 +114,8 @@ create table deliver
    last_modify_user_id  varchar(40),
    last_modify_time     datetime,
     delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
+    status				varchar(40) comment '投递状态，数据字典',
+    interview_status	varchar(40) comment '面试状态，数据字典',
    primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

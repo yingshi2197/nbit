@@ -125,14 +125,14 @@
 	<select id="getSearchList" resultType="list" parameterType="map"
 		resultMap="requirement.result">
 		select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName,
-		case when de.user_id is null or de.user_id='' then '0' else '1' end deliverStatus,c.name customerName
+		case when de.user_id is null or de.user_id='' then '0' else '1' end deliverStatus,de.id deliverId,c.name customerName
 			 from 
 			 	requirement q
 			 left join dict d1 on d1.id=q.period
 			  left join dict d2 on d2.id=q.address
 			   left join dict d3 on d3.id=q.level
 			   left join position d4 on d4.id=q.position_id
-			   left join (select de.requirement_id,re.user_id from deliver de
+			   left join (select de.requirement_id,re.user_id,de.id from deliver de
 				   left join resume re on re.id = de.resume_id and re.delete_flag='0'
 				   where de.delete_flag='0' and re.user_id = #{userId}
 			   ) de on de.requirement_id = q.id

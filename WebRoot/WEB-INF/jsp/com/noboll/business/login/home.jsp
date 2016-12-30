@@ -62,7 +62,7 @@
 						aria-haspopup="true" aria-expanded="false">简历<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<li><a id="resumeHref" class="click_a" href="javascript:void(0);"  url="business/resume/toList.do">我的简历</a></li>
+							<li><a id="resumeHref" class="click_a" href="javascript:void(0);"  url="business/resume/toMyList.do">我的简历</a></li>
 							<li><a id="resumeSearchHref" class="click_a" href="javascript:void(0);"  url="business/resume/toSearchList.do">简历搜索</a></li>
 						</ul>
 					</li>

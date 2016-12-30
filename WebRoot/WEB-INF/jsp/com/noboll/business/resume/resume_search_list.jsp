@@ -70,9 +70,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  		<!-- 左侧：分类条件 end -->
 	  		<!-- 右侧：列表 begin -->
 	  		<div class="col-xs-9">
-				<div class="row">
+				<div class="row"  style="padding:20px;">
   					<form id="myform">
-						<select class="search-Class select searchingSelect" placeholder="地区" dictCode="address" name="intentionName" style="display:inline;"></select>
+						<select class="search-Class select searchingSelect" placeholder="地区" dictCode="address" name="intentionName" id="intentionName" style="display:inline;"></select>
 <!-- 						<select class="search-Class select searchingSelect" placeholder="工作年限" dictCode="work_life" name="yearsName" style="display:inline;"></select> -->
 						<input placeholder="输入简历姓名或者求职岗位搜索" name="pyName" id="pyName" class="search-Class searchingTxt" type="text"/>
 						<!-- 左侧查询条件 -->
@@ -93,8 +93,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="tab-content" id="tab-content">
 						<div role="tabpanel" class="tab-pane active" id="home">
 							<div class="longTop">
-								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-								Hi，您目前在 <span id="span_address">全站</span> 搜索关键字 “ <b class=" cc20000"><span id="keyword"></span></b> ”，共找到 <span id="total"></span> 个内容。
+								<span style="display:none" id="remindDiv">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									Hi，您目前在<span id="span_address" class=" cc20000">所有地区</span><lable id="keywordLable">通过关键字 “<b class=" cc20000" id="keyword"></b> ”</lable>搜索简历，共找到 <span id="total"></span> 个内容。
+								</span>	
 							</div>
 							<div class="table-responsive">
 								<table id="table-javascript" ></table>
@@ -135,6 +137,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
 	                	{name:'简历详情',position:'row',css:"resumeDetail",a:'',func:unfinish,url:""}//简历详情
 	                ],
+	                responseHandler: function (res) {//将搜索结果数量显示到页面中的标题
+	    				var total=res.total;//总数量
+	    				$("#total").html(total);
+	    	            return res;
+	    			},
 	                clickToSelect: true,
 	                columns: [
 				                	//{field: 'statu_msb',checkbox: true},   //复选框
@@ -152,6 +159,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	});
 		    	
 		    	function searchByButton(){
+		    		$("#remindDiv").show();
+		    		var keyword = $("#pyName").val();
+		    		if(keyword){
+		    			$("#keywordLable").show();
+		    			$("#keyword").html(keyword);
+		    		}else{
+		    			$("#keywordLable").hide();
+			    		$("#keyword").html("");
+		    		}
+		    		var intentionId = $("#intentionName").val();
+		    		var intentionName = $("#intentionName").find("option:selected").text();
+		    		if(intentionId){
+		    			$("#span_address").html(intentionName);
+		    		}else{
+			    		$("#span_address").html("全部地区");
+		    		}
 		    		$("#table-javascript").search('search-Class','table-javascript','searchDiv');
 		    	}
 		    	

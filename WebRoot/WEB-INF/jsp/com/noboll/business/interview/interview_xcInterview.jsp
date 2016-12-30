@@ -18,7 +18,7 @@
 
 <base href="<%=basePath%>">
 
-<title>电话面试</title>
+<title>现场面试</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -38,7 +38,7 @@
 <body>
 	<div class="container">
 		<div class="tab-form1">
-			<form action="business/interview/dhInterview.do" id="myform"
+			<form action="business/interview/xcInterview.do" id="myform"
 				class="form-horizontal" role="form" method="post">
 				<input type="hidden" name="resumeId"
 					value="<c:out value="${resume.id}" />" />
@@ -46,52 +46,6 @@
 					value="<c:out value="${interview.id}" />" />
 				<input type="hidden" name="deliverId"
 					value="<c:out value="${deliver.id}" />" />
-				
-				<div class="table-responsive">
-					<div class="panel-heading-choose">确认简历信息</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="birthday" class="col-xs-2 control-label">出生日期</label>
-					<div class="col-xs-4 form-control-1">
-                 	  <input type="text"  class="form-control required date" name="birthday" id="birthday"  format="yyyy-MM-dd"
-			             placeholder="请输入出生日期"
-			             value="<fmt:formatDate value="${resume.birthday}" type="both" pattern="yyyy-MM-dd"/>"  readonly/>
-                   </div>
-                   <label for="years" class="col-xs-2 control-label">工作年限</label>
-					<div class="col-xs-4 form-control-1">
-						<select class="form-control select required" dictCode="work_life" name="years"  dictValue="<c:out value="${resume.years}" />">
-						</select>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="school" class="col-xs-2 control-label">毕业院校</label>
-					<div class="col-xs-4 form-control-1">
-						<input type="text" class="form-control required" name="school"
-							id="school" 	placeholder="请输入毕业院校"	 value="<c:out value="${resume.school}" />" maxlength="200" />
-					</div>
-					<label for="finishTime" class="col-xs-2 control-label">毕业时间</label>
-					<div class="col-xs-4 form-control-1">
-						<input type="text"  class="form-control required date" name="finishTime" id="finishTime"  format="yyyy-MM-dd"
-			             placeholder="请输入毕业时间"
-			             value="<fmt:formatDate value="${resume.finishTime}" type="both" pattern="yyyy-MM-dd"/>"  readonly/>
-					</div>
-				</div>	
-				
-				<div class="form-group">
-					<label for="degree" class="col-xs-2 control-label">学历</label>
-					<div class="col-xs-4 form-control-1">
-						<select class="form-control select required" dictCode="degree" name="degree"  dictValue="<c:out value="${resume.degree}" />">
-						</select>
-					</div>
-					<label for="pay" class="col-xs-2 control-label">期望薪资</label>
-					<div class="col-xs-4 form-control-1">
-						<select class="form-control select required" dictCode="pay" name="pay"  dictValue="<c:out value="${resume.pay}" />">
-						</select>
-					</div>
-				</div>
-				
 				
 				<div class="table-responsive">
 					<div class="panel-heading-choose">面试信息</div>
@@ -112,15 +66,15 @@
 				<div class="form-group">
 					<label for="result" class="col-xs-2 control-label">面试结果</label>
 					<div class="col-xs-4 form-control-1">
-						<select class="form-control select required" dictCode="dhms" name="result" id="result"
+						<select class="form-control select required" dictCode="xcms" name="result" id="result"
 						dictValue="<c:out value="${interview.result}" />">
 						</select>
 					</div>
 					<div id="nextTimeDiv" style="display:none">
-						<label for="nextTime" class="col-xs-2 control-label">预约面试时间</label>
+						<label for="nextTime" class="col-xs-2 control-label">预约入职时间</label>
 						<div class="col-xs-4 form-control-1">
 							<input type="text"  class="form-control required date" name="nextTime" id="nextTime"  format="yyyy-MM-dd HH:mm"
-				             placeholder="请选择预约时间"
+				             placeholder="请选择预约入职时间"
 				             value="<fmt:formatDate value="${interview.nextTime}" type="both" pattern="yyyy-MM-dd HH:mm"/>"  readonly/>
 						</div>
 					</div>
@@ -167,7 +121,6 @@
 			$("#myform").initForm({});
 		});
 						
-		
 		function closeDialog() {
 			tools.closeDialog();
 		}
@@ -179,14 +132,14 @@
 		
 		
 		function handlerResult(result){
-			var allResult = tools.getValueForDict("dhms");
+			var allResult = tools.getValueForDict("xcms");
 			$.each(allResult,function() {
 				if(this.id == result){
-					if("dhmstg" == this.code){// 通过
+					if("xcmstg" == this.code){// 通过
 						$("#nextTimeDiv").show();
 						$("#nextTime").addClass("required");
 						$("#nextTime").siblings(".redStar").show();
-					}else{//不通过、未接听、未选择
+					}else{//不通过
 						$("#nextTimeDiv").hide();
 						$("#nextTime").removeClass("required");
 						$("#nextTime").siblings(".redStar").hide();

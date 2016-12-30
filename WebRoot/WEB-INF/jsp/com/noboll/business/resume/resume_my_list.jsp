@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <base href="<%=basePath%>">
     
-    <title>投递管理-求职者</title>
+    <title>我的简历</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<div class="container">
 	  		 <div class="table-responsive">
-				<div class="panel-heading-choose">我的投递列表</div>
+				<div class="panel-heading-choose">我的简历</div>
 			  	<div id="searchDiv"></div>
 				<table id="table-javascript" ></table>
 	    	</div>
@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		       	$("#table-javascript").initBootTable({
 		       		method: 'post',
 		       		searchDiv:"searchDiv",
-	                url: 'business/deliver/myList.do',
+	                url: 'business/resume/myList.do',
 	                addUrl:"",
 	                striped: true,
 	                pagination: true,
@@ -52,19 +52,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-	                            {name:'详情',position:'row',select:"",css:"view",dialog:{url:"business/deliver/toView.do",width:"850px",height:"500px"}},//详情
-//                             {name:'评价',position:'top',select:"",css:"add",dialog:{url:"business/evaluate/toAdd.do",width:"850px",height:"500px"}}//评价
+                        {name:'新增简历',position:'top',select:"",css:"add",dialog:{url:"business/resume/toAdd.do",width:"1000px",height:"500px"}},//新增
+	                	{name:'完善简历',resume:'row',css:"edit",a:'',dialog:{url:"business/resume/toEdit.do",width:"1000px",height:"500px"}}//修改	
 	                ],
 	                clickToSelect: true,
 	                columns: [
 				                	//{field: 'statu_msb',checkbox: true},   //复选框
 				                	{field: 'id',title:'id',visible:false}, 
-				                    {field: 'customerName',title: '公司名称',align: 'center',valign: 'middle',searchable:true}, //公司名称
-				                    {field: 'requirementName',title: '需求名称',align: 'center',valign: 'middle'}, //需求名称
-				                    {field: 'addressName',index:'address',title: '地址',align: 'left',valign: 'top'},	//地址
-				                    {field: 'positionName',title: '申请岗位',align: 'center',valign: 'middle',searchable:true}, //招聘岗位
-				                    {field: 'status',formatter:"dictCode:deliver_status",title: '投递状态',align: 'left',valign: 'top',searchable:true,type:'select:deliver_status',selectCode:"id"},//学历
-				                    {field: 'deliverTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '投递时间',align: 'left',valign: 'top'}	//上传时间
+				                    {field: 'name',title: '姓名',align: 'center',valign: 'middle',searchable:true}, //名称
+				                    {field: 'sexName',index:"sex",title: '性别',align: 'center',valign: 'middle'}, //性别
+				                    {field: 'mobile',title: '联系电话',align: 'center',valign: 'middle',searchable:true}, //名称
+				                    {field: 'yearsName',title: '工作年限',align: 'center',valign: 'middle',searchable:true}, //工作年限
+				                    {field: 'address',index:'address',title: '住址',align: 'left',valign: 'top'},	//住址
+				                    {field: 'degreeName',title: '学历',align: 'left',valign: 'top'},//描述
+				                    {field: 'createTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '创建时间',align: 'left',valign: 'top'}	//上传时间
 				                  ]
 	            	});
 		    	});

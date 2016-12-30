@@ -1,5 +1,8 @@
 package com.noboll.business.interview.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -84,5 +87,78 @@ public class InterviewServiceImpl extends BaseServiceImpl<Interview>
 			this.updateEntity(interview);
 		}
 		
+		// 修改投递状态，以及投递面试状态
+		Dict dictResult = dictService.getEntity(interview.getResult());
+		String deliverStatus = this.getDeliverStatusByResult(dictResult);
+		deliver.setStatus(deliverStatus);
+		deliver.setInterviewStatus(dictResult.getId());
+		deliverService.updateStatus(deliver);
+	}
+	
+	/**
+	 * 通过面试结果得到投递状态<br>
+	 * <li>电话面试通过：处理中</li>
+	 * <li>电话面试未接听：回到待确认状态</li>
+	 * <li>电话面试/现场面试不通过：投递失败</li>
+	 * <li>现场面试通过：面试通过</li>
+	 */
+	private String getDeliverStatusByResult(Dict dictResult){
+		String code = dictResult.getCode();
+		List<String> success = new ArrayList<String>();
+		success.add("xcmstg");
+		success.add("dhmstg");
+		Dict dictDeliverStatus = null;
+		if (DictConstant.DICT_CODE_DHMSTG.equals(code)) {
+			// 电话面试通过：处理中
+			dictDeliverStatus = dictService.getByCode(DictConstant.DICT_CODE_DELIVER_INHAND);
+		}else if(DictConstant.DICT_CODE_DHMSWJT.equals(code)){
+			// 电话面试未接听：待确认
+			dictDeliverStatus = dictService.getByCode(DictConstant.DICT_CODE_DELIVER_DAIQUEREN);
+		}else if(DictConstant.DICT_CODE_DHMSBTG.equals(code) || DictConstant.DICT_CODE_XCMSBTG.equals(code)){
+			// 电话面试不通过/现场面试不通过：投递失败
+			dictDeliverStatus = dictService.getByCode(DictConstant.DICT_CODE_DELIVER_FAIL);
+		}else if(DictConstant.DICT_CODE_XCMSTG.equals(code)){
+			// 现场面试通过：面试通过
+			dictDeliverStatus = dictService.getByCode(DictConstant.DICT_CODED_DELIVER_INTERVIEWTG);
+		}
+		return dictDeliverStatus.getId();
+	}
+	
+	/**
+	 * 通过投递记录id得到现场面试记录
+	 */
+	public Interview getXcByDeliverId(String deliverId){
+		return interviewDao.getByDeliverIdAndType(deliverId,DictConstant.DICT_CODE_XCMS);
+	}
+	
+	/**
+	 * 新增\修改电话现场记录
+	 */
+	public void saveUpdateXcInterview(Interview interview){
+		// 查找投递记录
+		if (StringUtil.isEmpty(interview.getDeliverId()))
+			throw new BusinessException("无投递记录！");
+		Deliver deliver = deliverService.getEntity(interview.getDeliverId());
+		if (null == deliver || StringUtil.isEmpty(deliver.getResumeId())) 
+			throw new BusinessException("无投递记录！");
+		// 更新简历信息
+		Resume resumeData = resumeService.getEntity(deliver.getResumeId());
+				
+		Dict dict = dictService.getByCode(DictConstant.DICT_CODE_XCMS);// 电话面试
+		if (StringUtil.isEmpty(interview.getId())) {
+			interview.setType(dict.getId());
+			interview.setUserId(resumeData.getUserId());
+			interview.setCustomerId(deliver.getCustomerId());
+			this.saveEntity(interview);
+		}else{
+			this.updateEntity(interview);
+		}
+		
+		// 修改投递状态，以及投递面试状态
+		Dict dictResult = dictService.getEntity(interview.getResult());
+		String deliverStatus = this.getDeliverStatusByResult(dictResult);
+		deliver.setStatus(deliverStatus);
+		deliver.setInterviewStatus(dictResult.getId());
+		deliverService.updateStatus(deliver);
 	}
 }
