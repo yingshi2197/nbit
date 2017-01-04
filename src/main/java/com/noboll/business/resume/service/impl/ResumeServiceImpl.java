@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.noboll.business.experience.entity.Experience;
+import com.noboll.business.experience.service.ExperienceService;
 import com.noboll.business.position.service.PositionService;
 import com.noboll.business.resume.dao.ResumeDao;
 import com.noboll.business.resume.entity.Resume;
@@ -13,6 +15,7 @@ import com.noboll.business.resumePosition.service.ResumePositionService;
 import com.noboll.context.SystemContext;
 import com.noboll.core.base.dao.BaseDao;
 import com.noboll.core.base.service.impl.BaseServiceImpl;
+import com.noboll.core.util.JsonUtil;
 import com.noboll.core.util.StringUtil;
 
 @Service("resumeService")
@@ -26,6 +29,8 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 	private ResumePositionService resumePositionService;
 	@Resource
 	private ResumeIntentionService resumeIntentionService;
+	@Resource
+	private ExperienceService experienceService;
 	
 	@Override
 	public BaseDao<Resume> getBaseDao() {
@@ -51,6 +56,10 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 			resumeIntentionService.batchInsert(resume.getId(),intentions);
 		}
 		
+		// 简历工作经验
+		String experienceJson = resume.getExperienceJson();
+		Experience[] experiences = JsonUtil.jsonToObject(experienceJson, Experience[].class);
+		experienceService.batchInsert(resume.getId(),experiences);
 	}
 
 	@Override
@@ -73,6 +82,12 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 			String[] intentions = intentionIds.split(",");
 			resumeIntentionService.batchInsert(resume.getId(),intentions);
 		}
+		
+		// 简历工作经验
+		experienceService.deleteByResumeId(resume.getId());
+		String experienceJson = resume.getExperienceJson();
+		Experience[] experiences = JsonUtil.jsonToObject(experienceJson, Experience[].class);
+		experienceService.batchInsert(resume.getId(),experiences);
 	}
 	
 }

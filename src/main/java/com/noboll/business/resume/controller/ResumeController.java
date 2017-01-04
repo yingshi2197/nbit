@@ -18,6 +18,8 @@ import com.noboll.business.dict.constant.DictConstant;
 import com.noboll.business.dict.entity.Dict;
 import com.noboll.business.dict.entity.QueryBean;
 import com.noboll.business.dict.service.DictService;
+import com.noboll.business.experience.entity.Experience;
+import com.noboll.business.experience.service.ExperienceService;
 import com.noboll.business.position.entity.Position;
 import com.noboll.business.position.service.PositionService;
 import com.noboll.business.resume.entity.Resume;
@@ -26,6 +28,7 @@ import com.noboll.context.SystemContext;
 import com.noboll.core.base.controller.BaseController;
 import com.noboll.core.base.entity.Page;
 import com.noboll.core.base.entity.QueryParam;
+import com.noboll.core.util.JsonUtil;
 import com.noboll.core.util.StringUtil;
 import com.noboll.util.InitUtil;
 
@@ -39,6 +42,8 @@ public class ResumeController extends BaseController<Resume> {
 	private PositionService positionService;
 	@Resource
 	private DictService dictService;
+	@Resource
+	private ExperienceService experienceService;
 	
 	// 跳转到列表页面
 	@RequestMapping("/toList")
@@ -94,6 +99,11 @@ public class ResumeController extends BaseController<Resume> {
 	public String toEditResume(Model model, String id) {
 		Resume resume = resumeService.getEntity(id);
 		model.addAttribute("resume", resume);
+		List<Experience> experiences = experienceService.getByResumeId(id);
+		if (null != experiences &&experiences.size()>0)
+			resume.setExperienceJson(JsonUtil.objToJson(experiences));
+		else
+			resume.setExperienceJson("");
 		return "business/resume/resume_edit";
 	}
 

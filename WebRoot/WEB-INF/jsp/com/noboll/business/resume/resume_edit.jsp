@@ -32,6 +32,9 @@
   margin-right: -40px;
   margin-left: -60px;
 }
+.table-td-css{
+ vertical-align: middle;
+}
 </style>
 </head>
 
@@ -39,7 +42,7 @@
 	<div class="container">
 		<div class="tab-form1">
 			<form action="business/resume/edit.do" id="myform"
-				class="form-horizontal" role="form" method="post">
+				class="form-horizontal" role="form" method="post" onsubmit="setJsonValue();">
 				<input type="hidden" name="id"
 					value="<c:out value="${resume.id}" />" /> 
 				<div class="form-group">
@@ -51,7 +54,7 @@
 					<label for="name" class="col-xs-2 control-label">求职岗位</label>
 					<div class="col-xs-4 form-control-1">
 						<input type="hidden" class="form-control required" name="positionIds" id="positionIds" value="<c:out value="${resume.positionIds}" />"/>
-						<input type="text" class="form-control" name="positionNames"
+						<input type="text" class="form-control" name="positionNames" readonly
 							id="positionNames" 	placeholder="请选择求职岗位"	 value="<c:out value="${resume.positionNames}" />" maxlength="200" />
 						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="positionChoose"  chooseField="id,name" chooseId="positionIds" 
 				         chooseValue="positionNames" chooseWidth="850px" chooseHeight="500px"></a>
@@ -112,7 +115,7 @@
 					<label for="name" class="col-xs-2 control-label">意向地区</label>
 					<div class="col-xs-4 form-control-1">
 						<input type="hidden" class="form-control required" name="intentionIds" id="intentionIds" value="<c:out value="${resume.intentionIds}" />"/>
-						<input type="text" class="form-control" name="intentionNames"
+						<input type="text" class="form-control" name="intentionNames" readonly
 							id="intentionNames" 	placeholder="请选择意向地区"	 value="<c:out value="${resume.intentionNames}" />" maxlength="200" />
 						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="intentionChoose"  chooseField="id,name" chooseId="intentionIds" 
 				         chooseValue="intentionNames" chooseWidth="850px" chooseHeight="500px"></a>
@@ -188,6 +191,14 @@
 					</div>
 				</div>
 				
+				<!--项目经历 begin  -->
+				<div class="col-xs-12 edit_item_title">
+					<img src="http/common/images/resume_img.png" /> <span>项目经历</span>
+					<input type="hidden" name="experienceJson" id="experienceJson">
+				</div>
+				<div id="experienceCondition"></div>
+				<!--项目经历 end  -->
+				
 				<div class="tab-form-submit">
 					<button type="submit" class="btn btn-success">
 						提交
@@ -207,15 +218,36 @@
 	<spring:message code="jsp.include.basejs" />
 	<spring:message code="jsp.include.formjsforback" />
 	<spring:message code="jsp.include.listjsforback" />
+	<spring:message  code="jsp.include.tablejsforback"/>
 	<script type="text/javascript">
 		
 		$(document)	.ready(
 		function() {
 			$("#myform").initForm({});
+			
+			var experienceJson = '<c:out value="${ resume.experienceJson}" escapeXml="false"/>';
+			var data = [];
+			if(experienceJson)
+				data = tools.jsonToObj(experienceJson);
+			// 项目经验
+			$("#experienceCondition").initTable({
+					data:data,
+					column:[{"title":"项目名称","prop":"name"},
+					        {"title":"开始时间","prop":"startTime","type":"date:yyyy-MM-dd"},
+					        {"title":"结束时间","prop":"endTime","type":"date:yyyy-MM-dd"},
+					        {"title":"担任职务","prop":"positionId","type":"dialog:{nameFiled:\"positionName\",chooseCode:\"positionChooseRadio\",chooseWidth:\"850px\",chooseHeight:\"500px\"}"},
+					        {"title":"职责","prop":"duty","type":"textarea:{rows:\"5\",width:\"150px\"}"},
+					        {"title":"项目描述","prop":"description","type":"textarea:{rows:\"5\",width:\"150px\"}"}]
+			});
 		});
 						
 		function closeDialog() {
 			tools.closeDialog();
+		}
+		
+		function setJsonValue() {
+			$("#experienceJson").val($("#experienceCondition").getTableData());
+			return true;
 		}
 
 	</script>
