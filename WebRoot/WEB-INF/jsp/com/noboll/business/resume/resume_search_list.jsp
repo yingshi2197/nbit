@@ -95,7 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<div class="longTop">
 								<span style="display:none" id="remindDiv">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-									Hi，您目前在<span id="span_address" class=" cc20000">所有地区</span><lable id="keywordLable">通过关键字 “<b class=" cc20000" id="keyword"></b> ”</lable>搜索简历，共找到 <span id="total"></span> 个内容。
+									Hi，您目前在<span id="span_address" class=" cc20000">所有地区</span><label id="keywordLabel">通过关键字 “<b class=" cc20000" id="keyword"></b> ”</label>搜索简历，共找到 <span id="total"></span> 个内容。
 								</span>	
 							</div>
 							<div class="table-responsive">
@@ -162,10 +162,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		$("#remindDiv").show();
 		    		var keyword = $("#pyName").val();
 		    		if(keyword){
-		    			$("#keywordLable").show();
+		    			$("#keywordLabel").show();
 		    			$("#keyword").html(keyword);
 		    		}else{
-		    			$("#keywordLable").hide();
+		    			$("#keywordLabel").hide();
 			    		$("#keyword").html("");
 		    		}
 		    		var intentionId = $("#intentionName").val();

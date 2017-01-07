@@ -11,10 +11,12 @@ import com.noboll.business.resume.dao.ResumeDao;
 import com.noboll.business.resume.entity.Resume;
 import com.noboll.business.resume.service.ResumeService;
 import com.noboll.business.resumeIntention.service.ResumeIntentionService;
+import com.noboll.business.resumeLabel.service.ResumeLabelService;
 import com.noboll.business.resumePosition.service.ResumePositionService;
 import com.noboll.context.SystemContext;
 import com.noboll.core.base.dao.BaseDao;
 import com.noboll.core.base.service.impl.BaseServiceImpl;
+import com.noboll.core.exception.BusinessException;
 import com.noboll.core.util.JsonUtil;
 import com.noboll.core.util.StringUtil;
 
@@ -31,6 +33,8 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 	private ResumeIntentionService resumeIntentionService;
 	@Resource
 	private ExperienceService experienceService;
+	@Resource
+	private ResumeLabelService resumeLabelService;
 	
 	@Override
 	public BaseDao<Resume> getBaseDao() {
@@ -58,8 +62,17 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 		
 		// 简历工作经验
 		String experienceJson = resume.getExperienceJson();
+		if(StringUtil.isEmpty(experienceJson))
+			throw new BusinessException("请至少添加一条项目经验！");
 		Experience[] experiences = JsonUtil.jsonToObject(experienceJson, Experience[].class);
 		experienceService.batchInsert(resume.getId(),experiences);
+		
+		// 简历标签处理
+		String label = resume.getLabel();
+		if (!StringUtil.isEmpty(label)) {
+			String[] labels = label.split(",");
+			resumeLabelService.batchInsert(resume.getId(),labels);
+		}
 	}
 
 	@Override
@@ -86,8 +99,18 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 		// 简历工作经验
 		experienceService.deleteByResumeId(resume.getId());
 		String experienceJson = resume.getExperienceJson();
+		if(StringUtil.isEmpty(experienceJson))
+			throw new BusinessException("请至少添加一条项目经验！");
 		Experience[] experiences = JsonUtil.jsonToObject(experienceJson, Experience[].class);
 		experienceService.batchInsert(resume.getId(),experiences);
+		
+		// 简历标签处理
+		resumeLabelService.deleteByResumeId(resume.getId());
+		String label = resume.getLabel();
+		if (!StringUtil.isEmpty(label)) {
+			String[] labels = label.split(",");
+			resumeLabelService.batchInsert(resume.getId(),labels);
+		}
 	}
 	
 }

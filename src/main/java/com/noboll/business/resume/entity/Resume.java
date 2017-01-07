@@ -47,6 +47,7 @@ public class Resume extends BaseEntity {
 	private String intentionNames;//意向地区
 	
 	private String experienceJson;// 工作经历
+	private String label;// 标签
 	// Property accessors
 	public String getName() {
 		return name;
@@ -209,6 +210,12 @@ public class Resume extends BaseEntity {
 	}
 	public void setExperienceJson(String experienceJson) {
 		this.experienceJson = experienceJson;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	

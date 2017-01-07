@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.label.dao.LabelDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.label.entity.Label" resultMap="label.result">
+        <![CDATA[
+           	select p.*
+			 from 
+			 	label p
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.label.entity.Label">
+		update label 
+		set
+			name = #{name},
+			ename = #{ename},code = #{code},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.label.entity.Label">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into label
+		(id, name, ename,code,description,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, #{ename},#{code},#{description},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update label set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="label.result">
+		select p.*
+	 	from 
+		 	label p
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('name')">
+			and p.name LIKE CONCAT('%',
+			CONCAT(#{name,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('ename')">
+			and p.ename LIKE CONCAT('%',
+			CONCAT(#{ename,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('code')">
+			and p.code LIKE CONCAT('%',
+			CONCAT(#{code,jdbcType=VARCHAR}, '%'))
+		</if>
+		order by p.create_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="label.result">
+    	select p.*
+	 	from 
+		 	label p
+    	where p.delete_flag='0'
+    </select>
+    
+    <!-- 随机查找一定数量的 标签 -->
+	<select id="getChooseList" resultType="list"  parameterType="map" resultMap="label.result">
+    	SELECT * FROM (
+			SELECT id,name ,RAND() AS newno FROM label GROUP BY id 
+		)AS t ORDER BY t.newno asc LIMIT #{limit}
+    </select>
+
+</mapper>

@@ -27,6 +27,7 @@
 <spring:message code="jsp.include.basecss" />
 <spring:message code="jsp.include.formccforback" />
 <spring:message code="jsp.include.listcssforback" />
+<spring:message code="jsp.include.tagscssforback" /> 
 <style type="text/css">
 .form-horizontal .form-group {
   margin-right: -40px;
@@ -171,15 +172,12 @@
 					</div>
 				</div>
 				
-				
-				
-				<%-- <div class="form-group">
-					<label class="col-xs-2 control-label">应聘岗位</label>
-					<div class="col-xs-4 form-control-1">
-						<input type="text" class="form-control "   readonly="readonly"
-							value="<c:out value="${resume.positionName}" />" maxlength="100"/>
+				<div class="form-group">
+					<label for="label" class="col-xs-2 control-label">标签</label>
+					<input type="hidden" class="form-control required" name="label" id="label">
+					<div class="col-xs-10 form-control-1" id="myTags">
 					</div>
-				</div> --%>
+				</div>
 				
 				<div class="form-group">
 					<div class="col-sm-offset-1 col-sm-11 form-control-1">
@@ -219,17 +217,18 @@
 	<spring:message code="jsp.include.formjsforback" />
 	<spring:message code="jsp.include.listjsforback" />
 	<spring:message  code="jsp.include.tablejsforback"/>
+	<spring:message  code="jsp.include.tagsjsforback"/>
 	<script type="text/javascript">
 		
 		$(document)	.ready(
 		function() {
 			$("#myform").initForm({});
 			
+			// 项目经验
 			var experienceJson = '<c:out value="${ resume.experienceJson}" escapeXml="false"/>';
 			var data = [];
 			if(experienceJson)
 				data = tools.jsonToObj(experienceJson);
-			// 项目经验
 			$("#experienceCondition").initTable({
 					data:data,
 					column:[{"title":"项目名称","prop":"name"},
@@ -239,6 +238,19 @@
 					        {"title":"职责","prop":"duty","type":"textarea:{rows:\"5\",width:\"150px\"}"},
 					        {"title":"项目描述","prop":"description","type":"textarea:{rows:\"5\",width:\"150px\"}"}]
 			});
+			
+			// 标签
+			var resumeLabels = '<c:out value="${ resumeLabels}" escapeXml="false"/>';
+			var labelData = [];
+			if(resumeLabels)
+				labelData = tools.jsonToObj(resumeLabels);
+			$("#myTags").initTags({
+				maxTips:8, // 最多可以选择的标签个数
+				selects:labelData,
+				updateUrl:"business/label/choose.do",//换一换的数据链接
+				pageCount:10//候选区每次显示多少条数据
+			});
+			
 		});
 						
 		function closeDialog() {
@@ -247,6 +259,7 @@
 		
 		function setJsonValue() {
 			$("#experienceJson").val($("#experienceCondition").getTableData());
+			$("#label").val($("#myTags").getTipsId());
 			return true;
 		}
 

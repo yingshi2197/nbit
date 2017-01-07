@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.customerLabel.dao.CustomerLabelDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.customerLabel.entity.CustomerLabel" resultMap="customerLabel.result">
+        <![CDATA[
+           	select p.*
+			 from 
+			 	customer_label p
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.customerLabel.entity.CustomerLabel">
+		update customer_label 
+		set
+			customer_id = #{customerId},
+			label_id = #{labelId},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.customerLabel.entity.CustomerLabel">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into customer_label
+		(id, customer_id, label_id,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{customerId}, #{labelId},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update customer_label set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="customerLabel.result">
+		select p.*
+	 	from 
+		 	customer_label p
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('customerId')">
+			and p.customer_id LIKE CONCAT('%',
+			CONCAT(#{customerId,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('labelId')">
+			and p.label_id LIKE CONCAT('%',
+			CONCAT(#{labelId,jdbcType=VARCHAR}, '%'))
+		</if>
+		order by p.create_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="customerLabel.result">
+    	select p.*
+	 	from 
+		 	customer_label p
+    	where p.delete_flag='0'
+    </select>
+
+</mapper>
