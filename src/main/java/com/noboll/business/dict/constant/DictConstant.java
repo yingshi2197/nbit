@@ -60,5 +60,7 @@ public class DictConstant {
 	public static final String DICT_CODED_DELIVER_INTERVIEWTG = "deliver_interviewtg";
 	/** 已入职 */
 	public static final String DICT_CODE_DELIVER_ENTRANT = "deliver_entrant";
+	/** 已离职 */
+	public static final String DICT_CODE_DELIVER_LEAVE = "deliver_leave";
 	
 }

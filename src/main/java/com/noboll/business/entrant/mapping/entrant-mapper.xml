@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.entrant.dao.EntrantDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.entrant.entity.Entrant" resultMap="entrant.result">
+        <![CDATA[
+           	select i.*,po.name positionName
+			from entrant i
+			left join position po on po.id = i.position_id and po.delete_flag='0'
+			 where 
+				 i.delete_flag='0' 
+				 and i.id = #{id}
+        ]]>
+	</select>
+	
+	<update id="updateEntity" parameterType="com.noboll.business.entrant.entity.Entrant">
+		update entrant 
+		set
+			enter_time = #{enterTime},
+			pay = #{pay},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.entrant.entity.Entrant">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into entrant
+		(id,resume_id, enter_time, leave_time,customer_id, position_id,interview_id,deliver_id,pay,status,description,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{resumeId}, #{enterTime}, #{leaveTime}, #{customerId}, #{positionId}, #{interviewId}, #{deliverId}, #{pay},#{status},
+		#{description},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update entrant set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="entrant.result">
+			select i.*,po.name positionName,cu.name customerName,re.name resumeName
+			from entrant i
+			left join position po on po.id = i.position_id and po.delete_flag='0'
+			left join customer cu on cu.id = i.customer_id and cu.delete_flag='0'
+			left join resume re on re.id = i.resume_id and re.delete_flag='0'
+			 where 
+				 i.delete_flag='0' 
+			<if test="_parameter.containsKey('resumeId')">
+				and i.resume_id = #{resumeId,jdbcType=VARCHAR}
+			</if>
+			<if test="_parameter.containsKey('resumeName')">
+				and re.name LIKE CONCAT('%',
+				CONCAT(#{resumeName,jdbcType=VARCHAR}, '%'))
+			</if>
+			<if test="_parameter.containsKey('customerName')">
+				and cu.name LIKE CONCAT('%',
+				CONCAT(#{customerName,jdbcType=VARCHAR}, '%'))
+			</if>
+			<if test="_parameter.containsKey('positionName')">
+				and po.name LIKE CONCAT('%',
+				CONCAT(#{positionName,jdbcType=VARCHAR}, '%'))
+			</if>
+			<if test="_parameter.containsKey('enterTimeBT')">
+				and  DATE_FORMAT(i.enter_time, "%Y-%m-%d") <![CDATA[ >= ]]> DATE_FORMAT(#{enterTimeBT}, "%Y-%m-%d")
+			</if>
+			<if test="_parameter.containsKey('enterTimeET')">
+				and  DATE_FORMAT(i.enter_time, "%Y-%m-%d") <![CDATA[ < ]]> DATE_FORMAT(#{enterTimeET}, "%Y-%m-%d")
+			</if>
+			<if test="_parameter.containsKey('positionId')">
+				and i.position_id = #{positionId}
+			</if>
+			<if test="_parameter.containsKey('customerId')">
+				and i.customer_id = #{customerId}
+			</if>
+			order by i.enter_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="entrant.result">
+    	select i.*,po.name positionName,cu.name customerName,re.name resumeName
+			from entrant i
+			left join position po on po.id = i.position_id and po.delete_flag='0'
+			left join customer cu on cu.id = i.customer_id and cu.delete_flag='0'
+			left join resume re on re.id = i.resume_id and re.delete_flag='0'
+			 where 
+				 i.delete_flag='0'
+    </select>
+    
+    <select id="getByDeliverId"
+		resultType="com.noboll.business.entrant.entity.Entrant" resultMap="entrant.result">
+        <![CDATA[
+           	select i.*,po.name positionName
+			from entrant i
+			left join position po on po.id = i.position_id and po.delete_flag='0'
+			 where 
+				 i.delete_flag='0' 
+				 and i.deliver_id = #{deliverId}
+        ]]>
+	</select>
+    
+</mapper>

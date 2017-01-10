@@ -14,6 +14,7 @@ import com.noboll.business.interview.entity.Interview;
 import com.noboll.business.interview.service.InterviewService;
 import com.noboll.business.resume.entity.Resume;
 import com.noboll.business.resume.service.ResumeService;
+import com.noboll.context.SystemContext;
 import com.noboll.core.base.controller.BaseController;
 import com.noboll.core.base.entity.Page;
 import com.noboll.core.base.entity.QueryParam;
@@ -41,17 +42,18 @@ public class InterviewController extends BaseController<Interview> {
 	private ResumeService resumeService;
 	
 	// 跳转到列表页面
-	@RequestMapping("/toList")
-	public String toListInterview(HttpServletRequest request,Model model) {
-		return "business/interview/interview_list";
+	@RequestMapping("/toMyList")
+	public String toMyList(HttpServletRequest request,Model model) {
+		return "business/interview/interview_my_list";
 	}
 
 	// 异步返回json数据
-	@RequestMapping("/list")
+	@RequestMapping("/myList")
 	@ResponseBody
 	public Object listInterview(HttpServletRequest request,Model modeld) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
 		Page<Interview> page = InitUtil.initPage(request);
+		queryParam.addParam("userId", SystemContext.getLoginUser().getId());
 		page = interviewService.getPageList("com.noboll.business.interview.dao.InterviewDao.getList", queryParam,
 				page);
 		return page;

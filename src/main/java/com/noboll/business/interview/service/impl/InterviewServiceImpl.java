@@ -80,7 +80,7 @@ public class InterviewServiceImpl extends BaseServiceImpl<Interview>
 		Dict dict = dictService.getByCode(DictConstant.DICT_CODE_DHMS);// 电话面试
 		if (StringUtil.isEmpty(interview.getId())) {
 			interview.setType(dict.getId());
-			interview.setUserId(resume.getUserId());
+			interview.setUserId(resumeData.getUserId());
 			interview.setCustomerId(deliver.getCustomerId());
 			this.saveEntity(interview);
 		}else{

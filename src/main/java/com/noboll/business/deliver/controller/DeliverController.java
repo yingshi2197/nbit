@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noboll.business.deliver.entity.Deliver;
 import com.noboll.business.deliver.service.DeliverService;
+import com.noboll.business.entrant.entity.Entrant;
+import com.noboll.business.entrant.service.EntrantService;
 import com.noboll.business.interview.entity.Interview;
 import com.noboll.business.interview.service.InterviewService;
 import com.noboll.business.requirement.entity.Requirement;
@@ -37,6 +39,8 @@ public class DeliverController extends BaseController<Deliver> {
 	private InterviewService interviewService;
 	@Resource
 	private ResumeService resumeService;
+	@Resource
+	private EntrantService entrantService;
 	
 	// 投递管理-我的投递列表
 	@RequestMapping("/toMyList")
@@ -152,7 +156,9 @@ public class DeliverController extends BaseController<Deliver> {
 		// 需求信息
 		Requirement requirement = requirementService.getEntity(deliver.getRequirementId());
 		model.addAttribute("requirement", requirement);
-		// TODO 入职信息
+		// 入职信息
+		Entrant entrant = entrantService.getByDeliverId(deliver.getId());
+		model.addAttribute("entrant", entrant);
 		return "business/deliver/deliver_view";
 	}
 	

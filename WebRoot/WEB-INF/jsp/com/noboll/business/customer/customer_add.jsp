@@ -27,6 +27,7 @@
 <spring:message code="jsp.include.basecss" />
 <spring:message code="jsp.include.formccforback" />
 <spring:message code="jsp.include.listcssforback" />
+<spring:message code="jsp.include.tagscssforback" />
 <style type="text/css">
 .form-horizontal .form-group {
   margin-right: -40px;
@@ -39,7 +40,7 @@
 	<div class="container">
 		<div class="tab-form1">
 			<form action="business/customer/add.do" id="myform"
-				class="form-horizontal" role="form" method="post">
+				class="form-horizontal" role="form" method="post" onsubmit="setJsonValue();">
 				<div class="form-group">
 					<label for="name" class="col-xs-2 control-label">名称</label>
 					<div class="col-xs-4 form-control-1">
@@ -97,12 +98,20 @@
 							placeholder="请输入地址" value="<c:out value="${ customer.address}"/>" />
 					</div>
 				</div>
+				
+				<div class="form-group">
+					<label for="label" class="col-xs-2 control-label">标签</label>
+					<input type="hidden" class="form-control required" name="label" id="label">
+					<div class="col-xs-10 form-control-1" id="myTags">
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<div class="col-sm-offset-1 col-sm-11 form-control-1">
 						<!-- 简介-->
 						<label for="description" class="control-label">简介</label>
 						<textarea class="form-control required-2"
-							name="description" id="description" rows="10" cols="6"
+							name="description" id="description" rows="8" cols="6"
 							placeholder="请输入客户简介"><c:out value="${ customer.description}"/></textarea>
 					</div>
 				</div>
@@ -126,17 +135,27 @@
 	<spring:message code="jsp.include.basejs" />
 	<spring:message code="jsp.include.formjsforback" />
 	<spring:message code="jsp.include.listjsforback" />
+	<spring:message  code="jsp.include.tagsjsforback"/>
 	<script type="text/javascript">
 		
 		$(document)	.ready(
 		function() {
 			$("#myform").initForm({});
+			$("#myTags").initTags({
+				maxTips:8, // 最多可以选择的标签个数
+				updateUrl:"business/label/choose.do",//换一换的数据链接
+				pageCount:10//候选区每次显示多少条数据
+			});
 		});
 						
 		function closeDialog() {
 			tools.closeDialog();
 		}
 
+		function setJsonValue() {
+			$("#label").val($("#myTags").getTipsId());
+			return true;
+		}
 	</script>
 </body>
 </html>

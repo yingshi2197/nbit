@@ -8,8 +8,10 @@ import com.noboll.business.customer.constant.CustomerConstant;
 import com.noboll.business.customer.dao.CustomerDao;
 import com.noboll.business.customer.entity.Customer;
 import com.noboll.business.customer.service.CustomerService;
+import com.noboll.business.customerLabel.service.CustomerLabelService;
 import com.noboll.core.base.dao.BaseDao;
 import com.noboll.core.base.service.impl.BaseServiceImpl;
+import com.noboll.core.util.StringUtil;
 
 @Service("customerService")
 public class CustomerServiceImpl extends BaseServiceImpl<Customer>
@@ -17,6 +19,8 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer>
 
 	@Resource
 	private CustomerDao customerDao;
+	@Resource
+	private CustomerLabelService customerLabelService;
 	
 	@Override
 	public BaseDao<Customer> getBaseDao() {
@@ -26,11 +30,25 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer>
 	@Override
 	public void saveCustomer(Customer customer) {
 		this.saveEntity(customer);
+		// 标签处理
+		String label = customer.getLabel();
+		if (!StringUtil.isEmpty(label)) {
+			String[] labels = label.split(",");
+			customerLabelService.batchInsert(customer.getId(),labels);
+		}
 	}
 
 	@Override
 	public void updateCustomer(Customer customer) {
 		this.updateEntity(customer);
+
+		// 标签处理
+		customerLabelService.deleteByCustomerId(customer.getId());
+		String label = customer.getLabel();
+		if (!StringUtil.isEmpty(label)) {
+			String[] labels = label.split(",");
+			customerLabelService.batchInsert(customer.getId(),labels);
+		}
 	}
 
 	@Override

@@ -30,11 +30,13 @@ public class Deliver extends BaseEntity  {
 	private String addressName;// 需求地址
 	private String yearsName;// 工作年限
 	private String degreeName;// 学历
+	private String positionId;//　岗位
 	private String positionName;// 申请岗位
 	private String customerId;// 客户id
 	private String statusName;// 投递状态
 	private String interviewStatusName;// 面试状态
 	private String interviewStatusCode;// 面试状态
+	private String statusCode;// 状态
 	
 	public String getResumeId() {
 		return resumeId;
@@ -108,6 +110,12 @@ public class Deliver extends BaseEntity  {
 	public void setDegreeName(String degreeName) {
 		this.degreeName = degreeName;
 	}
+	public String getPositionId() {
+		return positionId;
+	}
+	public void setPositionId(String positionId) {
+		this.positionId = positionId;
+	}
 	public String getPositionName() {
 		return positionName;
 	}
@@ -149,6 +157,12 @@ public class Deliver extends BaseEntity  {
 	}
 	public void setInterviewStatusCode(String interviewStatusCode) {
 		this.interviewStatusCode = interviewStatusCode;
+	}
+	public String getStatusCode() {
+		return statusCode;
+	}
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
 	}
 	
 	

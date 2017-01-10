@@ -55,8 +55,10 @@
 						<li role="presentation"><a href="#interviewXc"
 							aria-controls="profile" role="tab" data-toggle="tab">现场面试 </a></li>
 						</c:if>
+						<c:if test="${entrant !=null }">
 						<li role="presentation"><a href="#entrant"
 							aria-controls="profile" role="tab" data-toggle="tab">入职信息 </a></li>
+						</c:if>
 					</ul>
 					<!-- Tab panes -->
 					<div class="tab-content">
@@ -261,8 +263,27 @@
 						<!-- 现场面试 end-->
 						</c:if>
 						<!-- 入职信息 -->
+						<c:if test="${entrant !=null }">
 						<div role="tabpanel" class="tab-pane" id="entrant">
+							<table class="table table-bordered">
+								<tbody>
+									<tr role="row">
+										<!-- 面试时间 -->
+										<td class="col-xs-2 info text-right">入职时间</td>
+										<td class="col-xs-4"><fmt:formatDate value="${entrant.enterTime}" type="both" pattern="yyyy-MM-dd HH:mm"/></td>
+										<!-- 面试官 -->
+										<td class="col-xs-2 info text-right">入职岗位</td>
+										<td class="col-xs-4"><c:out value="${entrant.positionName}" /></td>
+									</tr>
+									<tr role="row">
+										<!-- 面试官 -->
+										<td class="col-xs-2 info text-right">入职状态</td>
+										<td class="col-xs-4" colspan="3"><c:out value="${entrant.statusName}" /></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
+						</c:if>
 						<!-- 入职信息 end-->
 				
 				<div class="tab-form-submit">

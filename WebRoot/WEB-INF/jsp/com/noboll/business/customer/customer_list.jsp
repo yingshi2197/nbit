@@ -61,8 +61,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-	                	{name:'新增',position:'top',select:"",css:"add",dialog:{url:"business/customer/toAdd.do",width:"850px"}},//新增
-	                	{name:'修改',position:'row',css:"edit",a:'',dialog:{url:"business/customer/toEdit.do",width:"850px"}},//修改	         	
+	                	{name:'新增',position:'top',select:"",css:"add",dialog:{url:"business/customer/toAdd.do",width:"800px",height:"500px"}},//新增
+	                	{name:'修改',position:'row',css:"edit",a:'',dialog:{url:"business/customer/toEdit.do",width:"800px",height:"500px"}},//修改	         	
 	                	{name:'启用',position:'row',css:"enable",type:"ajax",url:"business/customer/enable.do"},//启用	         	
 	                	{name:'禁用',position:'row',css:"disable",type:"ajax",url:"business/customer/disable.do"},//禁用	         	
 	                	{name:'删除',position:'row',css:"remove",type:"ajax",url:"business/customer/remove.do"}//删除

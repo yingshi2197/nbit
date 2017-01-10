@@ -40,8 +40,11 @@ public class Interview extends BaseEntity  {
 	// 扩展字段
 	private String typeName;//类型
 	private String resultName;//结果
-	private String resumeId;//简历
 	private String resultCode;// 结果编码
+	private String resumeId;//简历
+	private String resumeName;//简历
+	private String customerName;//客户
+	private String positionName;//岗位
 	
 	
 	public String getName() {
@@ -151,6 +154,24 @@ public class Interview extends BaseEntity  {
 	}
 	public void setResultCode(String resultCode) {
 		this.resultCode = resultCode;
+	}
+	public String getResumeName() {
+		return resumeName;
+	}
+	public void setResumeName(String resumeName) {
+		this.resumeName = resumeName;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getPositionName() {
+		return positionName;
+	}
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
 	}
 	
 	

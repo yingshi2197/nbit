@@ -1,5 +1,7 @@
 package com.noboll.business.customer.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,9 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.noboll.business.customer.entity.Customer;
 import com.noboll.business.customer.service.CustomerService;
+import com.noboll.business.customerLabel.entity.CustomerLabel;
+import com.noboll.business.customerLabel.service.CustomerLabelService;
 import com.noboll.core.base.controller.BaseController;
 import com.noboll.core.base.entity.Page;
 import com.noboll.core.base.entity.QueryParam;
+import com.noboll.core.util.JsonUtil;
 import com.noboll.core.util.StringUtil;
 import com.noboll.util.InitUtil;
 
@@ -31,6 +36,8 @@ public class CustomerController extends BaseController<Customer> {
 
 	@Resource
 	private CustomerService customerService;
+	@Resource
+	private CustomerLabelService customerLabelService;
 	
 	// 跳转到列表页面
 	@RequestMapping("/toList")
@@ -68,6 +75,12 @@ public class CustomerController extends BaseController<Customer> {
 	public String toEditCustomer(Model model, String id) {
 		Customer customer = customerService.getEntity(id);
 		model.addAttribute("customer", customer);
+		// 标签
+		List<CustomerLabel> customerLabels = customerLabelService.getByCustomerId(id);
+		if (null != customerLabels && customerLabels.size()>0)
+			model.addAttribute("customerLabels", JsonUtil.objToJson(customerLabels));
+		else
+			model.addAttribute("customerLabels", "");
 		return "business/customer/customer_edit";
 	}
 

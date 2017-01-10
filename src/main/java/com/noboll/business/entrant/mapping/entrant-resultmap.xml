@@ -4,23 +4,26 @@
 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="deliver">
+<mapper namespace="entrant">
 
-    <resultMap type="com.noboll.business.deliver.entity.Deliver" id="result">
+    <resultMap type="com.noboll.business.entrant.entity.Entrant" id="result">
+    
     	<id property="id" column="id"/>
         <result property="resumeId" column="resume_id"/>
-        <result property="requirementId" column="requirement_id"/>
-        <result property="deliverTime" column="deliver_time"/>
-        <result property="description" column="description"/>
-        <result property="interviewStatus" column="interview_status"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="positionId" column="position_id"/>
+        <result property="interviewId" column="interview_id"/>
+        <result property="deliverId" column="deliver_id"/>
+        <result property="pay" column="pay"/>
         <result property="status" column="status"/>
-        
+        <result property="enterTime" column="enter_time"/>
+        <result property="leaveTime" column="leave_time"/>
+        <result property="description" column="description"/>
         <result property="deleteFlag" column="delete_flag"/>
         <result property="createUserId" column="create_user_id"/>
         <result property="createTime" column="create_time"/>
         <result property="lastModifyUserId"   column="last_modify_user_id"/>
         <result property="lastModifyTime" column="last_modify_time"/>    
-        
     </resultMap>
 	
 </mapper>

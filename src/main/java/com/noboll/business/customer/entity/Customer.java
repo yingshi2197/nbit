@@ -38,6 +38,9 @@ public class Customer extends BaseEntity  {
 	private String natureName;//性质，数据字典
 	private String scaleName;// 规模，数据字典
 	
+	
+	private String label;
+	
 	public String getName() {
 		return name;
 	}
@@ -125,6 +128,12 @@ public class Customer extends BaseEntity  {
 	}
 	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	

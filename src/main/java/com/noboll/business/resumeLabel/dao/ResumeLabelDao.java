@@ -2,7 +2,6 @@ package com.noboll.business.resumeLabel.dao;
 
 import java.util.List;
 
-import com.noboll.business.experience.entity.Experience;
 import com.noboll.business.resumeLabel.entity.ResumeLabel;
 import com.noboll.core.base.dao.BaseDao;
 
@@ -19,7 +18,7 @@ public interface ResumeLabelDao extends BaseDao<ResumeLabel>{
 	public void deleteByResumeId(String id);
 	
 	/**
-	 * 得到简历的工作经历
+	 * 得到简历的标签
 	 */
 	public List<ResumeLabel> getByResumeId(String resumeId);
 	

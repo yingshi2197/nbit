@@ -67,7 +67,7 @@
 					<div class="col-xs-4 form-control-1">
 						<input type="hidden" class="form-control required" name="positionId" id="positionIds" value="<c:out value="${requirement.positionId}" />"/>
 						<input type="text" class="form-control" name="positionName"
-							id="positionNames" 	placeholder="请选择求职岗位"	 value="<c:out value="${requirement.positionName}" />" maxlength="200" />
+							id="positionNames" 	placeholder="请选择求职岗位"	 value="<c:out value="${requirement.positionName}" />" maxlength="200" readonly/>
 						<a href="javascript:void(0)"  class='glyphicon glyphicon-search choose'  chooseCode="positionChoose"  chooseField="id,name" chooseId="positionIds" 
 				         chooseValue="positionNames" chooseWidth="850px" chooseHeight="500px"></a>
 					</div>

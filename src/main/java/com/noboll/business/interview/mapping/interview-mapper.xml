@@ -59,10 +59,14 @@
 	
 	<select id="getList" resultType="list" parameterType="map"
 		resultMap="interview.result">
-			select i.*,d1.name typeName,d2.name resultName
+			select i.*,d1.name typeName,d2.name resultName,cu.name customerName,po.name positionName
 			from interview i
 			left join dict d1 on d1.id = i.type and d1.delete_flag='0' 
 			left join dict d2 on d2.id = i.result and d2.delete_flag='0' 
+			left join deliver de on de.id = i.deliver_id and de.delete_flag='0' 
+			left join requirement req on req.id = de.requirement_id and req.delete_flag='0' 
+			left join position po on po.id = req.position_id and po.delete_flag='0' 
+			left join customer cu on cu.id = i.customer_id and cu.delete_flag='0' 
 			 where 
 				 i.delete_flag='0' 
 			<if test="_parameter.containsKey('name')">
@@ -75,6 +79,24 @@
 			<if test="_parameter.containsKey('resultName')">
 				and i.result = #{resultName}
 			</if>
+			<if test="_parameter.containsKey('customerName')">
+				and cu.name LIKE CONCAT('%',
+				CONCAT(#{customerName,jdbcType=VARCHAR}, '%'))
+			</if>
+			<if test="_parameter.containsKey('positionName')">
+				and po.name LIKE CONCAT('%',
+				CONCAT(#{positionName,jdbcType=VARCHAR}, '%'))
+			</if>
+			<if test="_parameter.containsKey('userId')">
+				and i.user_id = #{userId}
+			</if>
+			<if test="_parameter.containsKey('timeBT')">
+				and  DATE_FORMAT(i.time, "%Y-%m-%d") <![CDATA[ >= ]]> DATE_FORMAT(#{timeBT}, "%Y-%m-%d")
+			</if>
+			<if test="_parameter.containsKey('timeET')">
+				and  DATE_FORMAT(i.time, "%Y-%m-%d") <![CDATA[ < ]]> DATE_FORMAT(#{timeET}, "%Y-%m-%d")
+			</if>
+			order by de.deliver_time desc
 	</select>
 	
 	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="interview.result">

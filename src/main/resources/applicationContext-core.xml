@@ -20,8 +20,6 @@
    	 http://www.springframework.org/schema/mvc
    	 http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
    	 
-	<!-- 自动扫描 -->  
-    <context:component-scan base-package="com.noboll" />  
     <!-- 引入配置文件 -->  
     <bean id="propertyConfigurer"  
         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
@@ -121,17 +119,24 @@
         <tx:attributes>
             <tx:method name="save*" propagation="REQUIRED" />
             <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="query*" read-only="true" />
             <tx:method name="*" read-only="true" />
         </tx:attributes>
     </tx:advice>
     
-    <aop:config expose-proxy="true">
+    <aop:config>
         <!-- 只对业务逻辑层实施事务 -->
-        <aop:pointcut id="txPointcut" expression="execution(* com.noboll.**.service..*.*(..))" />
+        <aop:pointcut id="txPointcut" expression="execution(* com.noboll..*.service..*.*(..))" />
         <!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
         <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
     </aop:config>
     
+    <!-- 自动扫描组件，这里要把 controller去除，他们是在dispatcher-servlet.xml中配置扫描的   -->  
+     <context:component-scan base-package="com.noboll">  
+          <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />   
+     </context:component-scan> 
     
     <mvc:annotation-driven>  
 	    <mvc:message-converters register-defaults="true">  

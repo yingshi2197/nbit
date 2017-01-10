@@ -53,9 +53,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                minimumCountColumns: 2,
 	                permissionOperate:function(data){
 	                	var op={};
-	                	if(data.interviewStatusCode!="dhmstg" 
+	                	if( !data.interviewStatusCode || data.statusCode=="deliver_entrant" || (data.interviewStatusCode && data.interviewStatusCode!="dhmstg" 
 	                			&& data.interviewStatusCode!="xcmstg" 
-	                				&& data.interviewStatusCode!="xcmsbtg") {
+	                				&& data.interviewStatusCode!="xcmsbtg")) {
 	                		op["xcms"]="false";
 	                	}
 	                	return op;

@@ -14,6 +14,7 @@ public class CustomerLabel extends BaseEntity  {
 	private String customerId;
 	private String labelId;
 	private String deleteFlag;
+	private String name;// 标签名称，辅助字段，供修改时标签选择器初始化用
 	
 	
 	public String getCustomerId() {
@@ -33,6 +34,12 @@ public class CustomerLabel extends BaseEntity  {
 	}
 	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

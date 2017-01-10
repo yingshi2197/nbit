@@ -70,4 +70,28 @@
     	where p.delete_flag='0'
     </select>
 
+	<delete id="deleteByCustomerId" parameterType="string">
+		delete from customer_label where customer_id = #{customerId}
+	</delete>
+    
+     <!-- 批量新增到数据库 -->
+	<insert id="batchInsert" parameterType="com.noboll.business.customerLabel.entity.CustomerLabel">
+		insert into customer_label
+		(id,customer_id, label_id,delete_flag,create_time,create_user_id,last_modify_time,last_modify_user_id)
+		values
+		<foreach item="item" index="index" collection="list" 
+                   open=" " separator="," close=" ">
+        (
+	        uuid(), #{item.customerId}, #{item.labelId}, '0', CURRENT_TIMESTAMP(),#{item.createUserId},CURRENT_TIMESTAMP(), #{item.lastModifyUserId}
+        )  
+       </foreach>
+	</insert>
+	
+	<select id="getByCustomerId" resultType="list"  resultMap="customerLabel.result">
+    	select l.id,l.name
+			 from 
+			 	customer_label p
+		left join label l on p.label_id =l.id and l.delete_flag='0'
+    	where p.delete_flag='0' and p.customer_id = #{customerId}
+    </select>
 </mapper>

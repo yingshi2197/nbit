@@ -160,7 +160,7 @@
 	<script type="text/javascript">
 		
 		$(document)	.ready(function() {
-			// 角色处理
+			// 结果处理
 			var result = '<c:out value="${interview.result}"/>';
 			handlerResult(result);
 			

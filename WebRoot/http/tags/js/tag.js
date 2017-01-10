@@ -1,5 +1,5 @@
 /**
- * @Author:插件封装优化：weicb
+ * @Author:插件封装：weicb
  * @Date:2017-01-05
  * 1、实现基本的标签待选区域生成与选择/取消选择功能<br>
  * 2、计划：实现换一换功能，从后台随机取指定数量的标签[2017-01-08已实现]<br>
@@ -59,8 +59,8 @@
 				// 处理已选数据
 				if(setting.selects){
 					for(var i=0;i<setting.selects.length;i++) {
-						var data_value = tags[i].id;
-					    var data_name = tags[i].name;
+						var data_value = setting.selects[i].id;
+					    var data_name = setting.selects[i].name;
 						$(obj).setTips(data_name,data_value);
 					}
 				}
@@ -71,7 +71,7 @@
 				// 更换链接
 				var $changeTips = $('#'+change_tips_id);
 				$changeTips.on("click",function(){
-					var crad = $(".default-tag");
+					var crad = $(".default-tag .clearfix");
 					// 数据
 					var html = [];
 					$.ajax({
