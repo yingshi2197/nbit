@@ -51,7 +51,7 @@ public class EntrantServiceImpl extends BaseServiceImpl<Entrant>
 	/**
 	 * 新增\修改入职记录
 	 */
-	public void saveUpdateDhEntrant(Entrant entrant){
+	public void saveUpdateEntrant(Entrant entrant){
 		// 查找投递记录
 		if (StringUtil.isEmpty(entrant.getDeliverId()))
 			throw new BusinessException("无投递记录！");

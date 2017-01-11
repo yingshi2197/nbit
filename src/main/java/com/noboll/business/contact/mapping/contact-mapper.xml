@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.contact.dao.ContactDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.contact.entity.Contact" resultMap="contact.result">
+        <![CDATA[
+           	select i.*,po.name positionName,cu.name customerName
+			from contact i
+			left join position po on po.id = i.position_id and po.delete_flag='0'
+			left join customer cu on cu.id = i.customer_id and cu.delete_flag='0'
+			 where 
+				 i.delete_flag='0' 
+				 and i.id = #{id}
+        ]]>
+	</select>
+	
+	<update id="updateEntity" parameterType="com.noboll.business.contact.entity.Contact">
+		update contact 
+		set
+			name = #{name},
+			phone = #{phone},
+			sex = #{sex},
+			position_id = #{positionId},
+			description=#{description},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.contact.entity.Contact">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into contact
+		(id,name, phone, sex,customer_id, position_id,description,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{name}, #{phone}, #{sex}, #{customerId}, #{positionId},#{description},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update contact set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="contact.result">
+			select i.*,po.name positionName,cu.name customerName
+			from contact i
+			left join position po on po.id = i.position_id and po.delete_flag='0'
+			left join customer cu on cu.id = i.customer_id and cu.delete_flag='0'
+			 where 
+				 i.delete_flag='0' 
+			<if test="_parameter.containsKey('customerName')">
+				and cu.name LIKE CONCAT('%',
+				CONCAT(#{customerName,jdbcType=VARCHAR}, '%'))
+			</if>
+			<if test="_parameter.containsKey('positionName')">
+				and po.name LIKE CONCAT('%',
+				CONCAT(#{positionName,jdbcType=VARCHAR}, '%'))
+			</if>
+			<if test="_parameter.containsKey('positionId')">
+				and i.position_id = #{positionId}
+			</if>
+			<if test="_parameter.containsKey('customerId')">
+				and i.customer_id = #{customerId}
+			</if>
+			order by i.enter_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="contact.result">
+    	select i.*,po.name positionName,cu.name customerName
+			from contact i
+			left join position po on po.id = i.position_id and po.delete_flag='0'
+			left join customer cu on cu.id = i.customer_id and cu.delete_flag='0'
+			 where 
+				 i.delete_flag='0' 
+    </select>
+    
+    <select id="getByCustomerId"
+		resultType="com.noboll.business.contact.entity.Contact" resultMap="contact.result">
+        <![CDATA[
+           	select i.*,po.name positionName
+			from contact i
+			left join position po on po.id = i.position_id and po.delete_flag='0'
+			 where 
+				 i.delete_flag='0' 
+				 and i.customer_id = #{customerId}
+        ]]>
+	</select>
+	
+	 <!-- 批量新增到数据库 -->
+	<insert id="batchInsert" parameterType="com.noboll.business.contact.entity.Contact">
+		insert into contact
+		(id,name,phone,sex,customer_id, position_id,description,delete_flag,create_time,create_user_id,last_modify_time,last_modify_user_id)
+		values
+		<foreach item="item" index="index" collection="list" 
+                   open=" " separator="," close=" ">
+        (
+	        uuid(), #{item.name}, #{item.phone}, #{item.sex}, #{item.customerId}, #{item.positionId}, #{item.description},'0', CURRENT_TIMESTAMP(),#{item.createUserId},CURRENT_TIMESTAMP(), #{item.lastModifyUserId}
+        )  
+       </foreach>
+	</insert>
+	
+	 <delete id="deleteByCustomerId" parameterType="string">
+		delete from contact where customer_id = #{customerId}
+	</delete>    
+</mapper>

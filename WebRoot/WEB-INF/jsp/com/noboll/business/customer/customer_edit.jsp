@@ -117,6 +117,14 @@
 					</div>
 				</div>
 				
+				<!--联系人 begin  -->
+				<div class="col-xs-12 edit_item_title">
+					<img src="http/common/images/resume_img.png" /> <span>客户联系人</span>
+					<input type="hidden" name="contactJson" id="contactJson">
+				</div>
+				<div id="contactDiv"></div>
+				<!--联系人 end  -->
+				
 				<div class="tab-form-submit">
 					<button type="submit" class="btn btn-success">
 						提交
@@ -136,6 +144,7 @@
 	<spring:message code="jsp.include.basejs" />
 	<spring:message code="jsp.include.formjsforback" />
 	<spring:message code="jsp.include.listjsforback" />
+	<spring:message  code="jsp.include.tablejsforback"/>
 	<spring:message  code="jsp.include.tagsjsforback"/>
 	<script type="text/javascript">
 		
@@ -154,6 +163,22 @@
 				updateUrl:"business/label/choose.do",//换一换的数据链接
 				pageCount:10//候选区每次显示多少条数据
 			});
+			
+			
+			// 客户联系人
+			var contactJson = '<c:out value="${ customer.contactJson}" escapeXml="false"/>';
+			var data = [];
+			if(contactJson)
+				data = tools.jsonToObj(contactJson);
+			$("#contactDiv").initTable(
+				{
+					data:data,
+					column:[{"title":"姓名","prop":"name"},
+					        {"title":"电话","prop":"phone"},
+					        {"title":"性别","prop":"sex","dictCode":"sex"},
+					        {"title":"职务","prop":"positionId","type":"dialog:{nameFiled:\"positionName\",chooseCode:\"positionChooseRadio\",chooseWidth:\"850px\",chooseHeight:\"500px\"}"}]
+				}
+			);
 		});
 						
 		function closeDialog() {
@@ -161,6 +186,7 @@
 		}
 		
 		function setJsonValue() {
+			$("#contactJson").val($("#contactDiv").getTableData());
 			$("#label").val($("#myTags").getTipsId());
 			return true;
 		}

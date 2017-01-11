@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noboll.business.contact.entity.Contact;
+import com.noboll.business.contact.service.ContactService;
 import com.noboll.business.customer.entity.Customer;
 import com.noboll.business.customer.service.CustomerService;
 import com.noboll.business.customerLabel.entity.CustomerLabel;
@@ -38,6 +40,8 @@ public class CustomerController extends BaseController<Customer> {
 	private CustomerService customerService;
 	@Resource
 	private CustomerLabelService customerLabelService;
+	@Resource
+	private ContactService contactService;
 	
 	// 跳转到列表页面
 	@RequestMapping("/toList")
@@ -75,6 +79,12 @@ public class CustomerController extends BaseController<Customer> {
 	public String toEditCustomer(Model model, String id) {
 		Customer customer = customerService.getEntity(id);
 		model.addAttribute("customer", customer);
+		// 客户联系人
+		List<Contact> contacts = contactService.getByCustomerId(id);
+		if (null != contacts &&contacts.size()>0)
+			customer.setContactJson(JsonUtil.objToJson(contacts));
+		else
+			customer.setContactJson("");
 		// 标签
 		List<CustomerLabel> customerLabels = customerLabelService.getByCustomerId(id);
 		if (null != customerLabels && customerLabels.size()>0)

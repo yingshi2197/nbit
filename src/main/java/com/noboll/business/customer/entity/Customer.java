@@ -37,6 +37,7 @@ public class Customer extends BaseEntity  {
 	private String industryName;//行业，数据字典
 	private String natureName;//性质，数据字典
 	private String scaleName;// 规模，数据字典
+	private String contactJson;//联系人json串
 	
 	
 	private String label;
@@ -134,6 +135,12 @@ public class Customer extends BaseEntity  {
 	}
 	public void setLabel(String label) {
 		this.label = label;
+	}
+	public String getContactJson() {
+		return contactJson;
+	}
+	public void setContactJson(String contactJson) {
+		this.contactJson = contactJson;
 	}
 	
 	

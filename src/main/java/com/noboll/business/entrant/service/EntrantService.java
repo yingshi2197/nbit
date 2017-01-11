@@ -20,7 +20,7 @@ public interface EntrantService extends BaseService<Entrant> {
 	/**
 	 * 新增\修改入职记录
 	 */
-	public void saveUpdateDhEntrant(Entrant entrant);
+	public void saveUpdateEntrant(Entrant entrant);
 	
 	/**
 	 * 通过投递记录id得到入职记录

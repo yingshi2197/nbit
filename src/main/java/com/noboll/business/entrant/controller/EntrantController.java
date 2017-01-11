@@ -86,7 +86,7 @@ public class EntrantController extends BaseController<Entrant> {
 	@RequestMapping("addUpdate")
 	@ResponseBody
 	public Object entrant(Entrant entrant) {
-		entrantService.saveUpdateDhEntrant(entrant);
+		entrantService.saveUpdateEntrant(entrant);
 		return InitUtil.sucessMessage("操作成功");
 	}
 
