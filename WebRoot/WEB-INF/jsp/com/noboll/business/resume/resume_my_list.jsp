@@ -53,7 +53,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
                         {name:'新增简历',position:'top',select:"",css:"add",dialog:{url:"business/resume/toAdd.do",width:"1100px",height:"500px"}},//新增
-	                	{name:'完善简历',resume:'row',css:"edit",a:'',dialog:{url:"business/resume/toEdit.do",width:"1100px",height:"500px"}}//修改	
+	                	{name:'完善简历',resume:'row',css:"edit",a:'',dialog:{url:"business/resume/toEdit.do",width:"1100px",height:"500px"}},//修改
+	                	{name:'简历详情',position:'row',css:"resumeDetail",a:'',dialog:{url:"business/resume/toView.do",width:"1100px",height:"500px"}}//简历详情
 	                ],
 	                clickToSelect: true,
 	                columns: [

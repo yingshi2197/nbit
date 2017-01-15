@@ -99,6 +99,7 @@
 			 	experience p
 			 left join position d1 on d1.id=p.position_id
     	where p.delete_flag='0' and p.resume_id = #{resumeId}
+    	order by p.start_time desc
     </select>
 
 </mapper>

@@ -135,7 +135,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-	                	{name:'简历详情',position:'row',css:"resumeDetail",a:'',func:unfinish,url:""}//简历详情
+	                	{name:'简历详情',position:'row',css:"resumeDetail",a:'',dialog:{url:"business/resume/toView.do",width:"1100px",height:"500px"}}//简历详情
 	                ],
 	                responseHandler: function (res) {//将搜索结果数量显示到页面中的标题
 	    				var total=res.total;//总数量
@@ -176,10 +176,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		$("#span_address").html("全部地区");
 		    		}
 		    		$("#table-javascript").search('search-Class','table-javascript','searchDiv');
-		    	}
-		    	
-		    	function unfinish(){
-		    		alert("暂未实现！");
 		    	}
 		    	
 		    	/** 格式化显示简历的意向地区和求职岗位：多个换行显示 */

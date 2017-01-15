@@ -14,6 +14,7 @@
 				var setting={
 					id:null,  // id为空时自动赋值
 					selects:null,  //初始化时需要选中的数据
+					readonly:false,//是否只读，不显示待选区域
 					tags:[], // 初始化时候选区需要准备的标签数据
 					maxTips:10, // 最多可以选择的标签个数
 					updateUrl:"",//换一换的数据来源链接
@@ -27,33 +28,36 @@
 				// 已选区及已选区默认数据处理
 				arr.push('<div class="plus-tag tagbtn clearfix" id="'+id+'">');
 				arr.push('</div>');
-				// 待选区/候选区及数据
-				var cardId=setting.id||(new Date().getTime()+"_tag_card_n");
-				$(this).data("cardId",cardId);
-				arr.push('<div id="'+cardId+'s"><div class="default-tag tagbtn"><div class="clearfix">');
-				if (!tags || tags.length<=0) {// 没有指定，从后台直接取数据
-					$.ajax({
-						url : setting.updateUrl,
-						data : {limit:setting.pageCount},
-						method : "post",
-						async : false,
-						success : function(data) {
-							tags = data;
-						}
-					});
+				var readonly = setting.readonly;
+				if (!readonly) {
+					// 待选区/候选区及数据
+					var cardId=setting.id||(new Date().getTime()+"_tag_card_n");
+					$(this).data("cardId",cardId);
+					arr.push('<div id="'+cardId+'s"><div class="default-tag tagbtn"><div class="clearfix">');
+					if (!tags || tags.length<=0) {// 没有指定，从后台直接取数据
+						$.ajax({
+							url : setting.updateUrl,
+							data : {limit:setting.pageCount},
+							method : "post",
+							async : false,
+							success : function(data) {
+								tags = data;
+							}
+						});
+					}
+					for(var i=0;i<tags.length;i++) {
+					   var data_value = tags[i].id;
+					   var data_name = tags[i].name;
+					   arr.push('<a title="'+data_name+'" value="'+data_value+'" href="javascript:void(0);"><span>'+data_name+'</span><em></em></a>');
+					}
+					arr.push('</div></div>');
+					if(setting.updateUrl){// 换一换
+						var change_tips_id = cardId + "change_tips";
+						$(this).data("changeTtipsId",change_tips_id);
+						arr.push('<div align="right"><a href="javascript:void(0);" id="'+change_tips_id+'" style="color:#3366cc;">换一换</a></div>');
+					}
+					arr.push('</div>');
 				}
-				for(var i=0;i<tags.length;i++) {
-				   var data_value = tags[i].id;
-				   var data_name = tags[i].name;
-				   arr.push('<a title="'+data_name+'" value="'+data_value+'" href="javascript:void(0);"><span>'+data_name+'</span><em></em></a>');
-				}
-				arr.push('</div></div>');
-				if(setting.updateUrl){// 换一换
-					var change_tips_id = cardId + "change_tips";
-					$(this).data("changeTtipsId",change_tips_id);
-					arr.push('<div align="right"><a href="javascript:void(0);" id="'+change_tips_id+'" style="color:#3366cc;">换一换</a></div>');
-				}
-				arr.push('</div>');
 				
 				$(obj).html(arr.join(""));
 				// 处理已选数据
@@ -129,18 +133,21 @@
 					tools.alert("最多添加"+setting.maxTips+"个标签！");
 					return false;
 				}
-				var b=i?'value="'+i+'"':"";
-				a.append($('<a '+b+' title="'+n+'" href="javascript:void(0);" ><span>'+n+'</span><em></em></a>'));
+				var b = i ? 'value="' + i + '"' : "";
+				var em = setting.readonly ? "" : "<em></em>";// 标签后面的x
+				a.append($('<a '+b+' title="'+n+'" href="javascript:void(0);" ><span>'+n+'</span>'+em+'</a>'));
 				$(this).searchAjax(n,i,true);
 				
 				var obj = $(this);
 				// 删除事件
-				$(".plus-tag a").unbind("click");
-				$(".plus-tag a").on("click",function(){
-					var c=$(this),b=c.attr("title"),d=c.attr("value");
-					$(obj).delTips(b,d)
-				});
-				return true
+				if(!setting.readonly){
+					$(".plus-tag a").unbind("click");
+					$(".plus-tag a").on("click",function(){
+						var c=$(this),b=c.attr("title"),d=c.attr("value");
+						$(obj).delTips(b,d)
+					});
+				}
+				return true;
 			},
 			delTips:function(n,i){
 				if(!$(this).hasTips(n,i)){

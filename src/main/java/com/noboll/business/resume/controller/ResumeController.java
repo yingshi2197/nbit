@@ -207,5 +207,23 @@ public class ResumeController extends BaseController<Resume> {
 				page);
 		return page;
 	}
+	
+	// 跳转到简历详情页面
+	@RequestMapping("/toView")
+	public String toView(Model model, String id) {
+		Resume resume = resumeService.getEntity(id);
+		model.addAttribute("resume", resume);
+		// 项目经验
+		List<Experience> experiences = experienceService.getByResumeId(id);
+		model.addAttribute("experiences", experiences);
+		// 标签
+		List<ResumeLabel> resumeLabels = resumeLabelService.getByResumeId(id);
+		if (null != resumeLabels &&resumeLabels.size()>0)
+			model.addAttribute("resumeLabels", JsonUtil.objToJson(resumeLabels));
+		else
+			model.addAttribute("resumeLabels", "");
+		
+		return "business/resume/resume_view";
+	}
 
 }
