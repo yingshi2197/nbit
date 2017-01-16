@@ -9,6 +9,8 @@ import com.noboll.core.util.StringUtil;
 
 public class RoleMenu extends BaseEntity {
 	
+	private static final long serialVersionUID = 3338084664643458801L;
+
 	private String role;
 	
 	private String menu;

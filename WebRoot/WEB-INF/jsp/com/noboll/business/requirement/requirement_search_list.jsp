@@ -24,6 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<spring:message code="jsp.include.basecss"/>
 	<spring:message code="jsp.include.formccforback" />
 	<spring:message code="jsp.include.listcssforback"/>
+	<spring:message code="jsp.include.tagscssforback" /> 
 	<link rel="stylesheet" href="http/business/login/css/public.css">
 	<link href="http/business/search/search.css" rel="stylesheet">
 	<link href="http/business/search/css/style.css" rel="stylesheet">
@@ -96,8 +97,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									Hi，您目前在<span id="span_address" class=" cc20000">所有地区</span><label id="keywordLabel">通过关键字 “<b class=" cc20000" id="keyword"></b> ”</label>搜索招聘需求，共找到 <span id="total"></span> 个内容。
 								</span>	
 							</div>
-							<div class="table-responsive">
-								<table id="table-javascript" ></table>
+							<div class="table-responsive"  style="min-height:500px;">
+								<table id="table-javascript"></table>
 					    	</div>
 						</div>
 					</div>
@@ -108,60 +109,139 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<spring:message code="jsp.include.basejs"/>
     	<spring:message code="jsp.include.formjsforback" />
     	<spring:message code="jsp.include.listjsforback"/>
+    	<spring:message  code="jsp.include.tagsjsforback"/>
     	<script type="text/javascript" src="http/business/search/js/script.js"></script>
     	
     	<script type="text/javascript">
     		
     		$(document).ready(function () {
     			$("#myform").initForm({});
-		       	$("#table-javascript").initBootTable({
-		       		method: 'post',
-	                url: 'business/requirement/searchList.do',
-	                addUrl:"",
-	                striped: true,
-	                permissionOperate:function(data){
-	                	var op={};
-	                	if(data.deliverStatus=="1") {
-	                		op["deliver"]="false";
-	                	}else{
-	                		op["deliverDetail"]="false";
-	                	}
-	                	return op;
-	                }, 
-	                pagination: true,
-	                sidePagination:"server",
-	                pageSize: 10,
-	                minimumCountColumns: 2,
-	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-	                	/* {name:'发布',position:'row',css:"publish",type:"ajax",url:"business/requirement/publish.do"},//发布 
-	                	{name:'结束',position:'row',css:"finish",type:"ajax",url:"business/requirement/finish.do"},//结束  */
-	                	{name:'投递简历',position:'row',css:"deliver",a:'',dialog:{url:"business/deliver/toAdd.do",width:"600px",height:"320px"}},//投递
-	                	{name:'需求详情',position:'row',css:"requirementDetail",dialog:{url:"business/requirement/toView.do",width:"850px",height:"500px"}},//需求详情
-	                	{name:'投递详情',position:'row',field:"deliverId",css:"deliverDetail",dialog:{url:"business/deliver/toView.do",width:"850px",height:"500px"}}//投递详情
-	                ],
-	                responseHandler: function (res) {//将搜索结果数量显示到页面中的标题
+		       	 
+	    		$("#table-javascript").initBootTable({
+	    			method: 'post',
+	    			url:tools.joinUrl('business/requirement/searchList.do'),
+	    			striped: true,
+	    			pagination: true,
+	    			showHeader: false,
+	    			sidePagination:"server",
+	    			pageSize: 10,
+	    			minimumCountColumns: 2,
+	    			responseHandler: function (res) {//将搜索结果数量显示到页面中的标题
 	    				var total=res.total;//总数量
 	    				$("#total").html(total);
 	    	            return res;
 	    			},
-	                clickToSelect: true,
-	                columns: [
-				                	//{field: 'statu_msb',checkbox: true},   //复选框
-				                	{field: 'id',title:'id',visible:false}, 
-				                	{field: 'deliverStatus',title:'deliverStatus',visible:false}, 
-				                	{field: 'deliverId',title:'deliverId',visible:false}, 
-				                    {field: 'code',title: '需求编码',align: 'center',valign: 'middle',sortable: true,searchable:true}, //编码
-// 				                    {field: 'name',title: '需求名称',align: 'center',valign: 'middle',sortable: true,searchable:true}, //名称
-				                    {field: 'customerName',title: '公司名称',align: 'center',valign: 'middle',sortable: true,searchable:true}, //客户
-				                    {field: 'addressName',index:'address',title: '地址',align: 'left',valign: 'top',searchable:true,type:'select:address',selectCode:"id"},	//描述
-				                    {field: 'positionName',title: '职位',align: 'left',valign: 'top'},//职位
-				                    {field: 'levelName',title: '级别',align: 'left',valign: 'top'},//级别
-				                    {field: 'num',title: '需求人数',align: 'left',valign: 'top'},//需求人数
-				                    {field: 'periodName',title: '周期',align: 'left',valign: 'top'},//周期
-				                    {field: 'createTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '创建时间',align: 'left',valign: 'top'}	//创建时间
-				                  ]
-	            	});
-		    	});
+	    			columns: [
+			                	//{field: 'statu_msb',checkbox: true},   //复选框
+			                	{field: 'id',title:'id',visible:false}, 
+			                	{field: 'deliverStatus',title:'deliverStatus',visible:false}, 
+			                	{field: 'deliverId',title:'deliverId',visible:false}, 
+			                	{field: 'customerLabels',title:'customerLabels',visible:false}, 
+			                    {field: 'code',title: '需求编码',align: 'center',valign: 'middle',visible:false}, //编码
+//			                    {field: 'name',title: '需求名称',align: 'center',valign: 'middle',sortable: true,searchable:true}, //名称
+			                    {field: 'customerName',title: '公司名称',align: 'center',valign: 'middle',visible:false}, //客户
+			                    {field: 'addressName',index:'address',title: '地址',align: 'left',valign: 'top',visible:false},	//描述
+			                    {field: 'positionName',title: '职位',align: 'left',valign: 'top',visible:false},//职位
+			                    {field: 'levelName',title: '级别',align: 'left',valign: 'top',visible:false},//级别
+// 			                    {field: 'num',title: '需求人数',align: 'left',valign: 'top'},//需求人数
+// 			                    {field: 'periodName',title: '周期',align: 'left',valign: 'top'},//周期
+			                    {field: 'createTime',formatter:"date:yyyy-MM-dd hh:mm:ss",title: '创建时间',align: 'left',valign: 'top',visible:false},	//创建时间
+			                    {field: 'content',formatter:formatContent,title:'id',visible:true}
+			               ]
+	    			
+          			});
+	    	    });
+	    	    
+	    	    function formatContent(a,data){
+	    	    	var arr=[];
+	    	    	arr.push("<div class=\"search_con\">"); 
+	    			arr.push("<div class=\"col-md-9\">");
+	    			arr.push("<div class=\"search_list_01\">"+data.customerName+"</div>");
+	    			arr.push("<div class=\"search_list_02\">");
+	    			arr.push("<span class=\"search_span\">"+data.positionName+"</span>");
+	    			arr.push("<span class=\"search_span\">|</span>"); 
+	    			arr.push("<span class=\"search_span\">"+data.addressName+"</span>");
+	    			arr.push("<span class=\"search_span\">|</span>");
+	    			arr.push("<span class=\"search_span\">"+data.levelName+"</span>");
+	    			arr.push("</div>"); 
+	    			arr.push("<div class=\"search_list_03\">");
+	    			// 客户标签处理
+	    			var tagObj = $("<span class=\"search_span\" id=\"tags_\""+(new Date().getTime()+"_tag_cn")+">ssssssss</span>");
+	    			var customerLabels = data.customerLabels;
+	    			var labelData = [];
+	    			if(customerLabels)
+	    				labelData = tools.jsonToObj(customerLabels);
+	    			tagObj.initTags({
+	    				selects:labelData,
+	    				readonly:true//是否只读，不显示待选区域
+	    			});
+	    			arr.push(tagObj.html());
+	    			arr.push("</div>");
+	    			arr.push("<div class=\"search_list_03\">");
+	    			arr.push("<span class=\"search_span\">需求编码："+data.code+"</span>");
+	    			/* arr.push("<span class=\"search_span\">| </span>");
+	    			arr.push("<span class=\"search_span\">提交人："+data.createUserId+"</span>"); */
+	    			arr.push("<span class=\"search_span\">| </span>"); 
+	    			arr.push("<span class=\"search_span\">发布时间："+tools.parseDate(data.createTime,"yyyy-MM-dd")+"</span>");
+	    			arr.push("</div>");
+	    			arr.push("</div>");
+	    			
+	    			arr.push("<div class=\"col-md-3\"  style=\" line-height:80px; vertical-align:middle;\">");
+	    			if(tools.checkUrlPermission("business/requirement/toView.do")){
+		    			arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
+		    			arr.push("<a class=\"search_a\" title=\"招聘详情\" href=\"javascript:void(0)\" onclick=\"viewRequirement('"+data.id+"')\"> 查看</a>");
+		    			arr.push("</div>");
+	    			}
+	    			if("1" != data.deliverStatus && tools.checkUrlPermission("business/deliver/toAdd.do")){
+	    				arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
+		    			arr.push("<a class=\"search_a\" title=\"我要投递\" href=\"javascript:void(0)\" onclick=\"addDeliver('"+data.id+"')\"> 我要投递</a>");
+		    			arr.push("</div>");
+	    			}
+	    			if(data.deliverStatus=="1" && tools.checkUrlPermission("business/deliver/toView.do")){
+	    				arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
+		    			arr.push("<a class=\"search_a\" title=\"投递详情\" href=\"javascript:void(0)\" onclick=\"viewDeliver('"+data.deliverId+"')\"> 投递详情</a>");
+		    			arr.push("</div>");
+	    			}
+	    			arr.push("</div>");
+	    			arr.push("</div>");
+					
+	    			return arr.join("");
+	    	    }
+	    	    
+	    	    function viewRequirement(id){
+	    			tools.dialog({
+	    				name:"招聘详情",
+	    				url:"business/requirement/toView.do?id="+id,
+	    				width:"850px",
+	    				height:"500px",
+	    				close:function(){
+	    					$("#table-javascript").refresh();//刷新页面
+	    				}
+	    			});
+	    		}
+	    	    function addDeliver(id){
+	    			tools.dialog({
+	    				name:"投递简历",
+	    				url:"business/deliver/toAdd.do?id="+id,
+	    				width:"600px",
+	    				height:"320px",
+	    				close:function(){
+	    					$("#table-javascript").refresh();//刷新页面
+	    				}
+	    			});
+	    		}
+	    	    function viewDeliver(id){
+	    			tools.dialog({
+	    				name:"投递详情",
+	    				url:"business/deliver/toView.do?id="+id,
+	    				width:"850px",
+	    				height:"500px",
+	    				close:function(){
+	    					$("#table-javascript").refresh();//刷新页面
+	    				}
+	    			});
+	    		}
+	    	    
 		    	
 		    	function searchByButton(){
 		    		$("#remindDiv").show();

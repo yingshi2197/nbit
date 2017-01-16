@@ -7,6 +7,8 @@ import com.noboll.core.base.entity.BaseEntity;
 
 public class User extends BaseEntity {
 	
+	private static final long serialVersionUID = -6096248839118554079L;
+
 	private String name;
 	
 	private String role;

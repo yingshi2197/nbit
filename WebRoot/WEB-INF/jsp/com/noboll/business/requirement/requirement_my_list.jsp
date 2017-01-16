@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		       	$("#table-javascript").initBootTable({
 		       		method: 'post',
 		       		searchDiv:"searchDiv",
-	                url: 'business/requirement/list.do',
+	                url: 'business/requirement/myList.do',
 	                addUrl:"",
 	                striped: true,
 	                permissionOperate:function(data){
@@ -64,6 +64,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pageSize: 10,
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
+	                	{name:'新增',position:'top',select:"",css:"add",dialog:{url:"business/requirement/toAdd.do",width:"850px",height:"500px"}},//新增
+	                	{name:'修改',position:'row',css:"edit",a:'',dialog:{url:"business/requirement/toEdit.do",width:"850px",height:"500px"}},//修改	
 	                	{name:'发布',position:'row',css:"publish",type:"ajax",url:"business/requirement/publish.do"},//发布 
 	                	{name:'结束',position:'row',css:"finish",type:"ajax",url:"business/requirement/finish.do"},//结束 
 	                	//{name:'申请',position:'row',css:"apply",a:'',dialog:{url:"business/resume/toAdd.do",width:"850px",height:"500px"}},//修改	       	

@@ -44,9 +44,9 @@
 			<include refid="system.generatedId"></include>
 		</selectKey>
 		insert into requirement
-		(id, name, customer_id, code,level, period,position_id,duty,num,demand,address,description,delete_flag,<include refid="system.user_column_insert"></include>)
+		(id, name, code,level, period,position_id,duty,num,demand,address,description,delete_flag,status,<include refid="system.user_column_insert"></include>)
 		values
-		(#{id}, #{name}, #{customerId}, #{code},#{level}, #{period},#{positionId},#{duty},#{num},#{demand},#{address},#{description},'0',<include refid="system.user_value_insert"></include>)
+		(#{id}, #{name}, #{code},#{level}, #{period},#{positionId},#{duty},#{num},#{demand},#{address},#{description},'0',#{status},<include refid="system.user_value_insert"></include>)
 	</insert>
 
 	<!-- <update id="deleteEntity" parameterType="string">
@@ -86,6 +86,9 @@
 		<if test="_parameter.containsKey('customerName')">
 			and c.name like CONCAT('%',
 			CONCAT(#{customerName,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('customerId')">
+			and q.customer_id = #{customerId}
 		</if>
 		<if test="_parameter.containsKey('positionName')">
 			and d4.name like CONCAT('%',

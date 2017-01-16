@@ -1,44 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
+<!-- 角色菜单配置 -->
 	<roleMenu>
 		<role>admin</role>
 		<formal>1</formal><!-- 是否允许部署正式系统，1表示允许，0表示不允许 -->
-		<menu>
-			<!-- 为空时表示可以访问所有菜单 -->
-		</menu>
-	</roleMenu>
-	<roleMenu>
-		<role>test</role>
-		<formal>0</formal><!-- 是否允许部署正式系统，1表示允许，0表示不允许 -->
-		<menu>
+		<menu><!-- 为空时表示可以访问所有菜单，不为空时表示只可以访问如下菜单-->
 			toLogin.do,
 			home.do,
-			business/log/toAdd.do,
-			business/log/add.do,
-			business/project/toList.do,
-			business/project/list.do,
-			business/project/toProjectLog.do,
-			business/log/toList.do,
-			business/log/list.do,
-			progress/getProgress.do,
-			business/log/toView.do,
+			business/resume/toList.do,
+			business/resume/toView.do,
+			business/requirement/toList.do,
+			business/requirement/toSearchList.do,
+			business/resume/toSearchList.do,
+			business/requirement/toView.do,
+			business/deliver/toView.do,
+			business/deliver/toManageList.do,
+			business/interview/toDhInterview.do,
+			business/entrant/toAddUpdate.do,
+			business/userInfo/toList.do,
+			business/userInfo/toAdd.do,
+			business/userInfo/toEdit.do,
+			business/userInfo/remove.do,
+			business/customer/toList.do,
+			business/customer/toAdd.do,
+			business/customer/toEdit.do,
+			business/customer/enable.do,
+			business/customer/disable.do,
+			business/customer/remove.do,
+			business/entrant/toList.do,
+			business/dictType/toList.do,
+			business/dictType/toAdd.do,
+			business/dictType/toEdit.do,
+			business/dictType/remove.do,
+			business/dict/toList.do,
+			business/dict/toAdd.do,
+			business/dict/toEdit.do,
+			business/dict/remove.do,
+			business/position/toTypeList.do,
+			business/position/toList.do,
+			business/position/toAdd.do,
+			business/position/toEdit.do,
+			business/position/remove.do,
+			business/label/toList.do,
+			business/label/toAdd.do,
+			business/label/toEdit.do,
+			business/label/remove.do,
+			business/dict/queryByTypeCode.do,
+			<!-- 选择器，后续考虑提取为白名单 -->
+			business/position/toChoose.do,
+			business/dict/toChoose.do,
+			business/customer/toChoose.do,
+			business/label/choose.do,
 			logout.do
 		</menu>
 	</roleMenu>
 	<roleMenu>
-		<role>develop</role>
+		<role>applicant</role><!-- 求职者 -->
 		<formal>0</formal><!-- 是否允许部署正式系统，1表示允许，0表示不允许 -->
-		<menu>
-			<!-- 不为空时表示只可以访问如下菜单 -->
+		<menu><!-- 为空时表示可以访问所有菜单，不为空时表示只可以访问如下菜单-->
 			toLogin.do,
 			home.do,
-			business/project/toList.do,
-			business/project/toProjectLog.do,
-			business/project/list.do,
-			business/log/toList.do,
-			business/log/list.do,
-			business/log/toView.do,
-			progress/getProgress.do,
+			business/resume/toMyList.do,
+			business/resume/toAdd.do,
+			business/resume/toEdit.do,
+			business/resume/toView.do,
+			business/requirement/toSearchList.do,
+			business/requirement/toView.do,
+			business/deliver/toAdd.do,
+			business/deliver/toView.do,
+			business/deliver/toMyList.do,
+			business/interview/toMyList.do,
+			business/dict/queryByTypeCode.do,
+			<!-- 选择器，后续考虑提取为白名单 -->
+			business/position/toChoose.do,
+			business/dict/toChoose.do,
+			business/resume/toMyChoose.do,
+			business/label/choose.do,
+			logout.do
+		</menu>
+	</roleMenu>
+	<roleMenu>
+		<role>customer</role>
+		<formal>0</formal><!-- 客户 -->
+		<menu><!-- 为空时表示可以访问所有菜单，不为空时表示只可以访问如下菜单-->
+			toLogin.do,
+			home.do,
+			business/resume/toSearchList.do,
+			business/requirement/toMyList.do,
+			business/requirement/toAdd.do,
+			business/requirement/toEdit.do,
+			business/requirement/publish.do,
+			business/requirement/finish.do,
+			business/requirement/toView.do,
+			business/requirement/remove.do,
+			business/deliver/toCustomerList.do,
+			business/deliver/toView.do,
+			business/interview/toXcInterview.do,
+			business/resume/toView.do,
+			business/dict/queryByTypeCode.do,
+			<!-- 选择器，后续考虑提取为白名单 -->
+			business/position/toChoose.do,
+			business/dict/toChoose.do,
+			business/label/choose.do,
 			logout.do
 		</menu>
 	</roleMenu>

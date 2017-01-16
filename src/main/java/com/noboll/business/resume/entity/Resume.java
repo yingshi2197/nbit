@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.noboll.business.user.constant.UserInfoConstant;
 import com.noboll.core.base.entity.BaseEntity;
 
 /**
@@ -170,6 +171,10 @@ public class Resume extends BaseEntity {
 		this.nativeName = nativeName;
 	}
 	public String getSexName() {
+		if (UserInfoConstant.SEX_MALE.equals(sex))
+			sexName = UserInfoConstant.SEX_MALE_NAME;
+		else if (UserInfoConstant.SEX_FEMALE.equals(sex))
+			sexName =  UserInfoConstant.SEX_FEMALE_NAME;
 		return sexName;
 	}
 	public void setSexName(String sexName) {

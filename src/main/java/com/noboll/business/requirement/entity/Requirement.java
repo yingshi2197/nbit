@@ -36,6 +36,7 @@ public class Requirement extends BaseEntity  {
 	private String deliverStatus;// 是否已经投递，0代表没有，1代表已经投递过，用于需求搜索页(招聘浏览)中判断是否显示投递简历按钮
 	private String deliverId;// 投递记录id，用于需求搜索页(招聘浏览)中浏览投递详情
 	private String customerName;//客户
+	private String customerLabels;
 	
 	
 	public String getId() {
@@ -175,6 +176,12 @@ public class Requirement extends BaseEntity  {
 	}
 	public void setDeliverId(String deliverId) {
 		this.deliverId = deliverId;
+	}
+	public String getCustomerLabels() {
+		return customerLabels;
+	}
+	public void setCustomerLabels(String customerLabels) {
+		this.customerLabels = customerLabels;
 	}
 	
 	

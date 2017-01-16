@@ -16,5 +16,10 @@ public interface UserInfoService extends BaseService<UserInfo> {
 	 * 修改用户
 	 */
 	public void updateUserInfo(UserInfo userInfo);
+
+	/**
+	 * 通过登录账号查找用户
+	 */
+	public UserInfo getByLoginId(String loginId);
 	
 }

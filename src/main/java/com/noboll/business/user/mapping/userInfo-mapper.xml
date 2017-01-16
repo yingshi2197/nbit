@@ -79,4 +79,11 @@
 		where u.delete_flag = '0'
     </select>
     
+	<select id="getByLoginId" resultType="com.noboll.business.user.entity.UserInfo"  parameterType="string" resultMap="userInfo.result">
+    	select u.*,c.name customerName
+		from user_info u
+		left join customer c on c.id = u.customer_id and u.delete_flag='0'
+		where u.delete_flag = '0' and u.login_id=#{loginId}
+    </select>
+    
 </mapper>

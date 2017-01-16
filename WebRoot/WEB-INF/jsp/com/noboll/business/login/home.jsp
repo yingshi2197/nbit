@@ -31,9 +31,6 @@
 <header>
 	<div class="container">
 		<ul class="nav nav-pills navbar-right">
-			<!-- <li><a target="_blank" href="http://192.168.1.32/index.php">禅道</a></li>
-			<li><a target="_blank" href="http://192.168.1.32:8081/nexus/index.html#welcome">maven仓库</a></li>
-			<li><a target="_blank" href="http://192.168.1.88:8001/zabbix/index.php">服务器监控</a></li> -->
 			<li><a href="logout.do"><span
 					class="glyphicon glyphicon-new-window"></span> 退出</a></li>
 		</ul>
@@ -53,7 +50,8 @@
 						aria-haspopup="true" aria-expanded="false">需求 <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<li><a id="requirementHref" class="click_a" href="javascript:void(0);"  url="business/requirement/toList.do">我的需求</a></li>
+							<li><a id="requirementMyHref" class="click_a" href="javascript:void(0);"  url="business/requirement/toMyList.do">我的需求</a></li>
+							<li><a id="requirementHref" class="click_a" href="javascript:void(0);"  url="business/requirement/toList.do">需求列表</a></li>
 							<li><a id="requirementSearchHref" class="click_a" href="javascript:void(0);"  url="business/requirement/toSearchList.do">需求搜索</a></li>
 						</ul>
 					</li>
@@ -107,7 +105,8 @@
 <script type="text/javascript">
 		var temp=[];
 		// 需求
-		temp["requirementHref"]=[{name:"需求",url:""},{name:"我的需求",url:"business/requirement/toList.do"}];
+		temp["requirementMyHref"]=[{name:"需求",url:""},{name:"我的需求",url:"business/requirement/toMyList.do"}];
+		temp["requirementHref"]=[{name:"需求",url:""},{name:"需求列表",url:"business/requirement/toList.do"}];
 		temp["requirementSearchHref"]=[{name:"需求",url:""},{name:"需求搜索",url:"business/requirement/toSearchList.do"}];
 		// 简历
 		temp["resumeHref"]=[{name:"简历",url:""},{name:"我的简历",url:"business/resume/toList.do"}];
@@ -146,22 +145,38 @@
 			}
 		}
 		
-		click($("#projectHref"));
-		
-		$(document).on("click",".click_a",function(){
-			click($(this));
+		// 第一次进入页面加载
+		$(document).ready(function(){
+			var initMenu = '<c:out value="${initMenu}"/>';
+			click($("#"+initMenu));
+			
+			// 根据权限处理菜单显示
+			$(".click_a").each(function(){
+				var url = $(this).attr("url");
+				if(!tools.checkUrlPermission(url))
+					$(this).parent().remove();
+			})
+			
+			$("ul .parent").each(function(){
+				// 没有有权限的子菜单，则隐藏此菜单
+				if ($(this).find("ul li").length <= 0)
+					$(this).remove();
 		})
-		
-		$(".dropdown-toggle").on("click",function(){
-			$(".dropdown-menu").hide();
-			var ul=$(this).next();
-			ul.show();
-		})
-		
-		$(document).click(function(){
-		    $(".dropdown-menu").hide();
-		  })
-		
-	</script>
+	})
+
+	$(document).on("click", ".click_a", function() {
+		click($(this));
+	})
+
+	$(".dropdown-toggle").on("click", function() {
+		$(".dropdown-menu").hide();
+		var ul = $(this).next();
+		ul.show();
+	})
+
+	$(document).click(function() {
+		$(".dropdown-menu").hide();
+	})
+</script>
 </body>
 </html>

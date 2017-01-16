@@ -14,12 +14,9 @@ import com.noboll.core.base.entity.BaseEntity;
  */
 public class Dict extends BaseEntity  {
 
+	private static final long serialVersionUID = 6685468618290841859L;
 	// Fields
 
-	/**
-	* @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
-	*/
-	
 	private String name;//名称
 	private String typeId;//类型id
 	private String code;//关联数据字典

@@ -122,7 +122,7 @@
             <tx:method name="delete*" propagation="REQUIRED" />
             <tx:method name="get*" read-only="true" />
             <tx:method name="query*" read-only="true" />
-            <tx:method name="*" read-only="true" />
+            <tx:method name="*" propagation="REQUIRED" />
         </tx:attributes>
     </tx:advice>
     

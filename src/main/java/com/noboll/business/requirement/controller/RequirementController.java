@@ -13,24 +13,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.noboll.business.deliver.entity.Deliver;
+import com.noboll.business.customerLabel.entity.CustomerLabel;
+import com.noboll.business.customerLabel.service.CustomerLabelService;
 import com.noboll.business.dict.constant.DictConstant;
 import com.noboll.business.dict.entity.Dict;
 import com.noboll.business.dict.entity.QueryBean;
 import com.noboll.business.dict.service.DictService;
-import com.noboll.business.interview.entity.Interview;
 import com.noboll.business.position.entity.Position;
 import com.noboll.business.position.service.PositionService;
 import com.noboll.business.requirement.constant.RequirementConstant;
 import com.noboll.business.requirement.entity.Requirement;
 import com.noboll.business.requirement.service.RequirementService;
-import com.noboll.business.resume.entity.Resume;
+import com.noboll.business.user.entity.User;
 import com.noboll.context.SystemContext;
 import com.noboll.core.base.controller.BaseController;
 import com.noboll.core.base.entity.Page;
 import com.noboll.core.base.entity.QueryParam;
-import com.noboll.core.exception.BusinessException;
-import com.noboll.core.util.StringUtil;
+import com.noboll.core.util.JsonUtil;
 import com.noboll.util.InitUtil;
 
 @Controller
@@ -43,6 +42,8 @@ public class RequirementController extends BaseController<Requirement> {
 	private DictService dictService;
 	@Resource
 	private PositionService positionService;
+	@Resource
+	private CustomerLabelService customerLabelService;
 	
 	// 跳转到列表页面
 	@RequestMapping("/toList")
@@ -56,6 +57,24 @@ public class RequirementController extends BaseController<Requirement> {
 	public Object listRequirement(HttpServletRequest request,Model model) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
 		Page<Requirement> page = InitUtil.initPage(request);
+		page = requirementService.getPageList("com.noboll.business.requirement.dao.RequirementDao.getList", queryParam,
+				page);
+		return page;
+	}
+	
+	// 跳转到我的需求列表页面
+	@RequestMapping("/toMyList")
+	public String toMyListRequirement(HttpServletRequest request,Model model) {
+		return "business/requirement/requirement_my_list";
+	}
+
+	// 异步返回我的需求json数据
+	@RequestMapping("/myList")
+	@ResponseBody
+	public Object myListRequirement(HttpServletRequest request,Model model) {
+		QueryParam queryParam = InitUtil.initQueryParam(request);
+		Page<Requirement> page = InitUtil.initPage(request);
+		queryParam.addParam("customerId", ((User)SystemContext.getLoginUser()).getCustomerId());
 		page = requirementService.getPageList("com.noboll.business.requirement.dao.RequirementDao.getList", queryParam,
 				page);
 		return page;
@@ -149,6 +168,17 @@ public class RequirementController extends BaseController<Requirement> {
 		queryParam.addParam("userId", SystemContext.getLoginUser().getId());
 		page = requirementService.getPageList("com.noboll.business.requirement.dao.RequirementDao.getSearchList", queryParam,
 				page);
+		List<Requirement> list = page.getRows();
+		if (null!=list && list.size()>0) {
+			for (Requirement requirement : list) {
+				// 客户标签
+				List<CustomerLabel> customerLabels = customerLabelService.getByCustomerId(requirement.getCustomerId());
+				if (null != customerLabels && customerLabels.size()>0)
+					requirement.setCustomerLabels(JsonUtil.objToJson(customerLabels));
+				else
+					requirement.setCustomerLabels("");
+			}
+		}
 		return page;
 	}
 	

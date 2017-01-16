@@ -205,6 +205,17 @@ public class ResumeController extends BaseController<Resume> {
 		Page<Resume> page = InitUtil.initPage(request);
 		page = resumeService.getPageList("com.noboll.business.resume.dao.ResumeDao.getSearchList", queryParam,
 				page);
+		List<Resume> list = page.getRows();
+		if (null!=list && list.size()>0) {
+			for (Resume resume : list) {
+				// 简历标签
+				List<ResumeLabel> resumeLabels = resumeLabelService.getByResumeId(resume.getId());
+				if (null != resumeLabels && resumeLabels.size()>0)
+					resume.setLabel(JsonUtil.objToJson(resumeLabels));
+				else
+					resume.setLabel("");
+			}
+		}
 		return page;
 	}
 	

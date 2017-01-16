@@ -2,9 +2,10 @@
  * @Author:插件封装：weicb
  * @Date:2017-01-05
  * 1、实现基本的标签待选区域生成与选择/取消选择功能<br>
- * 2、计划：实现换一换功能，从后台随机取指定数量的标签[2017-01-08已实现]<br>
+ * 2、计划：实现换一换功能，从指定链接请求标签集合[2017-01-08已实现]<br>
  * 3、计划：实现初始化已选标签并在候选区禁止选择[2017-01-08已实现]<br>
- * 4、计划：实现单页面多个标签组件的兼容[延期]<br>
+ * 4、计划：实现单页面多个标签组件的兼容[2017-01-16已实现]<br>
+ * TODO 计划：实现添加、删除标签的回调函数[延期]<br>
  */
 (function($){
 	$.fn.extend({ 
@@ -12,13 +13,13 @@
 			    var obj=$(this);
 			    var arr=[];
 				var setting={
-					id:null,  // id为空时自动赋值
-					selects:null,  //初始化时需要选中的数据
-					readonly:false,//是否只读，不显示待选区域
-					tags:[], // 初始化时候选区需要准备的标签数据
-					maxTips:10, // 最多可以选择的标签个数
-					updateUrl:"",//换一换的数据来源链接
-					pageCount:20//候选区每次显示多少条数据
+						id : null, // id为空时自动赋值
+						selects : null, // 初始化时需要选中的数据
+						readonly : false,// 是否只读，不显示待选区域，默认为否
+						tags : [], // 初始化时候选区需要准备的标签数据
+						maxTips : 10, // 最多可以选择的标签个数，默认为10个
+						updateUrl : "", // 换一换的数据来源链接
+						pageCount : 20 // 候选区每次显示多少条数据，待选区每页显示的标签数量，默认为20个
 				}				
 				$.extend(true,setting,opt);
 				$(this).data("setting",setting);
@@ -58,7 +59,6 @@
 					}
 					arr.push('</div>');
 				}
-				
 				$(obj).html(arr.join(""));
 				// 处理已选数据
 				if(setting.selects){
@@ -70,36 +70,38 @@
 				}
 				$(obj).setSelectTips();
 				
-				// 选择事件
-				$(obj).bingSelectEvent();
-				// 更换链接
-				var $changeTips = $('#'+change_tips_id);
-				$changeTips.on("click",function(){
-					var crad = $(".default-tag .clearfix");
-					// 数据
-					var html = [];
-					$.ajax({
-						url : setting.updateUrl,
-						data : {limit:setting.pageCount},
-						method : "post",
-						async : false,
-						success : function(data) {
-							for(var i=0;i<data.length;i++) {
-							   var data_value = data[i].id;
-							   var data_name = data[i].name;
-							   html.push('<a title="'+data_name+'" value="'+data_value+'" href="javascript:void(0);"><span>'+data_name+'</span><em></em></a>')
-							   html.push('</div></div>');
-							   $(crad).html(html.join(""));
-							   $(obj).setSelectTips();
-							   $(obj).bingSelectEvent();
+				// 事件处理
+				if(!readonly){// 只读的时候没有待选区域，只需要显示已选标签，不需要绑定任何事件
+					// 选择事件，主要是将已选择的标签在待选区禁用
+					$(obj).bingSelectEvent();
+					// 更换链接：点击“换一换”事件
+					var $changeTips = $('#'+change_tips_id);
+					$changeTips.on("click",function(){
+						var crad = $(".default-tag .clearfix");
+						// 数据
+						var html = [];
+						$.ajax({
+							url : setting.updateUrl,
+							data : {limit:setting.pageCount},
+							method : "post",
+							async : false,
+							success : function(data) {
+								for(var i=0;i<data.length;i++) {
+								   var data_value = data[i].id;
+								   var data_name = data[i].name;
+								   html.push('<a title="'+data_name+'" value="'+data_value+'" href="javascript:void(0);"><span>'+data_name+'</span><em></em></a>')
+								   html.push('</div></div>');
+								   $(crad).html(html.join(""));
+								   $(obj).setSelectTips();
+								   $(obj).bingSelectEvent();
+								}
 							}
-						}
-					});
-					
-				});
+						});
+					});	
+				}
 			},
 			hasTips:function(n,i){
-				var a=$(".plus-tag");
+				var a=$(this).find(".plus-tag");
 				var d=$("a",a),c=false;
 				d.each(function(){
 					if($(this).attr("title")==n && $(this).attr("value")==i){
@@ -111,7 +113,7 @@
 			},
 			bingSelectEvent:function(){
 				var obj = $(this);
-				$('.default-tag a').on('click', function(){
+				$(this).find('.default-tag a').on('click', function(){
 					var $this = $(this),
 					name = $this.attr('title'),
 					id = $this.attr('value');
@@ -119,12 +121,12 @@
 				});
 			},
 			isMaxTips:function(){
-				var a=$(".plus-tag");
+				var a=$(this).find(".plus-tag");
 				var setting=$(this).data("setting");
 				return $("a",a).length>=setting.maxTips;
 			},
 			setTips:function(n,i){
-				var a=$(".plus-tag");
+				var a=$(this).find(".plus-tag");
 				var setting=$(this).data("setting");
 				if($(this).hasTips(n,i)){// 已选
 					return false;
@@ -141,10 +143,10 @@
 				var obj = $(this);
 				// 删除事件
 				if(!setting.readonly){
-					$(".plus-tag a").unbind("click");
-					$(".plus-tag a").on("click",function(){
+					$(this).find(".plus-tag a").unbind("click");
+					$(this).find(".plus-tag a").on("click",function(){
 						var c=$(this),b=c.attr("title"),d=c.attr("value");
-						$(obj).delTips(b,d)
+						$(obj).delTips(b,d);
 					});
 				}
 				return true;
@@ -153,7 +155,7 @@
 				if(!$(this).hasTips(n,i)){
 					return false;
 				}
-				var a=$(".plus-tag");
+				var a=$(this).find(".plus-tag");
 				$("a",a).each(function(){
 					var d=$(this);
 					if(d.attr("title")==n && d.attr("value")==i){
@@ -162,29 +164,29 @@
 					}
 				});
 				$(this).searchAjax(n,i,false);
-				return true
+				return true;
 			},
 	
 			getTips:function(){
-				var a=$(".plus-tag");
+				var a=$(this).find(".plus-tag");
 				var b=[];
 				$("a",a).each(function(){
-					b.push($(this).attr("title"))
+					b.push($(this).attr("title"));
 				});
 				return b;
 			},
 	
 			getTipsId:function(){
-				var a=$(".plus-tag");
+				var a=$(this).find(".plus-tag");
 				var b=[];
 				$("a",a).each(function(){
-					b.push($(this).attr("value"))
+					b.push($(this).attr("value"));
 				});
 				return b;
 			},
 			getTipsIdAndTag:function(){
 				var b=[];
-				var a=$(".plus-tag");
+				var a=$(this).find(".plus-tag");
 				$("a",a).each(function(){
 					b.push($(this).attr("value")+"##"+$(this).attr("title"))
 				});
@@ -199,9 +201,10 @@
 				}else{
 					$('#'+tagId).hide();
 				}
-				$('.default-tag a').removeClass('selected');
+				$(this).find('.default-tag a').removeClass('selected');
+				var _this = $(this);
 				$.each(arrName, function(index,name){
-					$('.default-tag a').each(function(){
+					$(_this).find('.default-tag a').each(function(){
 						var $this = $(this);
 						if($this.attr('title') == name){
 							$this.addClass('selected');

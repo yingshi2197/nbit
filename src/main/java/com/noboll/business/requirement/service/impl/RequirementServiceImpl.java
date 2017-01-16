@@ -28,7 +28,7 @@ public class RequirementServiceImpl extends BaseServiceImpl<Requirement> impleme
 	public void saveRequirement(Requirement requirement) {
 		requirement.setCustomerId(((User)SystemContext.getLoginUser()).getCustomerId());
 		if (!RequirementConstant.REQUIREMENT_STATUS_CG.equals(requirement.getStatus()) 
-				|| !RequirementConstant.REQUIREMENT_STATUS_FB.equals(requirement.getStatus())) {// 新增的需求状态只能是草稿或者直接发布
+				&& !RequirementConstant.REQUIREMENT_STATUS_FB.equals(requirement.getStatus())) {// 新增的需求状态只能是草稿或者直接发布
 			requirement.setStatus(RequirementConstant.REQUIREMENT_STATUS_CG);
 		}
 		this.saveEntity(requirement);

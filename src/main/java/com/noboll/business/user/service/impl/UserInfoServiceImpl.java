@@ -72,5 +72,12 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfo>
 		this.updateEntity(userInfo);
 	}
 
+	/**
+	 * 通过登录账号查找用户
+	 */
+	@Override
+	public UserInfo getByLoginId(String loginId){
+		return userInfoDao.getByLoginId(loginId);
+	}
 
 }
