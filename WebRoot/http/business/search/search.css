@@ -98,7 +98,19 @@ font-weight:bolder;
  border:1px solid #005bac; 
    background: transparent;
  }
+.search_a1{ 
+	color:#FFF;
+  	border:none;
+	padding:10px 20px;
+   background: #169BD5;
+ }
  .search_a:hover{ background:#50c9c4;
+  color:#FFF;
+  border:none;
+  text-decoration:none;
+    cursor: pointer;
+ }
+ .search_a1:hover{ background:#50c9c4;
   color:#FFF;
   border:none;
   text-decoration:none;

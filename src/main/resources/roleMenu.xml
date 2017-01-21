@@ -11,8 +11,9 @@
 			business/resume/toView.do,
 			business/requirement/toList.do,
 			business/requirement/toSearchList.do,
-			business/resume/toSearchList.do,
+			business/requirement/toSearchView.do
 			business/requirement/toView.do,
+			business/resume/toSearchList.do,
 			business/deliver/toView.do,
 			business/deliver/toManageList.do,
 			business/interview/toDhInterview.do,
@@ -46,6 +47,7 @@
 			business/label/toEdit.do,
 			business/label/remove.do,
 			business/dict/queryByTypeCode.do,
+			business/customer/getCustomer.do,
 			<!-- 选择器，后续考虑提取为白名单 -->
 			business/position/toChoose.do,
 			business/dict/toChoose.do,
@@ -65,12 +67,14 @@
 			business/resume/toEdit.do,
 			business/resume/toView.do,
 			business/requirement/toSearchList.do,
-			business/requirement/toView.do,
+			business/requirement/toSearchView.do,
 			business/deliver/toAdd.do,
 			business/deliver/toView.do,
 			business/deliver/toMyList.do,
 			business/interview/toMyList.do,
 			business/dict/queryByTypeCode.do,
+			business/evaluate/toCEvalute.do,
+			business/customer/getCustomer.do,
 			<!-- 选择器，后续考虑提取为白名单 -->
 			business/position/toChoose.do,
 			business/dict/toChoose.do,
@@ -98,6 +102,8 @@
 			business/interview/toXcInterview.do,
 			business/resume/toView.do,
 			business/dict/queryByTypeCode.do,
+			business/evaluate/toREvalute.do,
+			business/customer/getCustomer.do,
 			<!-- 选择器，后续考虑提取为白名单 -->
 			business/position/toChoose.do,
 			business/dict/toChoose.do,

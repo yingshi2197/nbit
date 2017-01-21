@@ -22,6 +22,8 @@ import com.noboll.business.experience.entity.Experience;
 import com.noboll.business.experience.service.ExperienceService;
 import com.noboll.business.position.entity.Position;
 import com.noboll.business.position.service.PositionService;
+import com.noboll.business.requirement.entity.Requirement;
+import com.noboll.business.requirement.service.RequirementService;
 import com.noboll.business.resume.entity.Resume;
 import com.noboll.business.resume.service.ResumeService;
 import com.noboll.business.resumeLabel.entity.ResumeLabel;
@@ -48,6 +50,8 @@ public class ResumeController extends BaseController<Resume> {
 	private ExperienceService experienceService;
 	@Resource
 	private ResumeLabelService resumeLabelService;
+	@Resource
+	private RequirementService requirementService;
 	
 	// 跳转到列表页面
 	@RequestMapping("/toList")
@@ -69,6 +73,9 @@ public class ResumeController extends BaseController<Resume> {
 	// 跳转到列表页面
 	@RequestMapping("/toMyList")
 	public String toMyList(HttpServletRequest request,Model model) {
+		// 可能感兴趣的职位(即简历匹配)
+		List<Requirement> labelMatchRequirments = requirementService.getLabelMatchByUserId(SystemContext.getLoginUser().getId());
+		model.addAttribute("labelMatchRequirments", labelMatchRequirments);
 		return "business/resume/resume_my_list";
 	}
 

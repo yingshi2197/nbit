@@ -202,8 +202,35 @@ public class RequirementController extends BaseController<Requirement> {
 	@RequestMapping("/toView")
 	public String toView(Model model,String id) {
 		// 需求信息
-		Requirement requirement = requirementService.getEntity(id);
+		Requirement requirement = requirementService.getDeliverStatusById(id,SystemContext.getLoginUser().getId());
 		model.addAttribute("requirement", requirement);
 		return "business/requirement/requirement_view";
+	}
+	
+	// 跳转到详情页面(需求搜索)
+	@RequestMapping("/toSearchView")
+	public String toSearchView(Model model,String id) {
+		// 需求信息
+		Requirement requirement = requirementService.getDeliverStatusById(id,SystemContext.getLoginUser().getId());
+		model.addAttribute("requirement", requirement);
+		// 客户标签
+		List<CustomerLabel> customerLabels = customerLabelService.getByCustomerId(requirement.getCustomerId());
+		if (null != customerLabels && customerLabels.size()>0)
+			model.addAttribute("customerLabels", JsonUtil.objToJson(customerLabels));
+		else
+			model.addAttribute("customerLabels", "");
+		// 可能感兴趣的职位(即简历匹配)
+		List<Requirement> labelMatchRequirments = requirementService.getLabelMatchByUserId(SystemContext.getLoginUser().getId());
+		if (null != labelMatchRequirments && labelMatchRequirments.size()>0) {
+			List<Requirement> matchRequirements = new ArrayList<Requirement>();
+			for (Requirement req : labelMatchRequirments) {
+				if (!id.equals(req.getId()))
+					matchRequirements.add(req);
+			}
+			model.addAttribute("labelMatchRequirments", matchRequirements);
+		}else{
+			model.addAttribute("labelMatchRequirments", labelMatchRequirments);
+		}
+		return "business/requirement/requirement_search_view";
 	}
 }

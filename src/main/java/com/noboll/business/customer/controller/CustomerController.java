@@ -148,4 +148,12 @@ public class CustomerController extends BaseController<Customer> {
 		return page;
 	}
 	
+	// 跳转到修改页面
+	@RequestMapping(value="/getCustomer",method=RequestMethod.POST)
+	@ResponseBody
+	public Object getCustomer(String id) {
+		Customer customer = customerService.getEntity(id);
+		return customer;
+	}
+	
 }

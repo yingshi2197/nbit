@@ -38,6 +38,8 @@ public class Customer extends BaseEntity  {
 	private String natureName;//性质，数据字典
 	private String scaleName;// 规模，数据字典
 	private String contactJson;//联系人json串
+	private Integer reqCount;//发布需求数
+	private Integer deliverCount;//投递数
 	
 	
 	private String label;
@@ -141,6 +143,18 @@ public class Customer extends BaseEntity  {
 	}
 	public void setContactJson(String contactJson) {
 		this.contactJson = contactJson;
+	}
+	public Integer getReqCount() {
+		return reqCount;
+	}
+	public void setReqCount(Integer reqCount) {
+		this.reqCount = reqCount;
+	}
+	public Integer getDeliverCount() {
+		return deliverCount;
+	}
+	public void setDeliverCount(Integer deliverCount) {
+		this.deliverCount = deliverCount;
 	}
 	
 	

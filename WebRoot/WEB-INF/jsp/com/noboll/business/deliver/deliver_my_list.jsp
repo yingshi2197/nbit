@@ -50,15 +50,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                pagination: true,
 	                sidePagination:"server",
 	                pageSize: 10,
+	                permissionOperate:function(data){
+	                	var op={};
+	                	if(!data.interviewStatusCode || (data.interviewStatusCode && data.interviewStatusCode!="xcmstg" &&　data.interviewStatusCode!="xcmsbtg")) {
+	                		op["cEvalute"]="false";
+	                	}
+	                	return op;
+	                }, 
 	                minimumCountColumns: 2,
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
-	                            {name:'详情',position:'row',select:"",css:"view",dialog:{url:"business/deliver/toView.do",width:"850px",height:"500px"}},//详情
-//                             {name:'评价',position:'top',select:"",css:"add",dialog:{url:"business/evaluate/toAdd.do",width:"850px",height:"500px"}}//评价
+	                        {name:'详情',position:'row',select:"",css:"view",dialog:{url:"business/deliver/toView.do",width:"850px",height:"500px"}},//详情
+                            {name:'评价',position:'row',select:"",css:"cEvalute",dialog:{url:"business/evaluate/toCEvalute.do",width:"800px",height:"300px"}}//评价
 	                ],
 	                clickToSelect: true,
 	                columns: [
 				                	//{field: 'statu_msb',checkbox: true},   //复选框
-				                	{field: 'id',title:'id',visible:false}, 
+				                	{field: 'id',title:'id',visible:false},
+				                	{field: 'interviewStatusCode',title:'interviewStatusCode',visible:false}, 
 				                    {field: 'customerName',title: '公司名称',align: 'center',valign: 'middle',searchable:true}, //公司名称
 				                    {field: 'requirementName',title: '需求名称',align: 'center',valign: 'middle'}, //需求名称
 				                    {field: 'addressName',index:'address',title: '地址',align: 'left',valign: 'top'},	//地址

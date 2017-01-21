@@ -25,6 +25,28 @@
         ]]>
 	</select>
 	
+	<!-- 求职者查找需求详情 -->	
+	<select id="getEntity4Detail" parameterType="com.noboll.business.requirement.entity.Requirement"
+		resultType="com.noboll.business.requirement.entity.Requirement" resultMap="requirement.result">
+        <![CDATA[
+			select q.*,d1.name periodName,d2.name addressName,d3.name levelName,d4.name positionName,
+		case when de.user_id is null or de.user_id='' then '0' else '1' end deliverStatus,de.id deliverId,c.name customerName
+			 from 
+			 	requirement q
+			 left join dict d1 on d1.id=q.period
+			  left join dict d2 on d2.id=q.address
+			   left join dict d3 on d3.id=q.level
+			   left join position d4 on d4.id=q.position_id
+			   left join (select de.requirement_id,re.user_id,de.id from deliver de
+				   left join resume re on re.id = de.resume_id and re.delete_flag='0'
+				   where de.delete_flag='0' and re.user_id = #{userId}
+			   ) de on de.requirement_id = q.id
+			   left join customer c on c.id=q.customer_id
+			 where 
+				 q.id = #{id} 
+        ]]>
+	</select>
+	
 	
 	<update id="updateEntity" parameterType="com.noboll.business.requirement.entity.Requirement">
 		update requirement 
@@ -180,6 +202,40 @@
 			and d4.type = #{position_type}
 		</if>
 		order by q.create_time desc
+	</select>
+	
+	<!-- 通过简历匹配出来五条数据 -->
+	<select id="getLabelMatchByUserId" resultType="list" parameterType="string"
+		resultMap="requirement.result">
+		select q.*,d2.name addressName,d3.name levelName,d4.name positionName,c.name customerName
+		 from 
+		 	requirement q
+		left join dict d2 on d2.id=q.address
+		left join dict d3 on d3.id=q.level
+		left join position d4 on d4.id=q.position_id
+		left join customer c on c.id=q.customer_id
+		where 1=1
+		<!-- 职位匹配 -->
+		and exists 
+			(select 1 from resume_position rp 
+			left join resume re on re.id = rp.resume_id and re.delete_flag='0' 
+			where rp.delete_flag='0' and  re.user_id=#{userId} and q.position_id = rp.position_id)
+		<!-- 标签匹配 -->
+		and exists (select 1 from customer_label cl 
+			where cl.delete_flag='0' 
+				and cl.label_id in 
+					(select rl.label_id from resume_label rl 
+					left join resume r on r.id = rl.resume_id and r.delete_flag='0' 
+					where rl.delete_flag='0' and  r.user_id=#{userId})
+				and cl.customer_id = q.customer_id 
+		)
+		<!-- 没有投递过 -->
+		and not exists ( select 1 from deliver de
+		   left join resume re on re.id = de.resume_id and re.delete_flag='0'
+		   where de.delete_flag='0' and re.user_id = #{userId}
+	  		and de.requirement_id = q.id)
+		order by q.create_time desc
+		limit 5
 	</select>
 	
 </mapper>

@@ -58,12 +58,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                				&& data.interviewStatusCode!="xcmsbtg")) {
 	                		op["xcms"]="false";
 	                	}
+	                	if(!data.interviewStatusCode || (data.interviewStatusCode && data.interviewStatusCode!="xcmstg" &&　data.interviewStatusCode!="xcmsbtg")) {
+	                		op["rEvalute"]="false";
+	                	}
 	                	return op;
 	                }, 
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
                              {name:'现场面试',position:'row',select:"",css:"xcms",dialog:{url:"business/interview/toXcInterview.do",width:"850px",height:"500px"}},//现场面试
                              {name:'详情',position:'row',select:"",css:"view",dialog:{url:"business/deliver/toView.do",width:"850px",height:"500px"}},//详情
-//                           {name:'评价',position:'top',select:"",css:"add",dialog:{url:"business/evaluate/toAdd.do",width:"850px",height:"500px"}}//评价
+                             {name:'评价',position:'row',select:"",css:"rEvalute",dialog:{url:"business/evaluate/toREvalute.do",width:"800px",height:"300px"}}//评价
 	                ],
 	                clickToSelect: true,
 	                columns: [

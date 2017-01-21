@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-	  <div class="form-horizontal" id="searchDiv" style="height:600px">
+	  <div class="form-horizontal" id="searchDiv">
 	  		<!-- 左侧：分类条件 begin -->
 	  		<div class="col-xs-3">
 	  			<ul class="search-select">
@@ -105,8 +105,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</div>
 					</div>
 				</div>
-				<!-- 右侧：列表 end -->
 			</div>
+				<!-- 右侧：列表 end -->
 		</div>
     	<spring:message code="jsp.include.basejs"/>
     	<spring:message code="jsp.include.formjsforback" />

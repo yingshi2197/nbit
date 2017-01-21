@@ -198,6 +198,8 @@ create table evaluate
    customer_id          varchar(200) comment '客户',
    r_evaluate           text comment '简历的评价',
    c_evaluate           text comment '客户的评价',
+   r_evaluate_star      varchar(1) comment '简历的评价星级',
+   c_evaluate_star      varchar(1) comment '客户的评价星级',
    create_user_id       varchar(40),
    create_time          datetime,
    last_modify_user_id  varchar(40),

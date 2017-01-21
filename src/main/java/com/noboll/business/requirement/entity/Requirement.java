@@ -37,6 +37,7 @@ public class Requirement extends BaseEntity  {
 	private String deliverId;// 投递记录id，用于需求搜索页(招聘浏览)中浏览投递详情
 	private String customerName;//客户
 	private String customerLabels;
+	private String userId;//查询是否投递时用于辅助查询
 	
 	
 	public String getId() {
@@ -182,6 +183,12 @@ public class Requirement extends BaseEntity  {
 	}
 	public void setCustomerLabels(String customerLabels) {
 		this.customerLabels = customerLabels;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	

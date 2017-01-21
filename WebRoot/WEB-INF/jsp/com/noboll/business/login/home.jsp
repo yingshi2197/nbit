@@ -38,7 +38,7 @@
 	<nav class="navbar navbar-default navbaro">
 		<div class="container">
 			<div class="navbar-header">
-				<a href="javascript:void(0);" class="navbar-brand"> <img
+				<a href="home.do" class="navbar-brand"> <img
 					src="http/business/login/images/nav-logo.png" class="logo-img"> <span
 					class="logo-text">IT外包平台</span>
 				</a>
@@ -52,7 +52,7 @@
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 							<li><a id="requirementMyHref" class="click_a" href="javascript:void(0);"  url="business/requirement/toMyList.do">我的需求</a></li>
 							<li><a id="requirementHref" class="click_a" href="javascript:void(0);"  url="business/requirement/toList.do">需求列表</a></li>
-							<li><a id="requirementSearchHref" class="click_a" href="javascript:void(0);"  url="business/requirement/toSearchList.do">需求搜索</a></li>
+							<li><a id="requirementSearchHref" class="click_a" href="javascript:void(0);"  url="business/requirement/toSearchList.do">职位搜索</a></li>
 						</ul>
 					</li>
 					<li class="active parent"><a href="###" id="dropdownMenu1"

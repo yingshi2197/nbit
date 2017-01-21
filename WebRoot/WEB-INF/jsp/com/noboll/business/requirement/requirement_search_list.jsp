@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <base href="<%=basePath%>">
     
-    <title>需求搜索页</title>
+    <title>职位搜索页</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-	  <div class="form-horizontal" id="searchDiv" style="height:600px">
+	  <div class="form-horizontal" id="searchDiv">
 	  		<!-- 左侧：分类条件 begin -->
 	  		<div class="col-xs-3">
 		  		<ul class="search-select">
@@ -156,9 +156,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	    	var arr=[];
 	    	    	arr.push("<div class=\"search_con\">"); 
 	    			arr.push("<div class=\"col-md-9\">");
-	    			arr.push("<div class=\"search_list_01\">"+data.customerName+"</div>");
+	    			arr.push("<div class=\"search_list_01\">"+data.positionName+"</div>");
 	    			arr.push("<div class=\"search_list_02\">");
-	    			arr.push("<span class=\"search_span\">"+data.positionName+"</span>");
+	    			arr.push("<span class=\"search_span\">"+data.customerName+"</span>");
 	    			arr.push("<span class=\"search_span\">|</span>"); 
 	    			arr.push("<span class=\"search_span\">"+data.addressName+"</span>");
 	    			arr.push("<span class=\"search_span\">|</span>");
@@ -187,9 +187,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			arr.push("</div>");
 	    			
 	    			arr.push("<div class=\"col-md-3\"  style=\" line-height:80px; vertical-align:middle;\">");
-	    			if(tools.checkUrlPermission("business/requirement/toView.do")){
+	    			if(tools.checkUrlPermission("business/requirement/toSearchView.do")){
 		    			arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
-		    			arr.push("<a class=\"search_a\" title=\"招聘详情\" href=\"javascript:void(0)\" onclick=\"viewRequirement('"+data.id+"')\"> 查看</a>");
+		    			arr.push("<a class=\"search_a\" title=\"招聘详情\" href=\"business/requirement/toSearchView.do?id="+data.id+"\" target=\"_blank\"> 查看</a>");
 		    			arr.push("</div>");
 	    			}
 	    			if("1" != data.deliverStatus && tools.checkUrlPermission("business/deliver/toAdd.do")){
@@ -212,7 +212,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			tools.dialog({
 	    				name:"招聘详情",
 	    				url:"business/requirement/toView.do?id="+id,
-	    				width:"850px",
+	    				width:"1000px",
 	    				height:"500px",
 	    				close:function(){
 	    					$("#table-javascript").refresh();//刷新页面

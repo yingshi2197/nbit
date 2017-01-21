@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -24,17 +25,64 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<spring:message code="jsp.include.basecss"/>
 	<spring:message code="jsp.include.listcssforback"/>
 	<link rel="stylesheet" href="http/business/login/css/public.css">
+		<link href="http/business/search/search.css" rel="stylesheet">
+	<link href="http/business/search/css/style.css" rel="stylesheet">
 	
   </head>
   
   <body>
-  	<div class="container">
-	  		 <div class="table-responsive">
-				<div class="panel-heading-choose">我的简历</div>
-			  	<div id="searchDiv"></div>
-				<table id="table-javascript" ></table>
-	    	</div>
-    	</div>
+	  <div class="form-horizontal">
+		  		<!-- 左侧：列表 begin -->
+		  		<div class="col-xs-9">
+			  		<div class="table-responsive">
+						<div class="panel-heading-choose">我的简历</div>
+					  	<div id="searchDiv"></div>
+						<table id="table-javascript" ></table>
+			    	</div>
+		  		</div>
+				<!-- 左侧：列表 end -->
+				<!-- 右侧：可能感兴趣的职位 begin -->
+		  		<div class="col-xs-3">
+		  			<div style="padding:5px 10px;border:#ddd 1px solid;border-radius:4px;margin:5% auto;font-size:12px">
+		  			<li class="select-result">
+						<h4><b>可能感兴趣的职位</b></h4>
+					</li>
+		  			<c:choose>
+		  				<c:when test="${empty labelMatchRequirments}">
+		  					<b>暂时没有匹配您的招聘需求，赶紧上传简历并贴上标签吧！</b>
+		  				</c:when>
+		  				<c:otherwise>
+		  					<c:forEach  items="${ labelMatchRequirments}" var="data">
+			    				<hr/>
+		  						<div class="search_con" style="padding:5px 0 5px 15px">
+					    			<div class="row">
+						    			<div class="search_list_01"><c:out value="${data.positionName }"></c:out></div>
+						    			<div class="search_list_02">
+							    			<span class="search_span"><c:out value="${data.customerName }"></c:out></span>
+							    			<span class="search_span">|</span> 
+							    			<span class="search_span"><c:out value="${data.addressName }"></c:out></span>
+							    			<span class="search_span">|</span>
+							    			<span class="search_span"><c:out value="${data.levelName }"></c:out></span>
+						    			</div> 
+						    			<!-- <div class="search_list_03">
+						    			</div> --> 
+						    			<div class="search_list_03">
+							    			<span class="search_span">发布日期：<fmt:formatDate value="${data.createTime}" type="both" pattern="yyyy-MM-dd"/></span>
+						    			</div>
+					    			</div>   
+					    			<div class="row"  style="line-height:60px; vertical-align:middle;">
+						    				<a class="search_a1" title="查看招聘详情" href="business/requirement/toSearchView.do?id=<c:out value="${data.id }"/>" target="_blank"> 立即查看</a>
+						    				<a class="search_a1" title="投递简历" href="javascript:void(0)" onclick="addDeliver('<c:out value="${data.id }"></c:out>')"> 我要投递</a>
+					    			</div>
+				    			</div>
+		  					</c:forEach>
+		  				</c:otherwise>
+		  			</c:choose>
+		  			</div>
+		  		</div>
+		  		<!-- 右侧：可能感兴趣的职位 end -->
+	 	</div>
+  	
     	<spring:message code="jsp.include.basejs"/>
     	<spring:message code="jsp.include.listjsforback"/>
     	
@@ -70,7 +118,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				                  ]
 	            	});
 		    	});
-		    	
+    		  
+    	    function addDeliver(id){
+    			tools.dialog({
+    				name:"投递简历",
+    				url:"business/deliver/toAdd.do?id="+id,
+    				width:"600px",
+    				height:"320px",
+    				close:function(){
+    					$("#table-javascript").refresh();//刷新页面
+    				}
+    			});
+    		}
     	</script>
   </body>
 </html>

@@ -1,5 +1,7 @@
 package com.noboll.business.requirement.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -55,6 +57,29 @@ public class RequirementServiceImpl extends BaseServiceImpl<Requirement> impleme
 			throw new BusinessException("当前需求状态下不允许结束需求！");
 		requirement.setStatus(RequirementConstant.REQUIREMENT_STATUS_JS);
 		requirementDao.updateStatus(requirement);
+	}
+	
+	/**
+	 * 根据用户id得到标签匹配出来的需求
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<Requirement> getLabelMatchByUserId(String userId){
+		return requirementDao.getLabelMatchByUserId(userId);
+	}
+	
+	/**
+	 * 根据需求id和用户id查找需求同时得到该用户对该需求的投递状态
+	 */
+	public Requirement getDeliverStatusById(String id,String userId){
+		Requirement requirement = new Requirement();
+		requirement.setId(id);
+		requirement.setUserId(userId);
+		List<Requirement> list = requirementDao.getEntity4Detail(requirement);
+		if (null != list && list.size()>0) 
+			return list.get(0);
+		return null;
 	}
 	
 }

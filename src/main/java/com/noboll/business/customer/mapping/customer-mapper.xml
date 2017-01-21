@@ -12,7 +12,11 @@
 	<select id="getEntity" parameterType="string"
 		resultType="com.noboll.business.customer.entity.Customer" resultMap="customer.result">
         <![CDATA[
-           	select c.*,d1.name industryName,d2.name natureName,d3.name scaleName
+           	select c.*,d1.name industryName,d2.name natureName,d3.name scaleName,
+			(select count(d.id) from deliver d 
+			left join requirement rd on rd.id = d.requirement_id and rd.delete_flag='0'
+			where rd.customer_id = #{id} and d.delete_flag='0') deliverCount,
+			(select count(req.id) from requirement req where req.customer_id = #{id} and req.delete_flag='0' and req.status='1') reqCount 
 			from customer c
 			left join dict d1 on d1.id = c.industry and d1.delete_flag='0'
 			left join dict d2 on d2.id = c.nature and d2.delete_flag='0'

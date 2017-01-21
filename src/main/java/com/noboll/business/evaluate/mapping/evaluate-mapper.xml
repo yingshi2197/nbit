@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.evaluate.dao.EvaluateDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.evaluate.entity.Evaluate" resultMap="evaluate.result">
+        <![CDATA[
+           	select p.*
+		 	from 
+			 	evaluate p
+			where p.delete_flag = '0' 
+					and p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.evaluate.entity.Evaluate">
+		update evaluate 
+		set
+			r_evaluate = #{REvaluate},
+			c_evaluate = #{CEvaluate},
+			r_evaluate_star = #{REvaluateStar},
+			c_evaluate_star = #{CEvaluateStar},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.evaluate.entity.Evaluate">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into evaluate
+		(id, resume_id, customer_id, r_evaluate,c_evaluate,r_evaluate_star,c_evaluate_star,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{resumeId}, #{customerId}, #{REvaluate},#{CEvaluate},#{REvaluateStar},#{CEvaluateStar},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update evaluate set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="evaluate.result">
+		select p.*
+	 	from 
+		 	evaluate p
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('resumeId')">
+			and p.resume_id =#{resumeId,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('customerId')">
+			and p.customer_id = #{customerId,jdbcType=VARCHAR}
+		</if>
+		order by p.evaluate_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="evaluate.result">
+    	select p.*
+	 	from 
+		 	evaluate p
+    	where delete_flag='0'
+    	<if test="_parameter.containsKey('resumeId')">
+			and p.resume_id =#{resumeId,jdbcType=VARCHAR}
+		</if>
+		<if test="_parameter.containsKey('customerId')">
+			and p.customer_id = #{customerId,jdbcType=VARCHAR}
+		</if>
+    </select>
+
+</mapper>
