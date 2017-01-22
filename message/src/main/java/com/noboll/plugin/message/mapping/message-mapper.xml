@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.plugin.message.dao.MessageDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.plugin.message.entity.Message" resultMap="message.result">
+        <![CDATA[
+           	select p.*
+			 from 
+			 	message p
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.plugin.message.entity.Message">
+		update message 
+		set
+			status = #{status},
+			reason = #{reason},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+
+	<insert id="saveEntity" parameterType="com.noboll.plugin.message.entity.Message">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into message
+		(id, send_name, sender, receiver,copyer, title,content,send_time,reason,status,type,template,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{sendName}, #{sender}, #{receiver},#{copyer}, #{title},#{content},#{sendTime},#{reason},#{status},#{type},#{template},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="message.result">
+		select *
+		from message 
+		where delete_flag = '0' and status='3' and type!='1' 
+		and (send_time is null or DATE_FORMAT(send_time, "%Y-%m-%d %h:%m:%s") <![CDATA[ <= ]]> DATE_FORMAT(current_timestamp(), "%Y-%m-%d %h:%m:%s"))
+		order by create_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="message.result">
+    	select *
+		from message 
+		where delete_flag = '0' and status='3' and type!='1' 
+		and (send_time is null or DATE_FORMAT(send_time, "%Y-%m-%d %h:%m:%s") <![CDATA[ <= ]]> DATE_FORMAT(current_timestamp(), "%Y-%m-%d %h:%m:%s"))
+		order by create_time desc
+    </select>
+    
+    <!-- 	 批量新增到数据库  -->
+	<insert id="batchInsert" parameterType="list">
+		insert into message
+		(id, send_name, sender, receiver,copyer, title,content,sendTime,reason,status,type,template,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+ 		<foreach item="item" index="index" collection="list" 
+                   open=" " separator="," close=" ">
+        (
+	        <include refid="system.generatedId"></include>, #{sendName}, #{sender}, #{receiver},#{copyer}, #{title},#{content},#{sendTime},#{reason},#{status},#{type},#{template},'0',<include refid="system.user_value_insert"></include>
+        )  
+       </foreach>
+	</insert>
+
+</mapper>

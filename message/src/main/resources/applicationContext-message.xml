@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:oscache="http://www.springmodules.org/schema/oscache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   	 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+   	 http://www.springframework.org/schema/context
+   	 http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+   	 http://www.springframework.org/schema/aop 
+   	 http://www.springframework.org/schema/aop/spring-aop-3.1.xsd 
+   	 http://www.springframework.org/schema/cache  
+	http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+   	 http://www.springframework.org/schema/tx 
+   	 http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+   	 http://www.springmodules.org/schema/oscache 
+   	 http://www.springmodules.org/schema/cache/springmodules-oscache.xsd
+   	 http://www.springframework.org/schema/mvc
+   	 http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+  	
+  	<!-- demo实例，请针对此进行修改 -->
+  	<bean id="messageTimer" class="com.noboll.plugin.message.job.EmailSendTimer"></bean>
+  	<bean id="messageTimerDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+  		<property name="durability" value="true"></property>
+  		<property name="jobClass">  
+            <value>com.noboll.core.component.quartz.job.CustomerDetailQuartzJobBean</value>
+        </property>  
+        <property name="jobDataAsMap">  
+            <map>  
+                <entry key="targetObject" value="messageTimer" />  <!-- 指定任务类 -->
+                <entry key="targetMethod" value="sendEmail" />  <!-- 指定任务方法 -->
+            </map>  
+        </property>  
+	</bean>  	
+ 	<bean id="messageTimerTigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" >
+		<property name="jobDetail" ref="messageTimerDetail"></property>
+		<property name="cronExpression">
+			<value>0 0/5 * * * ?</value><!-- 每5分钟触发一次 -->
+		</property>
+	</bean> 
+	<!-- quartz的调度工厂 调度工厂只能有一个，多个调度任务在list中添加 -->
+   <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+   <property name="dataSource" ref="dataSource" />
+   <property name="applicationContextSchedulerContextKey" value="applicationContext" />
+   <property name="configLocation" value="classpath:setting.properties" />
+    <property name="triggers">
+      <list>
+        <ref local="messageTimerTigger" />
+      </list>
+    </property>
+  </bean>
+</beans>

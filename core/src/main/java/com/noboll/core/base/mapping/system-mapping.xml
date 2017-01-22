@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="system">
+	<sql id="generatedId">
+			 select uuid() from dual
+	</sql>
+	
+	<sql id="user_column_insert">
+			 create_time,create_user_id,last_modify_time,last_modify_user_id
+	</sql>
+	
+	<sql id="user_value_insert">
+			 #{createTime},#{createUserId},#{lastModifyTime},#{lastModifyUserId}
+	</sql>
+	
+	<sql id="user_value_update">
+			last_modify_time=#{lastModifyTime},last_modify_user_id=#{lastModifyUserId}
+	</sql>
+	
+</mapper>
