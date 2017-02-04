@@ -24,7 +24,7 @@ public class Resume extends BaseEntity {
 	private Date finishTime;// 毕业时间
 	private String userId;// 对应系统用户id
 	private String degree;// 学历，数据字典
-	private String mobile;
+	private String mobile;// 电话，加密
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birthday;
 	private String contact;// 紧急联系人

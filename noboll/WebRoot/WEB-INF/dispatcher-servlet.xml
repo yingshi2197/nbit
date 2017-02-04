@@ -21,7 +21,7 @@
 	
 	<mvc:annotation-driven />
     <!-- 注解探测器 -->
-     <!-- 扫描所有的controller 但是不扫描service 防止service在这个时候被扫描而系统的aop事务配置还未加载导致事务不生效-->  
+    <!-- 这里先只扫描所有的controller注册为bean，不扫描service。防止service在这个时候被扫描注册而系统的aop事务配置还未加载导致事务不生效-->  
     <context:component-scan base-package="com.noboll">  
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />  
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />  

@@ -72,10 +72,10 @@
 								<p class="basic-infor">
 									<span> <i class="icons24 icons24-position"></i>
 													<a href="javascript:void(0)"><c:out value="${requirement.addressName}"/></a>
-									</span> <span> <i class="icons24 icons24-time"></i><fmt:formatDate value="${requirement.createTime}" pattern="yyyy-MM-dd"/></span>
+									</span> <span> <i class="icons24 icons24-time"></i><fmt:formatDate value="${requirement.lastModifyTime}" pattern="yyyy-MM-dd"/></span>
 								</p>
 								<div class="job-qualifications">
-									<span><c:out value="${requirement.levelName}"/></span><span>学历不限</span>
+									<span><c:out value="${requirement.levelName}"/></span><span>招聘${requirement.num}人</span>
 								</div>
 							</div>
 							<!-- 投递按钮 start -->
@@ -182,7 +182,7 @@
 							    			<!-- <div class="search_list_03">
 							    			</div> -->
 							    			<div class="search_list_03">
-								    			<span class="search_span">发布日期：<fmt:formatDate value="${data.createTime}" type="both" pattern="yyyy-MM-dd"/></span>
+								    			<span class="search_span">最近更新：<fmt:formatDate value="${data.lastModifyTime}" type="both" pattern="yyyy-MM-dd"/></span>
 							    			</div>
 						    			</div>      
 						    			<div class="row"  style="line-height:60px; vertical-align:middle;">  

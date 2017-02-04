@@ -13,11 +13,14 @@ import com.noboll.business.resume.service.ResumeService;
 import com.noboll.business.resumeIntention.service.ResumeIntentionService;
 import com.noboll.business.resumeLabel.service.ResumeLabelService;
 import com.noboll.business.resumePosition.service.ResumePositionService;
+import com.noboll.constant.NbitConstant;
 import com.noboll.context.SystemContext;
 import com.noboll.core.base.dao.BaseDao;
 import com.noboll.core.base.service.impl.BaseServiceImpl;
 import com.noboll.core.exception.BusinessException;
+import com.noboll.core.util.CipherUtil;
 import com.noboll.core.util.JsonUtil;
+import com.noboll.core.util.PropertiesUtil;
 import com.noboll.core.util.StringUtil;
 
 @Service("resumeService")
@@ -44,6 +47,10 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 	@Override
 	public void saveResume(Resume resume) {
 		resume.setUserId(SystemContext.getLoginUser().getId());// 简历所属用户
+		// 电话加密
+		String mobile = resume.getMobile();
+		String key = PropertiesUtil.getSettingValue(NbitConstant.ENCRYPT_PWKEY_CONFIG_KEY);
+		resume.setMobile(CipherUtil.encrypt(mobile, key));
 		super.saveEntity(resume);
 		
 		// 处理简历与求职岗位关联关系
@@ -78,6 +85,10 @@ public class ResumeServiceImpl extends BaseServiceImpl<Resume> implements Resume
 	@Override
 	public void updateResume(Resume resume) {
 		resume.setUserId(SystemContext.getLoginUser().getId());// 简历所属用户
+		// 电话加密
+		String mobile = resume.getMobile();
+		String key = PropertiesUtil.getSettingValue(NbitConstant.ENCRYPT_PWKEY_CONFIG_KEY);
+		resume.setMobile(CipherUtil.encrypt(mobile, key));
 		super.updateEntity(resume);
 		
 		// 处理简历与求职岗位关联关系

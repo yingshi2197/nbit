@@ -28,11 +28,14 @@ import com.noboll.business.resume.entity.Resume;
 import com.noboll.business.resume.service.ResumeService;
 import com.noboll.business.resumeLabel.entity.ResumeLabel;
 import com.noboll.business.resumeLabel.service.ResumeLabelService;
+import com.noboll.constant.NbitConstant;
 import com.noboll.context.SystemContext;
 import com.noboll.core.base.controller.BaseController;
 import com.noboll.core.base.entity.Page;
 import com.noboll.core.base.entity.QueryParam;
+import com.noboll.core.util.CipherUtil;
 import com.noboll.core.util.JsonUtil;
+import com.noboll.core.util.PropertiesUtil;
 import com.noboll.core.util.StringUtil;
 import com.noboll.util.InitUtil;
 
@@ -109,6 +112,10 @@ public class ResumeController extends BaseController<Resume> {
 	@RequestMapping("/toEdit")
 	public String toEditResume(Model model, String id) {
 		Resume resume = resumeService.getEntity(id);
+		// 电话解密
+		String mobile = resume.getMobile();
+		String key = PropertiesUtil.getSettingValue(NbitConstant.ENCRYPT_PWKEY_CONFIG_KEY);
+		resume.setMobile(CipherUtil.decrypt(mobile, key));
 		model.addAttribute("resume", resume);
 		// 项目经验
 		List<Experience> experiences = experienceService.getByResumeId(id);

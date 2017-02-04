@@ -31,7 +31,7 @@
 <body >
 <div style="text-align: center;">
 	<img alt="" src="http/business/home/images/weihu.jpg" >
-	<h3 style="position: relative;top:-450px;left:-300px;color: #535862">noboll </br>招聘管理系统</h3>
+	<h3 style="position: relative;top:-450px;left:-300px;color: #535862">noboll </br>诺宝IT外包平台</h3>
 	<h3 style="position: relative;top:-325px;left:108px;color: #535862">大约1小时！</h3>
 </div>
 	<spring:message code="jsp.include.basejs" />

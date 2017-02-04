@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
 	  <div class="form-horizontal">
-		  		<!-- 左侧：列表 begin -->
+		  		<!-- 左侧：我的简历列表 begin -->
 		  		<div class="col-xs-9">
 			  		<div class="table-responsive">
 						<div class="panel-heading-choose">我的简历</div>
@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<table id="table-javascript" ></table>
 			    	</div>
 		  		</div>
-				<!-- 左侧：列表 end -->
+				<!-- 左侧：我的简历列表 end -->
 				<!-- 右侧：可能感兴趣的职位 begin -->
 		  		<div class="col-xs-3">
 		  			<div style="padding:5px 10px;border:#ddd 1px solid;border-radius:4px;margin:5% auto;font-size:12px">
@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						    			<!-- <div class="search_list_03">
 						    			</div> --> 
 						    			<div class="search_list_03">
-							    			<span class="search_span">发布日期：<fmt:formatDate value="${data.createTime}" type="both" pattern="yyyy-MM-dd"/></span>
+							    			<span class="search_span">最近更新：<fmt:formatDate value="${data.lastModifyTime}" type="both" pattern="yyyy-MM-dd"/></span>
 						    			</div>
 					    			</div>   
 					    			<div class="row"  style="line-height:60px; vertical-align:middle;">

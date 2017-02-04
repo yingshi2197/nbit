@@ -33,6 +33,10 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfo>
 
 	@Override
 	public void saveUserInfo(UserInfo userInfo) {
+		// 登录账号是否已经存在
+		UserInfo loginUser = userInfoDao.getByLoginId(userInfo.getLoginId());
+		if (null != loginUser) 
+			throw new BusinessException("该登录账号已经存在，换个账号试试！");
 		// 密码MD5加密处理
 		String password = userInfo.getPassword();
 		userInfo.setPassword(Md5Util.MD5(password));
@@ -55,6 +59,10 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfo>
 
 	@Override
 	public void updateUserInfo(UserInfo userInfo) {
+		// 登录账号是否已经存在
+		UserInfo loginUser = userInfoDao.getByLoginId(userInfo.getLoginId());
+		if (null != loginUser && !userInfo.getId().equals(loginUser.getId())) 
+			throw new BusinessException("该登录账号已经存在，换个账号试试！");
 		// 如果角色是客户，那么要验证是否选择了客户，如果角色是求职者，需要把客户id清空
 		String role = userInfo.getRole();
 		if (StringUtil.isEmpty(role)) 
