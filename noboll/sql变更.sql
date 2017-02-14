@@ -34,6 +34,8 @@ drop table if exists resume_position;
 
 drop table if exists user_info;
 
+drop table if exists evaluate_label;-- 评价标签
+
 /*==============================================================*/
 /* Table: contact                                               */
 /*==============================================================*/
