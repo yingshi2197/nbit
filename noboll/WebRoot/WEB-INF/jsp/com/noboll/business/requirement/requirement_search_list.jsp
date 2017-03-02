@@ -70,11 +70,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  		</div>
 	  		<!-- 左侧：分类条件 end -->
 	  		<!-- 右侧：列表 begin -->
-	  		<div class="col-xs-9">
-				<div class="row" style="padding:20px;">
+	  		<div class="col-xs-6">
+				<div class="row" style="padding-top:20px;">
   					<form id="myform">
 						<select placeholder="地区" class="search-Class select searchingSelect" dictCode="address" name="addressName" id="addressName" style="display:inline;"></select>
-						<input placeholder="输入职位名称或者公司名称搜索" name="pcName" id="pcName" class="search-Class searchingTxt" type="text"/>
+						<input placeholder="输入职位名称或者公司名称搜索" name="pcName" id="pcName" class="search-Class searchingTxt" type="text" style="width:388px;"/>
 						<!-- 左侧查询条件 -->
 						<c:forEach items="${conditionList }" var="condition" varStatus="index">
 							<input type="hidden" name="<c:out value="${condition.code }" />" id="<c:out value="${condition.code }" />" class="search-Class searchingTxt"/>
@@ -105,6 +105,46 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 				<!-- 右侧：列表 end -->
 			</div>
+			<!-- 右侧：可能感兴趣的职位 begin -->
+		  		<div class="col-xs-3">
+		  			<div style="padding:5px 10px;border:#ddd 1px solid;border-radius:4px;margin:5% auto;font-size:12px">
+		  			<li class="select-result">
+						<h4><b>可能感兴趣的职位</b></h4>
+					</li>
+		  			<c:choose>
+		  				<c:when test="${empty labelMatchRequirments}">
+		  					<b>暂时没有匹配您的招聘需求，赶紧上传简历并贴上标签吧！</b>
+		  				</c:when>
+		  				<c:otherwise>
+		  					<c:forEach  items="${ labelMatchRequirments}" var="data">
+			    				<hr/>
+		  						<div class="search_con" style="padding:5px 0 5px 15px">
+					    			<div class="row">
+						    			<div class="search_list_01"><c:out value="${data.positionName }"></c:out></div>
+						    			<div class="search_list_02">
+							    			<span class="search_span"><c:out value="${data.customerName }"></c:out></span>
+							    			<span class="search_span">|</span> 
+							    			<span class="search_span"><c:out value="${data.addressName }"></c:out></span>
+							    			<span class="search_span">|</span>
+							    			<span class="search_span"><c:out value="${data.levelName }"></c:out></span>
+						    			</div> 
+						    			<!-- <div class="search_list_03">
+						    			</div> --> 
+						    			<div class="search_list_03">
+							    			<span class="search_span">最近更新：<fmt:formatDate value="${data.lastModifyTime}" type="both" pattern="yyyy-MM-dd"/></span>
+						    			</div>
+					    			</div>   
+					    			<div class="row"  style="line-height:60px; vertical-align:middle;">
+						    				<a class="search_a1" title="查看招聘详情" href="business/requirement/toSearchView.do?id=<c:out value="${data.id }"/>" target="_blank"> 立即查看</a>
+						    				<a class="search_a1" title="投递简历" href="javascript:void(0)" onclick="addDeliver('<c:out value="${data.id }"></c:out>')"> 我要投递</a>
+					    			</div>
+				    			</div>
+		  					</c:forEach>
+		  				</c:otherwise>
+		  			</c:choose>
+		  			</div>
+		  		</div>
+		  		<!-- 右侧：可能感兴趣的职位 end -->
 		</div>
     	<spring:message code="jsp.include.basejs"/>
     	<spring:message code="jsp.include.formjsforback" />

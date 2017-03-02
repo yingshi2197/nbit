@@ -46,6 +46,10 @@
 			business/label/toAdd.do,
 			business/label/toEdit.do,
 			business/label/remove.do,
+			business/evaluateLabel/toList.do,
+			business/evaluateLabel/toAdd.do,
+			business/evaluateLabel/toEdit.do,
+			business/evaluateLabel/remove.do,
 			business/dict/queryByTypeCode.do,
 			business/customer/getCustomer.do,
 			<!-- 选择器，后续考虑提取为白名单 -->

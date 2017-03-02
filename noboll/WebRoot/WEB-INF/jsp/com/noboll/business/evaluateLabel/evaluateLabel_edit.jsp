@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <base href="<%=basePath%>">
     
-    <title>修改标签</title>
+    <title>修改评价标签</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -29,14 +29,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
 	  <div class="container">
 	  	<div class="tab-form1">
-	  		<form action="business/label/edit.do" id="myform" class="form-horizontal" role="form" method="post">
-	          <input type="hidden"  name="id"  value="<c:out value="${label.id}" />" />
+	  		<form action="business/evaluateLabel/edit.do" id="myform" class="form-horizontal" role="form" method="post">
+	          <input type="hidden"  name="id"  value="<c:out value="${evaluateLabel.id}" />" />
 	          <div class="form-group" style="margin-top: 10px">
 			      <label for="name" class="col-xs-2 control-label text-right">名称</label><!-- 名称 -->
 			      <div class="col-xs-10 form-control-1">
 				      <input type="text" class="form-control  required" name="name" id="name" 
 				         placeholder="请输入名称"
-				         value="<c:out value="${label.name}" />" maxlength="200"/>
+				         value="<c:out value="${evaluateLabel.name}" />" maxlength="200"/>
 			      </div>
 		     </div>
 		  	 <div class="form-group">
@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			      <div class="col-xs-10 form-control-1">
 				      <input type="text" class="form-control english required" name="ename" id="ename" 
 				         placeholder="请输入英文名称"
-				         value="<c:out value="${label.ename}" />" maxlength="200"/>
+				         value="<c:out value="${evaluateLabel.ename}" />" maxlength="200"/>
 			      </div>
 			   </div>
 			  <div class="form-group">
@@ -52,14 +52,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			      <div class="col-xs-10 form-control-1">
 			      <input type="text"  class="form-control  required english" name="code" id="code" 
 			         placeholder="请输入编码"
-			          value="<c:out value="${label.code}" />" maxlength="10"/>
+			          value="<c:out value="${evaluateLabel.code}" />" maxlength="10"/>
+			      </div>
+			   </div>
+			   <div class="form-group">
+			      <label for="code" class="col-xs-2 control-label text-right">分值</label><!-- 分值 -->
+			      <div class="col-xs-10 form-control-1">
+			      <input type="text"  class="form-control required digits" name="score" id="score" 
+			         placeholder="请输入分值"
+			          value="<c:out value="${evaluateLabel.score}" />" maxlength="5"/>
 			      </div>
 			   </div>
 			  <div class="form-group">
 			      <label for="description" class="col-xs-2 control-label text-right" >描述</label><!-- 描述 -->
 			      <div class="col-xs-10 form-control-1">
 				      <textarea class="form-control" name="description" id="description" 
-				         placeholder="请输入描述"><c:out value="${label.description}" /></textarea>
+				         placeholder="请输入描述"><c:out value="${evaluateLabel.description}" /></textarea>
 			   	  </div>
 			    </div>
 			  <div class="text-center tab-form-submit" >

@@ -86,6 +86,7 @@
 							<li><a id="sysHref" class="click_a" href="javascript:void(0);"  url="business/dictType/toList.do">数据字典</a></li>
 							<li><a id="sysPositionHref" class="click_a" href="javascript:void(0);"  url="business/position/toTypeList.do">职位管理</a></li>
 							<li><a id="sysLabelHref" class="click_a" href="javascript:void(0);"  url="business/label/toList.do">标签管理</a></li>
+							<li><a id="sysEvaluateLabelHref" class="click_a" href="javascript:void(0);"  url="business/evaluateLabel/toList.do">评价标签管理</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -123,6 +124,7 @@
 		temp["sysHref"]=[{name:"系统管理",url:""},{name:"数据字典",url:"business/dictType/toList.do"}];
 		temp["sysPositionHref"]=[{name:"系统管理",url:""},{name:"职位管理",url:"business/position/toTypeList.do"}];
 		temp["sysLabelHref"]=[{name:"系统管理",url:""},{name:"标签管理",url:"business/label/toList.do"}];
+		temp["sysEvaluateLabelHref"]=[{name:"系统管理",url:""},{name:"评价标签管理",url:"business/evaluateLabel/toList.do"}];
 
 		function click(obj) {
 			$(".active").removeClass("active");

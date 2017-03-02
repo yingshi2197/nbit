@@ -111,7 +111,8 @@ var dictionary={
 		ajaxUrl:"business/dict/queryByTypeCode.do",
 		// 不要再在这里添加其他数据字典了，以后统一在msb/src/java/dictionary.properties中添加数据字典（不需要保存到数据库中的数据字典）
 		role:[{"admin":"管理员","customer":"客户","applicant":"求职者"}],
-		sex:[{"0":"男","1":"女"}]
+		sex:[{"0":"男","1":"女"}],
+		labelType:[{"0":"客户","1":"求职者"}]
 }
 
 

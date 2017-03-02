@@ -71,11 +71,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  		<!-- 左侧：分类条件 end -->
 	  		<!-- 右侧：列表 begin -->
 	  		<div class="col-xs-9">
-				<div class="row"  style="padding:20px;">
+				<div class="row"  style="padding-top:20px;">
   					<form id="myform">
 						<select class="search-Class select searchingSelect" placeholder="地区" dictCode="address" name="intentionName" id="intentionName" style="display:inline;"></select>
 <!-- 						<select class="search-Class select searchingSelect" placeholder="工作年限" dictCode="work_life" name="yearsName" style="display:inline;"></select> -->
-						<input placeholder="输入简历姓名或者求职岗位搜索" name="pyName" id="pyName" class="search-Class searchingTxt" type="text"/>
+						<input placeholder="输入简历姓名或者求职岗位搜索" name="pyName" id="pyName" class="search-Class searchingTxt" type="text" style="width:680px;"/>
 						<!-- 左侧查询条件 -->
 						<c:forEach items="${conditionList }" var="condition" varStatus="index">
 							<input type="hidden" name="<c:out value="${condition.code }" />" id="<c:out value="${condition.code }" />" class="search-Class searchingTxt"/>

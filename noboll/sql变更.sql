@@ -446,3 +446,29 @@ create table user_info
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 alter table user_info comment '用户信息';
+
+
+/*==========================2017.3.1============================*/
+/*==============================================================*/
+/* Table: "evaluate_label"                                      */
+/*==============================================================*/
+create table evaluate_label
+(
+   id                   varchar(40) not null,
+   name                 varchar(200) comment '名称',
+   ename                varchar(200) comment '英文名',
+   code                 varchar(10) comment '编码',
+   type                 varchar(10) comment '类型，0客户/1求职者',
+   score                double comment '分值',
+   description          text comment '描述',
+   create_user_id       varchar(40),
+   create_time          datetime,
+   last_modify_user_id  varchar(40),
+   last_modify_time     datetime,
+   delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
+   primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table evaluate_label comment '评价标签表';
+
+alter table label add column type varchar(10) comment '类型，0客户/1求职者'；

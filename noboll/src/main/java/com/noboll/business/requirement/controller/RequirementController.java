@@ -154,7 +154,9 @@ public class RequirementController extends BaseController<Requirement> {
 		List<Dict> payList = dictService.queryByTypeCode(DictConstant.DICT_TYPE_CODE_PAY);
 		conditionList.add(new QueryBean(DictConstant.DICT_TYPE_CODE_PAY,DictConstant.DICT_TYPE_CODE_PAY_NAME,payList));*/
 		model.addAttribute("conditionList", conditionList);
-		
+		// 可能感兴趣的职位(即简历匹配)
+		List<Requirement> labelMatchRequirments = requirementService.getLabelMatchByUserId(SystemContext.getLoginUser().getId());
+		model.addAttribute("labelMatchRequirments", labelMatchRequirments);
 		return "business/requirement/requirement_search_list";
 	}
 
