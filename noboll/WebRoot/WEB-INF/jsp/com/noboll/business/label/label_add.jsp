@@ -42,7 +42,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				         value="<c:out value="${label.ename}" />" maxlength="200"/>
 			      </div>
 			  </div>
-			   
+			  <div class="form-group">
+			      <label for="code" class="col-xs-2 control-label text-right">类型</label><!-- 类型 -->
+			      <div class="col-xs-10 form-control-1">
+			      	<select class="form-control select required" dictCode="labelType" name="type" id="type" dictValue="<c:out value="${evaluateLabel.type}" />">
+						</select>
+			      </div>
+			   </div>
 			   <div class="form-group">
 			      <label for="code" class="col-xs-2 control-label text-right">编码</label><!-- 编码 -->
 			      <div class="col-xs-10 form-control-1">

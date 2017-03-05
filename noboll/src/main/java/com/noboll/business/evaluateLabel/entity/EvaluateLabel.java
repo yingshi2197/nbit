@@ -14,7 +14,7 @@ public class EvaluateLabel extends BaseEntity  {
 	private String name;
 	private String ename;
 	private String code;
-	private String type;
+	private String type; // 类型，0客户/1求职者
 	private Double score;
 	private String description;
 	private String deleteFlag;

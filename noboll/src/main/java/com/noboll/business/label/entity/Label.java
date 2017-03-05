@@ -15,6 +15,7 @@ public class Label extends BaseEntity  {
 	private String ename;
 	private String code;
 	private String description;
+	private String type;// 类型，0客户，1求职者
 	private String deleteFlag;
 	
 	public String getName() {
@@ -46,6 +47,12 @@ public class Label extends BaseEntity  {
 	}
 	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

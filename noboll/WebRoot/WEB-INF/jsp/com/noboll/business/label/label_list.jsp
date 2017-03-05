@@ -64,6 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				                    {field: 'name',title: '名称',align: 'center',valign: 'middle',sortable: false,searchable:true}, //名称
 				                    {field: 'ename',title: '英文名称',align: 'center',valign: 'middle',sortable: false,searchable:true}, //英文名称
 				                    {field: 'code',index:'code',title: '编码',align: 'left',valign: 'top',searchable:true},	//编码
+				                    {field: 'type',index:'type',title: '类型',align: 'left',valign: 'top',formatter:"dictCode:labelType",searchable:true,type:'select:labelType',selectCode:"id"},	//类型
 				                    {field: 'description',index:'description',title: '描述',align: 'left',valign: 'top'}	//描述	
 				                   		                    
 				                  ]

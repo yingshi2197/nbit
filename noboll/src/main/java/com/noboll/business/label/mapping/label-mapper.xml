@@ -36,9 +36,9 @@
 			<include refid="system.generatedId"></include>
 		</selectKey>
 		insert into label
-		(id, name, ename,code,description,delete_flag,<include refid="system.user_column_insert"></include>)
+		(id, name, ename,code,type,description,delete_flag,<include refid="system.user_column_insert"></include>)
 		values
-		(#{id}, #{name}, #{ename},#{code},#{description},'0',<include refid="system.user_value_insert"></include>)
+		(#{id}, #{name}, #{ename},#{code},#{type},#{description},'0',<include refid="system.user_value_insert"></include>)
 	</insert>
 
 	<update id="deleteEntity" parameterType="string">
