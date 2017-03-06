@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row" style="padding-top:20px;">
   					<form id="myform">
 						<select placeholder="地区" class="search-Class select searchingSelect" dictCode="address" name="addressName" id="addressName" style="display:inline;"></select>
-						<input placeholder="输入职位名称或者公司名称搜索" name="pcName" id="pcName" class="search-Class searchingTxt" type="text" style="width:388px;"/>
+						<input placeholder="输入职位名称或者公司名称搜索" name="pcName" id="pcName" class="search-Class searchingTxt" type="text" style="width:66%;"/>
 						<!-- 左侧查询条件 -->
 						<c:forEach items="${conditionList }" var="condition" varStatus="index">
 							<input type="hidden" name="<c:out value="${condition.code }" />" id="<c:out value="${condition.code }" />" class="search-Class searchingTxt"/>
@@ -195,7 +195,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	    function formatContent(a,data){
 	    	    	var arr=[];
 	    	    	arr.push("<div class=\"search_con\">"); 
-	    			arr.push("<div class=\"col-md-9\">");
+	    			arr.push("<div class=\"col-md-12\">");
 	    			arr.push("<div class=\"search_list_01\">"+data.positionName+"</div>");
 	    			arr.push("<div class=\"search_list_02\">");
 	    			arr.push("<span class=\"search_span\">"+data.customerName+"</span>");
@@ -225,21 +225,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			arr.push("<span class=\"search_span\">发布时间："+tools.parseDate(data.createTime,"yyyy-MM-dd")+"</span>");
 	    			arr.push("</div>");
 	    			arr.push("</div>");
-	    			
-	    			arr.push("<div class=\"col-md-3\"  style=\" line-height:80px; vertical-align:middle;\">");
+	    			arr.push("</div>");
+	    			arr.push("<div class=\"search_con\">");
+	    			arr.push("<div class=\"col-md-12\"  style=\" line-height:60px; vertical-align:middle;\">");
 	    			if(tools.checkUrlPermission("business/requirement/toSearchView.do")){
 		    			arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
-		    			arr.push("<a class=\"search_a\" title=\"招聘详情\" href=\"business/requirement/toSearchView.do?id="+data.id+"\" target=\"_blank\"> 查看</a>");
+		    			arr.push("<a class=\"search_a\" title=\"招聘详情\" href=\"business/requirement/toSearchView.do?id="+data.id+"\" target=\"_blank\">招聘详情</a>");
 		    			arr.push("</div>");
 	    			}
 	    			if("1" != data.deliverStatus && tools.checkUrlPermission("business/deliver/toAdd.do")){
 	    				arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
-		    			arr.push("<a class=\"search_a\" title=\"我要投递\" href=\"javascript:void(0)\" onclick=\"addDeliver('"+data.id+"')\"> 我要投递</a>");
+		    			arr.push("<a class=\"search_a\" title=\"我要投递\" href=\"javascript:void(0)\" onclick=\"addDeliver('"+data.id+"')\">我要投递</a>");
 		    			arr.push("</div>");
 	    			}
 	    			if(data.deliverStatus=="1" && tools.checkUrlPermission("business/deliver/toView.do")){
 	    				arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
-		    			arr.push("<a class=\"search_a\" title=\"投递详情\" href=\"javascript:void(0)\" onclick=\"viewDeliver('"+data.deliverId+"')\"> 投递详情</a>");
+		    			arr.push("<a class=\"search_a\" title=\"投递详情\" href=\"javascript:void(0)\" onclick=\"viewDeliver('"+data.deliverId+"')\">投递详情</a>");
 		    			arr.push("</div>");
 	    			}
 	    			arr.push("</div>");

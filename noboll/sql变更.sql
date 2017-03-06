@@ -447,11 +447,11 @@ create table user_info
 
 alter table user_info comment '用户信息';
 
-
 /*==========================2017.3.1============================*/
 /*==============================================================*/
 /* Table: "evaluate_label"                                      */
 /*==============================================================*/
+drop table if exists evaluate_label;-- 评价标签
 create table evaluate_label
 (
    id                   varchar(40) not null,
@@ -471,4 +471,49 @@ create table evaluate_label
 
 alter table evaluate_label comment '评价标签表';
 
-alter table label add column type varchar(10) comment '类型，0客户/1求职者'；
+alter table label add column type varchar(10) comment '类型，0客户/1求职者';
+
+/*==============================================================*/
+/* Table: customer_evaluate_label                               */
+/*==============================================================*/
+drop table if exists customer_evaluate_label;-- 客户评价标签
+create table customer_evaluate_label
+(
+   id                   varchar(40) not null,
+   customer_id          varchar(40) comment '客户',
+   evaluate_id          varchar(40) comment '评价id',
+   evaluate_label_id    varchar(40) comment '评价标签id',
+   create_user_id       varchar(40),
+   create_time          datetime,
+   last_modify_user_id  varchar(40),
+   last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
+   primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table customer_evaluate_label comment '客户评价标签表';
+
+/*==============================================================*/
+/* Table: resume_evaluate_label                                 */
+/*==============================================================*/
+drop table if exists resume_evaluate_label;-- 简历评价标签
+create table resume_evaluate_label
+(
+   id                   varchar(40) not null,
+   resume_id            varchar(40) comment '简历',
+   evaluate_id          varchar(40) comment '评价id',
+   evaluate_label_id    varchar(40) comment '评价标签id',
+   create_user_id       varchar(40),
+   create_time          datetime,
+   last_modify_user_id  varchar(40),
+   last_modify_time     datetime,
+    delete_flag          varchar(1) comment '删除标志,0表示正常，1表示删除',
+   primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table customer_evaluate_label comment '简历评价标签表';
+
+/*=====================标签数据处理，客户使用客户标签，简历使用简历标签=====================*/
+DELETE FROM resume_label WHERE label_id IN (SELECT id FROM label WHERE TYPE!=1);
+DELETE FROM customer_label WHERE label_id IN (SELECT id FROM label WHERE TYPE!=0);
+

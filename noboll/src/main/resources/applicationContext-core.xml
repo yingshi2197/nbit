@@ -126,9 +126,8 @@
         </tx:attributes>
     </tx:advice>
     
-    <!-- AOP事务配置 -->
     <aop:config>
-        <!-- 切点：只对业务逻辑层实施事务 -->
+        <!-- 只对业务逻辑层实施事务 -->
         <aop:pointcut id="txPointcut" expression="execution(* com.noboll..*.service..*.*(..))" />
         <!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
         <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>

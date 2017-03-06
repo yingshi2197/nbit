@@ -160,7 +160,7 @@
 			$("#myTags").initTags({
 				maxTips:8, // 最多可以选择的标签个数
 				selects:labelData,
-				updateUrl:"business/label/choose.do",//换一换的数据链接
+				updateUrl:"business/label/chooseCustomer.do",//换一换的数据链接
 				pageCount:10//候选区每次显示多少条数据
 			});
 			

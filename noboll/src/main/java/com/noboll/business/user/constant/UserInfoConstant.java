@@ -1,7 +1,7 @@
 package com.noboll.business.user.constant;
 
 /**
- * 客户模块常量
+ * 用户模块常量
  *
  */
 public class UserInfoConstant {

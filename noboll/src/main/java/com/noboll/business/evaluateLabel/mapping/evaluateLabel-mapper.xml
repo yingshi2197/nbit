@@ -82,7 +82,12 @@
     <!-- 随机查找一定数量的 标签 -->
 	<select id="getChooseList" resultType="list"  parameterType="map" resultMap="evaluateLabel.result">
     	SELECT * FROM (
-			SELECT id,name ,RAND() AS newno FROM evaluate_label GROUP BY id 
+			SELECT id,name ,RAND() AS newno FROM evaluate_label 
+			where 1=1
+			<if test="_parameter.containsKey('type')">
+				and type = #{type}
+			</if>
+			GROUP BY id 
 		)AS t ORDER BY t.newno asc LIMIT #{limit}
     </select>
 

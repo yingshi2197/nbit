@@ -8,16 +8,23 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.noboll.business.customerEvaluateLabel.service.CustomerEvaluateLabelService;
 import com.noboll.business.evaluate.dao.EvaluateDao;
 import com.noboll.business.evaluate.entity.Evaluate;
 import com.noboll.business.evaluate.service.EvaluateService;
+import com.noboll.business.resumeEvaluateLabel.service.ResumeEvaluateLabelService;
 import com.noboll.core.base.dao.BaseDao;
 import com.noboll.core.base.service.impl.BaseServiceImpl;
+import com.noboll.core.util.StringUtil;
 
 @Service("evaluateService")
 public class EvaluateServiceImpl extends BaseServiceImpl<Evaluate> implements EvaluateService {
 	@Resource
 	private EvaluateDao evaluateDao;
+	@Resource
+	private CustomerEvaluateLabelService customerEvaluateLabelService;
+	@Resource
+	private ResumeEvaluateLabelService resumeEvaluateLabelService;
 	
 	@Override
 	public BaseDao<Evaluate> getBaseDao() {
@@ -36,6 +43,12 @@ public class EvaluateServiceImpl extends BaseServiceImpl<Evaluate> implements Ev
 			evaluateData.setREvaluateStar(evaluate.getREvaluateStar());
 			this.updateEntity(evaluateData);
 		}
+		// 评价标签处理
+		String label = evaluate.getLabel();
+		if (!StringUtil.isEmpty(label)) {
+			String[] labels = label.split(",");
+			resumeEvaluateLabelService.batchInsert(evaluate.getId(),evaluate.getResumeId(),labels);
+		}
 	}
 	/**
 	 * 新增评价(简历对客户的评价)
@@ -48,6 +61,12 @@ public class EvaluateServiceImpl extends BaseServiceImpl<Evaluate> implements Ev
 			evaluateData.setCEvaluate(evaluate.getCEvaluate());
 			evaluateData.setCEvaluateStar(evaluate.getCEvaluateStar());
 			this.updateEntity(evaluateData);
+		}
+		// 评价标签处理
+		String label = evaluate.getLabel();
+		if (!StringUtil.isEmpty(label)) {
+			String[] labels = label.split(",");
+			customerEvaluateLabelService.batchInsert(evaluate.getId(),evaluate.getCustomerId(),labels);
 		}
 	}
 	

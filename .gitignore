@@ -6,3 +6,5 @@
 /core/.*
 /file/.*
 /message/.*
+/core/bin
+/message/bin

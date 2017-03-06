@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noboll.business.evaluateLabel.constant.EvaluateLabelConstant;
 import com.noboll.business.evaluateLabel.entity.EvaluateLabel;
 import com.noboll.business.evaluateLabel.service.EvaluateLabelService;
 import com.noboll.core.base.controller.BaseController;
@@ -80,12 +81,24 @@ public class EvaluateLabelController extends BaseController<EvaluateLabel> {
 		return InitUtil.sucessMessage("删除成功");
 	}
 	
-	// 获取选择器数据
-	@RequestMapping(value = "/choose", method = RequestMethod.POST)
+	// 获取客户评价标签选择器数据
+	@RequestMapping(value = "/chooseCustomer", method = RequestMethod.POST)
 	@ResponseBody
-	public Object choose(HttpServletRequest request,int limit) {
+	public Object chooseCustomer(HttpServletRequest request,int limit) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
 		queryParam.addParam("limit", limit);
+		queryParam.addParam("type", EvaluateLabelConstant.TYPE_CUSTOMER);
+		List<EvaluateLabel> list = evaluateLabelService.getChooseList(queryParam.getMap());
+		return list;
+	}
+	
+	// 获取简历评价标签选择器数据
+	@RequestMapping(value = "/chooseResume", method = RequestMethod.POST)
+	@ResponseBody
+	public Object chooseResume(HttpServletRequest request,int limit) {
+		QueryParam queryParam = InitUtil.initQueryParam(request);
+		queryParam.addParam("limit", limit);
+		queryParam.addParam("type", EvaluateLabelConstant.TYPE_APPLICANT);
 		List<EvaluateLabel> list = evaluateLabelService.getChooseList(queryParam.getMap());
 		return list;
 	}

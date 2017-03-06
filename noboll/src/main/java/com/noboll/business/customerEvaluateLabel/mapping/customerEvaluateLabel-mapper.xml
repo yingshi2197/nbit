@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+
+<mapper namespace="com.noboll.business.customerEvaluateLabel.dao.CustomerEvaluateLabelDao">
+
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->	
+	<select id="getEntity" parameterType="string"
+		resultType="com.noboll.business.customerEvaluateLabel.entity.CustomerEvaluateLabel" resultMap="customerEvaluateLabel.result">
+        <![CDATA[
+           	select p.*
+			 from 
+			 	customer_evaluate_label p
+			 where 
+				 p.id = #{id} 
+        ]]>
+	</select>
+	
+	
+	<update id="updateEntity" parameterType="com.noboll.business.customerEvaluateLabel.entity.CustomerEvaluateLabel">
+		update customer_evaluate_label 
+		set
+			customer_id = #{customerId},
+			evaluate_label_id = #{evaluateLabelId},
+			<include refid="system.user_value_update"></include>
+		where id = #{id}
+	</update>
+
+	<insert id="saveEntity" parameterType="com.noboll.business.customerEvaluateLabel.entity.CustomerEvaluateLabel">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			<include refid="system.generatedId"></include>
+		</selectKey>
+		insert into customer_evaluate_label
+		(id, customer_id,evaluate_id, evaluate_label_id,delete_flag,<include refid="system.user_column_insert"></include>)
+		values
+		(#{id}, #{customerId}, #{evaluateId}, #{evaluateLabelId},'0',<include refid="system.user_value_insert"></include>)
+	</insert>
+
+	<update id="deleteEntity" parameterType="string">
+		update customer_evaluate_label set
+		delete_flag = '1'
+		where id = #{id}
+	</update>
+	
+	<select id="getList" resultType="list" parameterType="map"
+		resultMap="customerEvaluateLabel.result">
+		select p.*
+	 	from 
+		 	customer_evaluate_label p
+		where p.delete_flag = '0' 
+		<if test="_parameter.containsKey('customerId')">
+			and p.customer_id LIKE CONCAT('%',
+			CONCAT(#{customerId,jdbcType=VARCHAR}, '%'))
+		</if>
+		<if test="_parameter.containsKey('evaluateLabelId')">
+			and p.evaluate_label_id LIKE CONCAT('%',
+			CONCAT(#{evaluateLabelId,jdbcType=VARCHAR}, '%'))
+		</if>
+		order by p.create_time desc
+	</select>
+	
+	<select id="getAllEntity" resultType="list"  parameterType="map" resultMap="customerEvaluateLabel.result">
+    	select p.*
+	 	from 
+		 	customer_evaluate_label p
+    	where p.delete_flag='0'
+    </select>
+
+	<delete id="deleteByCustomerId" parameterType="string">
+		delete from customer_evaluate_label where customer_id = #{customerId}
+	</delete>
+    
+     <!-- 批量新增到数据库 -->
+	<insert id="batchInsert" parameterType="com.noboll.business.customerEvaluateLabel.entity.CustomerEvaluateLabel">
+		insert into customer_evaluate_label
+		(id, customer_id, evaluate_id, evaluate_label_id, delete_flag,create_time,create_user_id,last_modify_time,last_modify_user_id)
+		values
+		<foreach item="item" index="index" collection="list" 
+                   open=" " separator="," close=" ">
+        (
+	        uuid(), #{item.customerId}, #{item.evaluateId}, #{item.evaluateLabelId}, '0', CURRENT_TIMESTAMP(),#{item.createUserId},CURRENT_TIMESTAMP(), #{item.lastModifyUserId}
+        )  
+       </foreach>
+	</insert>
+	
+	<select id="getByCustomerId" resultType="list"  resultMap="customerEvaluateLabel.result">
+    	select l.id,l.name
+			 from 
+			 	customer_evaluate_label p
+		left join evaluate_label l on p.evaluate_label_id =l.id and l.delete_flag='0'
+    	where p.delete_flag='0' and p.customer_id = #{customerId}
+    </select>
+</mapper>

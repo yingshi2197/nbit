@@ -27,6 +27,7 @@
 <spring:message code="jsp.include.basecss" />
 <spring:message code="jsp.include.formccforback" />
 <spring:message code="jsp.include.listcssforback" />
+<spring:message code="jsp.include.tagscssforback" />
 <style type="text/css">
 .form-horizontal .form-group {
   margin-right: -40px;
@@ -41,7 +42,7 @@
 	<div class="container">
 		<div class="tab-form1">
 			<form action="business/evaluate/cEvalute.do" id="myform"
-				class="form-horizontal" role="form" method="post">
+				class="form-horizontal" role="form" method="post" onsubmit="setJsonValue();">
 				<input type="hidden" name="resumeId"
 					value="<c:out value="${evaluate.resumeId}" />" />
 				<input type="hidden" name="customerId"
@@ -60,6 +61,14 @@
 						<input id="CEvaluateStar"
 							name="CEvaluateStar" type="number" class="rating required required-2" min=0 max=5
 							step=1 data-size="xs">
+					</div>
+				</div>
+				
+				<!-- 标签 -->
+				<div class="form-group">
+					<label for="label" class="col-xs-2 control-label">标签</label>
+					<input type="hidden" class="form-control required" name="label" id="label">
+					<div class="col-xs-10 form-control-1" id="myTags">
 					</div>
 				</div>
 				
@@ -92,14 +101,26 @@
 	<spring:message code="jsp.include.basejs" />
 	<spring:message code="jsp.include.formjsforback" />
 	<spring:message code="jsp.include.listjsforback" />
+	<spring:message  code="jsp.include.tagsjsforback"/>
 	<script>
 		$(document)	.ready(function() {
 			$("#myform").initForm({});
+			
+			$("#myTags").initTags({
+				maxTips:8, // 最多可以选择的标签个数
+				updateUrl:"business/evaluateLabel/chooseCustomer.do",//换一换的数据链接
+				pageCount:10//候选区每次显示多少条数据
+			});
 		});
 						
-		
 		function closeDialog() {
 			tools.closeDialog();
+		}
+		
+		
+		function setJsonValue() {
+			$("#label").val($("#myTags").getTipsId());
+			return true;
 		}
 	</script>
 	<script src="http/business/evaluate/js/star-rating.js" type="text/javascript"></script>

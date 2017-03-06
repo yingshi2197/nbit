@@ -20,6 +20,8 @@ public class Evaluate extends BaseEntity  {
 	private String CEvaluateStar;// 客户评价星级
 	private String deleteFlag;
 	
+	private String label;// 标签
+	
 	
 	public String getResumeId() {
 		return resumeId;
@@ -63,5 +65,13 @@ public class Evaluate extends BaseEntity  {
 	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	
+	
 	
 }

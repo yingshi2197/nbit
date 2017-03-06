@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.noboll.business.label.constant.LabelConstant;
 import com.noboll.business.label.entity.Label;
 import com.noboll.business.label.service.LabelService;
 import com.noboll.core.base.controller.BaseController;
@@ -80,12 +81,24 @@ public class LabelController extends BaseController<Label> {
 		return InitUtil.sucessMessage("删除成功");
 	}
 	
-	// 获取选择器数据
-	@RequestMapping(value = "/choose", method = RequestMethod.POST)
+	// 获取客户评价标签选择器数据
+	@RequestMapping(value = "/chooseCustomer", method = RequestMethod.POST)
 	@ResponseBody
-	public Object choose(HttpServletRequest request,int limit) {
+	public Object chooseCustomer(HttpServletRequest request,int limit) {
 		QueryParam queryParam = InitUtil.initQueryParam(request);
 		queryParam.addParam("limit", limit);
+		queryParam.addParam("type", LabelConstant.TYPE_CUSTOMER);
+		List<Label> list = labelService.getChooseList(queryParam.getMap());
+		return list;
+	}
+	
+	// 获取简历评价标签选择器数据
+	@RequestMapping(value = "/chooseResume", method = RequestMethod.POST)
+	@ResponseBody
+	public Object chooseResume(HttpServletRequest request,int limit) {
+		QueryParam queryParam = InitUtil.initQueryParam(request);
+		queryParam.addParam("limit", limit);
+		queryParam.addParam("type", LabelConstant.TYPE_APPLICANT);
 		List<Label> list = labelService.getChooseList(queryParam.getMap());
 		return list;
 	}

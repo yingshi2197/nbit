@@ -56,7 +56,8 @@
 			business/position/toChoose.do,
 			business/dict/toChoose.do,
 			business/customer/toChoose.do,
-			business/label/choose.do,
+			business/label/chooseCustomer.do,
+			business/label/chooseResume.do,
 			logout.do
 		</menu>
 	</roleMenu>
@@ -83,7 +84,8 @@
 			business/position/toChoose.do,
 			business/dict/toChoose.do,
 			business/resume/toMyChoose.do,
-			business/label/choose.do,
+			business/evaluateLabel/chooseCustomer.do,
+			business/label/chooseResume.do,
 			logout.do
 		</menu>
 	</roleMenu>
@@ -111,7 +113,8 @@
 			<!-- 选择器，后续考虑提取为白名单 -->
 			business/position/toChoose.do,
 			business/dict/toChoose.do,
-			business/label/choose.do,
+			business/evaluateLabel/chooseResume.do,
+			business/label/chooseCustomer.do,
 			logout.do
 		</menu>
 	</roleMenu>
