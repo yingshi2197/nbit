@@ -99,8 +99,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									Hi，您目前在<span id="span_address" class=" cc20000">所有地区</span><label id="keywordLabel">通过关键字 “<b class=" cc20000" id="keyword"></b> ”</label>搜索简历，共找到 <span id="total"></span> 个内容。
 								</span>	
 							</div>
-							<div class="table-responsive" style="min-height:500px;">
+							<div class="table-responsive">
 								<table id="table-javascript" ></table>
+								<div style="height:20px"></div>
 					    	</div>
 						</div>
 					</div>

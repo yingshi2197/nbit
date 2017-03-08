@@ -91,6 +91,15 @@ public class ResumeController extends BaseController<Resume> {
 		queryParam.addParam("userId", SystemContext.getLoginUser().getId());
 		page = resumeService.getPageList("com.noboll.business.resume.dao.ResumeDao.getList", queryParam,
 				page);
+		List<Resume> resumes = page.getRows();
+		if (resumes != null && resumes.size()>0) {
+			for (Resume resume : resumes) {
+				// 电话解密
+				String mobile = resume.getMobile();
+				String key = PropertiesUtil.getSettingValue(NbitConstant.ENCRYPT_PWKEY_CONFIG_KEY);
+				resume.setMobile(CipherUtil.decrypt(mobile, key));
+			}
+		}
 		return page;
 	}
 

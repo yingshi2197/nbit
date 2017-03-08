@@ -27,6 +27,7 @@
 <spring:message code="jsp.include.basecss" />
 <spring:message code="jsp.include.formccforback" />
 <spring:message code="jsp.include.listcssforback" />
+<spring:message code="jsp.include.tagscssforback" /> 
 <style type="text/css">
 .form-horizontal .form-group {
   margin-right: -40px;
@@ -57,6 +58,7 @@
 					</div>
 				</div>
 				
+				
 				<!-- 评价 -->
 				<div class="form-group" style="margin-top: 20px;">
 					<label for="cEvaluate" class="col-sm-2 control-label">评价：</label>
@@ -65,6 +67,12 @@
 							id="CEvaluate" rows="3" cols="6" maxlength="400"
 							placeholder="此次面试感觉如何，说一说吧！"  readonly="readonly"><c:out value="${evaluate.CEvaluate }"/></textarea>
 					</div>
+				</div>
+				
+				<!--标签 -->
+				<div class="form-group">
+					<label class="col-sm-2 control-label">标签：</label>
+					<div class="col-sm-9 form-control-1" id="myTags"></div>
 				</div>
 			</form>
 		</div>
@@ -76,9 +84,19 @@
 	<spring:message code="jsp.include.basejs" />
 	<spring:message code="jsp.include.formjsforback" />
 	<spring:message code="jsp.include.listjsforback" />
+	<spring:message  code="jsp.include.tagsjsforback"/>
 	<script>
 		$(document)	.ready(function() {
 			$("#myform").initForm({});
+			// 标签
+			var labels = '<c:out value="${ labels}" escapeXml="false"/>';
+			var labelData = [];
+			if(labels)
+				labelData = tools.jsonToObj(labels);
+			$("#myTags").initTags({
+				selects:labelData,
+				readonly:true//是否只读，不显示待选区域
+			});
 		});
 						
 		

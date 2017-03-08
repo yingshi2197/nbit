@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
   </head>
   
-  <body>
+  <body style="height:1000px;">
 	  <div class="form-horizontal" id="searchDiv">
 	  		<!-- 左侧：分类条件 begin -->
 	  		<div class="col-xs-3">
@@ -97,8 +97,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									Hi，您目前在<span id="span_address" class=" cc20000">所有地区</span><label id="keywordLabel">通过关键字 “<b class=" cc20000" id="keyword"></b> ”</label>搜索招聘需求，共找到 <span id="total"></span> 个内容。
 								</span>	
 							</div>
-							<div class="table-responsive"  style="min-height:500px;">
+							<div class="table-responsive">
 								<table id="table-javascript"></table>
+						    	<div style="height:20px"></div>
 					    	</div>
 						</div>
 					</div>
@@ -195,7 +196,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	    function formatContent(a,data){
 	    	    	var arr=[];
 	    	    	arr.push("<div class=\"search_con\">"); 
-	    			arr.push("<div class=\"col-md-12\">");
+	    			arr.push("<div class=\"col-md-6\">");
 	    			arr.push("<div class=\"search_list_01\">"+data.positionName+"</div>");
 	    			arr.push("<div class=\"search_list_02\">");
 	    			arr.push("<span class=\"search_span\">"+data.customerName+"</span>");
@@ -204,6 +205,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			arr.push("<span class=\"search_span\">|</span>");
 	    			arr.push("<span class=\"search_span\">"+data.levelName+"</span>");
 	    			arr.push("</div>"); 
+	    			arr.push("</div>"); 
+	    			arr.push("<div class=\"col-md-6\" style=\"padding-top:10px;padding-bottom:20px;\">");  
+	    			if(tools.checkUrlPermission("business/requirement/toSearchView.do")){
+		    			arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
+		    			arr.push("<a class=\"search_a\" title=\"招聘详情\" href=\"business/requirement/toSearchView.do?id="+data.id+"\" target=\"_blank\">招聘详情</a>");
+		    			arr.push("</div>");
+	    			}
+	    			if("1" != data.deliverStatus && tools.checkUrlPermission("business/deliver/toAdd.do")){
+	    				arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
+		    			arr.push("<a class=\"search_a\" title=\"我要投递\" href=\"javascript:void(0)\" onclick=\"addDeliver('"+data.id+"')\">我要投递</a>");
+		    			arr.push("</div>");
+	    			}
+	    			if(data.deliverStatus=="1" && tools.checkUrlPermission("business/deliver/toView.do")){
+	    				arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
+		    			arr.push("<a class=\"search_a\" title=\"投递详情\" href=\"javascript:void(0)\" onclick=\"viewDeliver('"+data.deliverId+"')\">投递详情</a>");
+		    			arr.push("</div>");
+	    			}
+	    			arr.push("</div>");
+	    			arr.push("<div class=\"col-md-12\">");
 	    			arr.push("<div class=\"search_list_03\">");
 	    			// 客户标签处理
 	    			var tagObj = $("<span class=\"search_span\" id=\"tags_\""+(new Date().getTime()+"_tag_cn")+">ssssssss</span>");
@@ -228,21 +248,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			arr.push("</div>");
 	    			arr.push("<div class=\"search_con\">");
 	    			arr.push("<div class=\"col-md-12\"  style=\" line-height:60px; vertical-align:middle;\">");
-	    			if(tools.checkUrlPermission("business/requirement/toSearchView.do")){
-		    			arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
-		    			arr.push("<a class=\"search_a\" title=\"招聘详情\" href=\"business/requirement/toSearchView.do?id="+data.id+"\" target=\"_blank\">招聘详情</a>");
-		    			arr.push("</div>");
-	    			}
-	    			if("1" != data.deliverStatus && tools.checkUrlPermission("business/deliver/toAdd.do")){
-	    				arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
-		    			arr.push("<a class=\"search_a\" title=\"我要投递\" href=\"javascript:void(0)\" onclick=\"addDeliver('"+data.id+"')\">我要投递</a>");
-		    			arr.push("</div>");
-	    			}
-	    			if(data.deliverStatus=="1" && tools.checkUrlPermission("business/deliver/toView.do")){
-	    				arr.push("<div style=\"width:50%;float:left; white-space:nowrap;\">");
-		    			arr.push("<a class=\"search_a\" title=\"投递详情\" href=\"javascript:void(0)\" onclick=\"viewDeliver('"+data.deliverId+"')\">投递详情</a>");
-		    			arr.push("</div>");
-	    			}
+	    			
+	    			arr.push("</div>");
 	    			arr.push("</div>");
 	    			arr.push("</div>");
 					

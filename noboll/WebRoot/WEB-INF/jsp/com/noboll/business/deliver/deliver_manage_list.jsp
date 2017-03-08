@@ -66,7 +66,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                rowButtons:[ // select 表示选择规则，1表示多选，0表示单选，空表示不选
                             {name:'电话确认',position:'row',select:"",css:"dhms",dialog:{url:"business/interview/toDhInterview.do",width:"850px",height:"500px"}},//电话确认、预约时间
                         	{name:'报到入职',position:'row',select:"",css:"entrant",dialog:{url:"business/entrant/toAddUpdate.do",width:"850px",height:"500px"}},//报到入职
-                            {name:'详情',position:'row',select:"",css:"view",dialog:{url:"business/deliver/toView.do",width:"850px",height:"500px"}}//详情
+                            {name:'详情',position:'row',select:"",css:"view",dialog:{url:"business/deliver/toView.do",width:"850px",height:"500px"}},//详情
+                            {name:'评价详情',position:'row',select:"",css:"evaluateView",dialog:{url:"business/evaluate/toEvalute.do",width:"800px",height:"500px"}}//评价详情
 	                ],
 	                clickToSelect: true,
 	                columns: [

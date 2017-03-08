@@ -52,6 +52,7 @@
 			business/evaluateLabel/remove.do,
 			business/dict/queryByTypeCode.do,
 			business/customer/getCustomer.do,
+			business/evaluate/toEvalute.do,
 			<!-- 选择器，后续考虑提取为白名单 -->
 			business/position/toChoose.do,
 			business/dict/toChoose.do,
